@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.home.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_menuListFragment"
+            app:destination="@id/menuListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/menuListFragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.menu.MenuListFragment"
+        android:label="menu_list_fragment"
+        tools:layout="@layout/menu_list_fragment" >
+        <argument android:name="item"
+            app:nullable="false"
+            app:argType="string"/>
+    </fragment>
+</navigation>
