@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
+import com.varivoda.igor.tvz.financijskimanager.util.toast
 import kotlinx.android.synthetic.main.menu_list_fragment.view.*
 
 class MenuListFragment : Fragment() {
@@ -53,9 +54,11 @@ class MenuListFragment : Fragment() {
     }
 
     private fun setRecyclerViewData(view: View,list: List<String>){
+        val menuAdapter = MenuListAdapter(MenuItemClickListener { it -> context?.toast(it) })
+        menuAdapter.submitList(list)
         view.menuListRecyclerView.apply {
             setHasFixedSize(true)
-            adapter = MenuListAdapter(list)
+            adapter = menuAdapter
         }
     }
 

@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_rowWeight="1"
-    android:layout_columnWeight="1"
-    android:layout_margin="12dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="8dp">
+<layout>
 
-    <TextView
-        android:id="@+id/menuItem"
+    <data>
+        <variable
+            name="item"
+            type="String" />
+        <variable
+            name="clickListener"
+            type="com.varivoda.igor.tvz.financijskimanager.ui.menu.MenuItemClickListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="25dp"
-        android:textColor="#6f6f6f"
-        android:textSize="18sp"
-        tools:text="test" />
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp">
+
+        <TextView
+            android:id="@+id/menuItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="25dp"
+            android:text="@{item}"
+            android:onClick="@{() -> clickListener.onClick(item)}"
+            android:textColor="#6f6f6f"
+            android:textSize="18sp"
+            tools:text="test" />
 
 
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+</layout>

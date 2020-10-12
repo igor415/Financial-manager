@@ -1,24 +1,26 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.menu
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.varivoda.igor.tvz.financijskimanager.R
+import com.varivoda.igor.tvz.financijskimanager.databinding.MenuListItemBinding
 
-class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class ViewHolder private constructor(private var binding: MenuListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    private val menuItem: TextView = itemView.findViewById(R.id.menuItem)
-
-    fun bind(menuItem: String){
-        this.menuItem.text = menuItem
+    fun bind(
+        menuItem: String,
+        clickListener: MenuItemClickListener
+    ){
+        binding.item = menuItem
+        binding.executePendingBindings()
+        binding.clickListener = clickListener
     }
 
     companion object{
         fun create(parent: ViewGroup): ViewHolder{
             val inflater = LayoutInflater.from(parent.context)
-            return ViewHolder(inflater.inflate(R.layout.menu_list_item,parent,false))
+            val binding = MenuListItemBinding.inflate(inflater,parent,false)
+            return ViewHolder(binding)
         }
     }
 }

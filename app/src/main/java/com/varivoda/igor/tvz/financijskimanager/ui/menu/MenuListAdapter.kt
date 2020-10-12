@@ -1,18 +1,18 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.menu
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 
-class MenuListAdapter(private val items: List<String>): RecyclerView.Adapter<ViewHolder>(){
+class MenuListAdapter(val clickListener: MenuItemClickListener): ListAdapter<String,ViewHolder>(MenuDiffCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.create(parent)
     }
 
-    override fun getItemCount(): Int = items.size
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(getItem(position),clickListener)
+        //private val items: List<String>
+        //items[position]
     }
 
 }
