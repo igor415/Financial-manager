@@ -13,12 +13,31 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="AppTheme.NoActionBar.TranslucentStatusBar">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
     <style name="PrimaryButtonStyle">
         <item name="android:textColor">#fff</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">18sp</item>
         <item name="android:disabledAlpha">0.5</item>
         <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="HomeItemStyle">
+        <item name="android:textColor">@color/homeTextColor</item>
+        <item name="android:padding">25dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="HomeCardView">
+        <item name="android:layout_margin">12dp</item>
+        <item name="android:layout_rowWeight">1</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">8dp</item>
     </style>
 
 </resources>

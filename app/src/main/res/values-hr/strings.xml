@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Financijski manager</string>
+    <string name="employees_value">Zaposlenici</string>
+    <string name="products_value">Proizvodi</string>
+    <string name="stores_value">Poslovnice</string>
+    <string name="customers_value">Kupci</string>
+    <string name="insert_bill_value">Unesi račun</string>
+    <string name="statistic_value">Statistika</string>
+    <string name="notification_title">Baza podataka je uspješno ažurirana.</string>
+    <string name="title_activity_maps">Karta</string>
+    <string name="login">Prijava</string>
+    <string name="login_in_progress">Prijava u tijeku..</string>
+    <string name="enter_your_password">Unesite lozinku</string>
+    <string name="enter_your_username">Unesite korisničko ime</string>
+    <string name="enter_your_credentials">Unesite korisničke podatke</string>
+    <string name="remember_me">Zapamti me</string>
+    <string name="login_background_picture">pozadina - prijava</string>
+    <string name="home_title">Početna stranica</string>
+    <string name="products_title">Proizvodi</string>
+    <string name="customers_title">Kupci</string>
+    <string name="statistics_title">Statistika</string>
+    <string name="stores_title">Poslovnice</string>
+    <string name="employees_title">Zaposlenici</string>
+    <string name="insert_bill_title">Unesi račun</string>
+    <string name="stores_locations">Store locations</string>
+    <string name="no_internet">Nema internetske povezivosti</string>
+    <string name="mail_title">Title</string>
+    <string name="general_error">Pojavio se problem. Molimo vas pokušajte kasnije.</string>
+    <string name="send_email">Send e-mail</string>
+    <string name="choose_to_share">Choose where to share:</string>
+    <string name="navigation_problem">Pojavio se problem sa radom aplikacije.</string>
+    <string name="describe_problem">Please describe the problem you encountered.</string>
+    <string name="problem_with_email">There was a problem opening the email</string>
+</resources>

@@ -16,14 +16,27 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+
     </fragment>
     <fragment
         android:id="@+id/menuListFragment"
         android:name="com.varivoda.igor.tvz.financijskimanager.ui.menu.MenuListFragment"
         android:label="menu_list_fragment"
         tools:layout="@layout/menu_list_fragment" >
+        <action
+            android:id="@+id/action_menuListFragment_to_listFragment"
+            app:destination="@id/listFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <argument android:name="item"
             app:nullable="false"
             app:argType="string"/>
     </fragment>
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.list.ListFragment"
+        android:label="fragment_list"
+        tools:layout="@layout/fragment_list" />
 </navigation>

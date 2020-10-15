@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Financijski manager</string>
+    <string name="app_name">"Financial manager "</string>
     <string name="login_background_picture">login background picture</string>
     <string name="enter_your_credentials">Enter your credentials</string>
     <string name="enter_your_username">Enter your username</string>
@@ -7,8 +7,49 @@
     <string name="remember_me">Remember me</string>
     <string name="login_in_progress">Login in progress..</string>
     <string name="login">Login</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
     <string name="notification_title">Database is successfully updated.</string>
+    <string name="image_description" translatable="false">image description</string>
+    <string name="employees_value">Employees</string>
+    <string name="products_value">Products</string>
+    <string name="stores_value">Stores</string>
+    <string name="customers_value">Customers</string>
+    <string name="insert_bill_value">Insert bill</string>
+    <string name="statistic_value">Statistic</string>
+    <string name="navigation_problem">There is a problem with navigation</string>
+    <string name="home_title">Home</string>
+    <string name="products_title">Products</string>
+    <string name="customers_title">Customers</string>
+    <string name="statistics_title">Statistics</string>
+    <string name="stores_title">Stores</string>
+    <string name="employees_title">Employees</string>
+    <string name="insert_bill_title">Insert Bill</string>
+    <string name="stores_locations">Lokacije poslovnica</string>
+    <string name="no_internet">There is no internet connection</string>
+    <string name="general_error">An error occurred. Please try again later.</string>
+    <string name="mail_title">Naslov</string>
+    <string name="describe_problem">Molimo Vas opišite problem na koji ste naišli..</string>
+    <string name="send_email">Pošalji e-mail</string>
+    <string name="problem_with_email">Pojavio se problem sa otvaranjem e-maila</string>
+    <string name="choose_to_share">Izaberite gdje želite podijeliti:</string>
+    <string name="retry_resource">Retry</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="settings">Settings</string>
+    <string name="more">more</string>
+    <string name="share">Share</string>
+    <string name="report_a_bug">Report a bug</string>
 </resources>

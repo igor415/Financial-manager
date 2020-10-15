@@ -16,12 +16,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.varivoda.igor.tvz.financijskimanager.R
+import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.databinding.FragmentHomeBinding
 import com.varivoda.igor.tvz.financijskimanager.ui.maps.MapsActivity
 import com.varivoda.igor.tvz.financijskimanager.ui.menu.Menu
 import com.varivoda.igor.tvz.financijskimanager.util.*
 import com.varivoda.igor.tvz.financijskimanager.workmanager.BroadcastNotification
 import kotlinx.android.synthetic.main.fragment_home.*
+import timber.log.Timber
 import java.util.*
 
 
@@ -42,9 +44,9 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
         setListeners()
-        (activity as HomeActivity).setActionBarText("Home")
+        (activity as HomeActivity).setActionBarText(getString(R.string.home_title))
         createChannel()
-        setTimerForDatabaseUpdate()
+        //setTimerForDatabaseUpdate()
     }
 
     private fun setListeners() {
@@ -70,7 +72,7 @@ class HomeFragment : Fragment() {
             }
 
         }else{
-            context?.toast("There is a problem with navigation")
+            context?.toast(getString(R.string.navigation_problem))
         }
 
     }
@@ -97,7 +99,7 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun setTimerForDatabaseUpdate(){
+   /* private fun setTimerForDatabaseUpdate(){
         val alarmFor: Calendar = Calendar.getInstance()
         alarmFor.set(Calendar.HOUR_OF_DAY, 15)
         alarmFor.set(Calendar.MINUTE, 40)
@@ -122,6 +124,6 @@ class HomeFragment : Fragment() {
             alarmFor.timeInMillis,
             pendingIntent
         )
-    }
+    }*/
 
 }

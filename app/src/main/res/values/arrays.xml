@@ -48,4 +48,11 @@
         <item>Zaposlenici koji su ostvarili najveći prihod po mjesecu i županiji</item>
         <item>Zaposlenik koji je prodao najveću količinu nekog proizvoda po mjesecu</item>
     </string-array>
+
+    <string-array name="toast_designs">
+        <item>default</item>
+        <item>dark</item>
+        <item>light</item>
+    </string-array>
+
 </resources>

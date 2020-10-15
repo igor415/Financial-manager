@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.varivoda.igor.tvz.financijskimanager.R
+import com.varivoda.igor.tvz.financijskimanager.ui.settings.SettingsActivity
 import com.varivoda.igor.tvz.financijskimanager.util.toast
 
 class HomeActivity : AppCompatActivity() {
@@ -34,25 +35,27 @@ class HomeActivity : AppCompatActivity() {
                 Intent.ACTION_SENDTO,
                 Uri.parse("mailto:igor.varivodaa@gmail.com.com")
             )
-            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Naslov")
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_title))
             emailIntent.putExtra(
                 Intent.EXTRA_TEXT,
-                "Molimo Vas opišite problem na koji ste naišli.."
+                getString(R.string.describe_problem)
             )
             try {
-                startActivity(Intent.createChooser(emailIntent, "Pošalji e-mail"))
+                startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email)))
             } catch (ex: ActivityNotFoundException) {
-                this.toast("Pojavio se problem sa otvaranjem e-maila")
+                this.toast(getString(R.string.problem_with_email))
             }
             return true
         } else if (item.itemId == R.id.podijeli) {
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "text/plain"
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Financijski manager 2020")
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
             val message =
                 "\nhttps://play.google.com/store/apps/details?id=com.varivoda.igor.financijskimanager\n\n"
             intent.putExtra(Intent.EXTRA_TEXT, message)
-            startActivity(Intent.createChooser(intent, "Izaberite gdje želite podijeliti:"))
+            startActivity(Intent.createChooser(intent, getString(R.string.choose_to_share)))
+        }else if(item.itemId == R.id.settings){
+            startActivity(Intent(this,SettingsActivity::class.java))
         }
         return super.onOptionsItemSelected(item)
     }

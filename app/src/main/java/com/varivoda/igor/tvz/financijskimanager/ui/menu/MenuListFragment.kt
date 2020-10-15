@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
+import com.varivoda.igor.tvz.financijskimanager.ui.selector.FragmentSelector
 import com.varivoda.igor.tvz.financijskimanager.util.toast
 import kotlinx.android.synthetic.main.menu_list_fragment.view.*
 
@@ -27,34 +29,36 @@ class MenuListFragment : Fragment() {
     private fun setActionBarTextAndItems(item: String, view: View) {
         when(item){
             Menu.PRODUCTS.string -> {
-                (activity as HomeActivity).setActionBarText("Products")
+                (activity as HomeActivity).setActionBarText(getString(R.string.products_title))
                 setRecyclerViewData(view, resources.getStringArray(R.array.productsOptions).toList())
             }
             Menu.CUSTOMERS.string -> {
-                (activity as HomeActivity).setActionBarText("Customers")
+                (activity as HomeActivity).setActionBarText(getString(R.string.customers_title))
                 setRecyclerViewData(view, resources.getStringArray(R.array.customersOptions).toList())
             }
             Menu.INSERT_BILL.string -> {
-                (activity as HomeActivity).setActionBarText("Insert Bill")
+                (activity as HomeActivity).setActionBarText(getString(R.string.insert_bill_title))
                 setRecyclerViewData(view, resources.getStringArray(R.array.billsOptions).toList())
             }
             Menu.EMPLOYEES.string -> {
-                (activity as HomeActivity).setActionBarText("Employees")
+                (activity as HomeActivity).setActionBarText(getString(R.string.employees_title))
                 setRecyclerViewData(view, resources.getStringArray(R.array.employeesOptions).toList())
             }
             Menu.STORES.string -> {
-                (activity as HomeActivity).setActionBarText("Stores")
+                (activity as HomeActivity).setActionBarText(getString(R.string.stores_title))
                 setRecyclerViewData(view, resources.getStringArray(R.array.storesOptions).toList())
             }
             Menu.STATISTICS.string -> {
-                (activity as HomeActivity).setActionBarText("Statistics")
+                (activity as HomeActivity).setActionBarText(getString(R.string.statistics_title))
                 setRecyclerViewData(view, resources.getStringArray(R.array.statisticsOptions).toList())
             }
         }
     }
 
     private fun setRecyclerViewData(view: View,list: List<String>){
-        val menuAdapter = MenuListAdapter(MenuItemClickListener { it -> context?.toast(it) })
+        val menuAdapter = MenuListAdapter(MenuItemClickListener { it -> context?.toast(it)
+        FragmentSelector().navigate(it,findNavController())
+        })
         menuAdapter.submitList(list)
         view.menuListRecyclerView.apply {
             setHasFixedSize(true)

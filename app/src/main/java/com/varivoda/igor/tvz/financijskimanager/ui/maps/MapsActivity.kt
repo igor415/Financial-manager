@@ -37,7 +37,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        actionBar?.title = "Lokacije poslovnica"
+        actionBar?.title = getString(R.string.stores_locations)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

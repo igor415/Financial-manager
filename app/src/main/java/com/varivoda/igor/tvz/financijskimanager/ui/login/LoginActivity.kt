@@ -38,10 +38,10 @@ class LoginActivity : AppCompatActivity() {
                     finish()
                 }
                 is Result.NoNetworkConnection -> {
-                    this.toast("There is no internet connection")
+                    this.toast(getString(R.string.no_internet))
                 }
                 is Result.Error -> {
-                    this.toast("error")
+                    this.toast(getString(R.string.general_error))
                 }
 
             }
