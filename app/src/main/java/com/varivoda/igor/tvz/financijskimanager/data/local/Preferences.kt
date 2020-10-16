@@ -23,4 +23,11 @@ class Preferences(appContext: Context) {
 
     fun getToastMessageDesign(): String? = appPreferences.getString("toast key","default") ?: "default"
 
+    fun setSeekBarValue(float: Float){
+        val editor = sharedPreferences.edit()
+        editor.putFloat("brightness key",float).apply()
+    }
+
+    fun getSeekBarValue(): Float = sharedPreferences.getFloat("brightness key",0.5f)
+
 }

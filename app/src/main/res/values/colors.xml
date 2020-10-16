@@ -6,4 +6,6 @@
     <color name="colorAccent">#fdaa29</color>
     <color name="homeTextColor">#6f6f6f</color>
     <color name="lightBackgroundColor">#f1f3ff</color>
+    <color name="light_color">#b3ab9e</color>
+    <color name="dark_color">#1a3c70</color>
 </resources>

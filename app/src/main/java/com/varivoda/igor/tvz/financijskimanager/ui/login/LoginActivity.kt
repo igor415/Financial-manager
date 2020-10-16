@@ -11,6 +11,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.databinding.ActivityLoginBinding
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import com.varivoda.igor.tvz.financijskimanager.util.Result
+import com.varivoda.igor.tvz.financijskimanager.util.showSelectedToast
 import com.varivoda.igor.tvz.financijskimanager.util.toast
 
 
@@ -38,10 +39,10 @@ class LoginActivity : AppCompatActivity() {
                     finish()
                 }
                 is Result.NoNetworkConnection -> {
-                    this.toast(getString(R.string.no_internet))
+                    showSelectedToast(this,getString(R.string.no_internet))
                 }
                 is Result.Error -> {
-                    this.toast(getString(R.string.general_error))
+                    showSelectedToast(this,getString(R.string.general_error))
                 }
 
             }

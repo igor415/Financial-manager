@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import com.varivoda.igor.tvz.financijskimanager.ui.selector.FragmentSelector
+import com.varivoda.igor.tvz.financijskimanager.util.showSelectedToast
 import com.varivoda.igor.tvz.financijskimanager.util.toast
 import kotlinx.android.synthetic.main.menu_list_fragment.view.*
 
@@ -56,7 +57,7 @@ class MenuListFragment : Fragment() {
     }
 
     private fun setRecyclerViewData(view: View,list: List<String>){
-        val menuAdapter = MenuListAdapter(MenuItemClickListener { it -> context?.toast(it)
+        val menuAdapter = MenuListAdapter(MenuItemClickListener { it -> showSelectedToast(requireContext(),it)
         FragmentSelector().navigate(it,findNavController())
         })
         menuAdapter.submitList(list)

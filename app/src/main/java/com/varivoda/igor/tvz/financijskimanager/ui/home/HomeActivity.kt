@@ -6,16 +6,21 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.varivoda.igor.tvz.financijskimanager.R
+import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.ui.settings.SettingsActivity
-import com.varivoda.igor.tvz.financijskimanager.util.toast
+import com.varivoda.igor.tvz.financijskimanager.util.showSelectedToast
+
 
 class HomeActivity : AppCompatActivity() {
+
+    private lateinit var preferences: Preferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        preferences = Preferences(this)
     }
 
     fun setActionBarText(text: String){
@@ -43,7 +48,7 @@ class HomeActivity : AppCompatActivity() {
             try {
                 startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email)))
             } catch (ex: ActivityNotFoundException) {
-                this.toast(getString(R.string.problem_with_email))
+                showSelectedToast(this,getString(R.string.problem_with_email))
             }
             return true
         } else if (item.itemId == R.id.podijeli) {
@@ -58,5 +63,15 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this,SettingsActivity::class.java))
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(this::preferences.isInitialized){
+            val brightness: Float = preferences.getSeekBarValue()
+            val lp = window.attributes
+            lp.screenBrightness = brightness
+            window.attributes = lp
+        }
     }
 }

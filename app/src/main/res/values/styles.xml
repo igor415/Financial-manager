@@ -40,4 +40,22 @@
         <item name="cardElevation">8dp</item>
     </style>
 
+    <style name="darkToast">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">@android:color/white</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stColorBackground">@color/dark_color</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stRadius">5dp</item>
+    </style>
+
+    <style name="lightToast">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">@android:color/white</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stColorBackground">@color/light_color</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stRadius">3dp</item>
+    </style>
+
 </resources>

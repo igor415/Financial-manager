@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
 import com.varivoda.igor.tvz.financijskimanager.R
+import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 
 fun NotificationManager.sendNotification(text: String, context: Context){
@@ -37,6 +38,9 @@ fun NotificationManager.sendNotification(text: String, context: Context){
             )
         )
         .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+    val pref = Preferences(context)
+    if(pref.getVibrationsOption()) builder.setVibrate(LongArray(300))
 
     notify(NOTIFICATION_ID,builder.build())
 }

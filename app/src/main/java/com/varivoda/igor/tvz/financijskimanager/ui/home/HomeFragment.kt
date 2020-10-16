@@ -72,7 +72,7 @@ class HomeFragment : Fragment() {
             }
 
         }else{
-            context?.toast(getString(R.string.navigation_problem))
+            showSelectedToast(requireContext(),getString(R.string.navigation_problem))
         }
 
     }

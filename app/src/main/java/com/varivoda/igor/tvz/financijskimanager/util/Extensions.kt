@@ -13,3 +13,8 @@ fun Context?.toast(text: String){
 fun View.getSnackBar(text: String): Snackbar{
     return Snackbar.make(this,text,Snackbar.LENGTH_LONG)
 }
+
+fun Context.styleableToast(text: String, styleId: Int) {
+    com.muddzdev.styleabletoast.StyleableToast.makeText(this, text, Toast.LENGTH_LONG, styleId)
+        .show()
+}

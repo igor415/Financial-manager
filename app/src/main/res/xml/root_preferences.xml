@@ -29,7 +29,9 @@
         <SeekBarPreference
             app:allowDividerAbove="true"
             android:title="Change brightness"
+            android:defaultValue="50"
             android:key="brightness key"/>
+
 
     </PreferenceCategory>
 

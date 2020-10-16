@@ -22,6 +22,6 @@ class CountyRepository(private val context: Context) {
     }
 
     companion object {
-        private const val NETWORK_PAGE_SIZE = 14
+        private const val NETWORK_PAGE_SIZE = 2
     }
 }

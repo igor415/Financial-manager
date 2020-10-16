@@ -2,9 +2,10 @@ package com.varivoda.igor.tvz.financijskimanager.ui.settings
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.replace
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SeekBarPreference
 import com.varivoda.igor.tvz.financijskimanager.R
+import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -20,9 +21,22 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.settings)
     }
 
+    fun setBrightness(float: Float){
+        val lp = window.attributes
+        lp.screenBrightness = float
+        window.attributes = lp
+    }
+
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
+            findPreference<SeekBarPreference>("brightness key")?.setOnPreferenceChangeListener { _, newValue ->
+                val pref = Preferences(requireContext())
+                    val value = (newValue as Int) * 0.01
+                (activity as SettingsActivity).setBrightness(value.toFloat())
+                pref.setSeekBarValue(value.toFloat())
+                return@setOnPreferenceChangeListener true
+            }
         }
     }
 }
