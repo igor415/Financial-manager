@@ -11,6 +11,7 @@ import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.ui.settings.SettingsActivity
 import com.varivoda.igor.tvz.financijskimanager.util.showSelectedToast
+import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeActivity : AppCompatActivity() {
@@ -61,6 +62,9 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent.createChooser(intent, getString(R.string.choose_to_share)))
         }else if(item.itemId == R.id.settings){
             startActivity(Intent(this,SettingsActivity::class.java))
+        }else if(item.itemId == R.id.enable_all){
+            startActivity(Intent(this,HomeActivity::class.java))
+            finish()
         }
         return super.onOptionsItemSelected(item)
     }

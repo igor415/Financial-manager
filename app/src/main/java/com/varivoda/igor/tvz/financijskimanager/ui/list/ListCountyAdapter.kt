@@ -1,17 +1,16 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.County
 
-class ListCountyAdapter() : PagingDataAdapter<County, RecyclerView.ViewHolder>(COUNTY_COMPARATOR){
+class ListCountyAdapter(val clickListener: ListItemClickListener) : PagingDataAdapter<County, RecyclerView.ViewHolder>(COUNTY_COMPARATOR){
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as ListViewHolder).bind(getItem(position)!!)
+        (holder as ListViewHolder).bind(getItem(position)!!,clickListener)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

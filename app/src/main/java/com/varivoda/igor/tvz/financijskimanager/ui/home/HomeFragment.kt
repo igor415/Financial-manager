@@ -1,5 +1,6 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.home
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -9,10 +10,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.varivoda.igor.tvz.financijskimanager.R
@@ -31,6 +31,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var navController: NavController
     private lateinit var binding: FragmentHomeBinding
+    private var currentViewClicked: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +47,32 @@ class HomeFragment : Fragment() {
         setListeners()
         (activity as HomeActivity).setActionBarText(getString(R.string.home_title))
         createChannel()
+        listOf(statistics,customers,employees,insertInvoice,products,stores).forEach {
+            registerForContextMenu(it)
+        }
+
         //setTimerForDatabaseUpdate()
+    }
+
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        menu.add("Disable")
+        currentViewClicked = v
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        if(item.title == "Disable"){
+            if(currentViewClicked != null) {
+                currentViewClicked?.isEnabled = !currentViewClicked?.isEnabled!!
+                currentViewClicked?.alpha = if (currentViewClicked!!.isEnabled) 1.0f else 0.6f
+            }
+        }
+        return super.onContextItemSelected(item)
     }
 
     private fun setListeners() {

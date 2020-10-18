@@ -2,25 +2,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="@string/settings"
+    <item
         android:id="@+id/settings"
         android:icon="@drawable/ic_baseline_settings_24"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/settings"
+        app:showAsAction="ifRoom" />
 
     <item
         android:icon="@drawable/ic_more_vert_black_24dp"
         android:title="@string/more"
         app:showAsAction="ifRoom">
         <menu>
-        <item
-            android:id="@+id/bug"
-            android:title="@string/report_a_bug"
-            android:icon="@drawable/ic_virus"
-            app:showAsAction="never" />
-        <item
-            android:icon="@drawable/ic_share_black_24dp"
-            android:title="@string/share"
-            android:id="@+id/podijeli"/>
+            <item
+                android:id="@+id/bug"
+                android:icon="@drawable/ic_virus"
+                android:title="@string/report_a_bug"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/podijeli"
+                android:icon="@drawable/ic_share_black_24dp"
+                android:title="@string/share" />
+            <item
+                android:id="@+id/enable_all"
+                android:icon="@drawable/ic_baseline_settings_24"
+                android:title="@string/enable_all_options" />
         </menu>
     </item>
 </menu>

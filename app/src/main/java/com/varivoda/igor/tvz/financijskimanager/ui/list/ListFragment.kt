@@ -62,7 +62,7 @@ class ListFragment : Fragment() {
     }
 
     private var searchJob: Job? = null
-    private var adapter: ListCountyAdapter = ListCountyAdapter()
+    private var adapter: ListCountyAdapter = ListCountyAdapter(clickListener = ListItemClickListener {  })
 
 
     private fun getCountiesStream() {
