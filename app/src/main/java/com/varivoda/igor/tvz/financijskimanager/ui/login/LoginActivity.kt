@@ -35,8 +35,7 @@ class LoginActivity : AppCompatActivity() {
             if(it==null) return@Observer
             when(it){
                 is Result.Success -> {
-                    startActivity(Intent(this,HomeActivity::class.java))
-                    finish()
+                    startActivity(Intent(this,HomeActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
                 }
                 is Result.NoNetworkConnection -> {
                     showSelectedToast(this,getString(R.string.no_internet))

@@ -23,8 +23,7 @@ class SplashActivity : AppCompatActivity() {
 
         logoAnimation()
         Handler().postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+            startActivity(Intent(this, LoginActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
         }, 1300)
     }
 
