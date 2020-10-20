@@ -52,7 +52,7 @@ class HomeActivity : AppCompatActivity() {
                 showSelectedToast(this,getString(R.string.problem_with_email))
             }
             return true
-        } else if (item.itemId == R.id.podijeli) {
+        } else if (item.itemId == R.id.share) {
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
