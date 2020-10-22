@@ -21,6 +21,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.varivoda.igor.tvz.financijskimanager.R
+import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
+import com.varivoda.igor.tvz.financijskimanager.ui.settings.SettingsActivity
 
 import timber.log.Timber
 
@@ -38,6 +40,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         actionBar?.title = getString(R.string.stores_locations)
+        val pref = Preferences(this)
+        setBrightness(pref.getSeekBarValue())
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -154,4 +158,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
             else -> super.onOptionsItemSelected(item)
         }
+
+    fun setBrightness(float: Float){
+        val lp = window.attributes
+        lp.screenBrightness = float
+        window.attributes = lp
+    }
+
 }

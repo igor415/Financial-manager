@@ -26,7 +26,7 @@ data class Employee (
     var id: Int = 0,
     var employeeName: String? = null,
     var employeeLastName: String? = null,
-    private val address: String? = null,
+    var address: String? = null,
     var storeId: Int,
     var locationId: Int
 )

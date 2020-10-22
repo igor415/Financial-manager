@@ -7,12 +7,10 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.dao.CountyDao
 import com.varivoda.igor.tvz.financijskimanager.data.local.dao.ProductDao
-import com.varivoda.igor.tvz.financijskimanager.data.local.entity.County
-import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Location
-import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
-import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.*
 
-@Database(entities = [Product::class,Location::class,County::class, Store::class],version = 5,exportSchema = false)
+@Database(entities = [Product::class,Location::class,County::class, Store::class, Bill::class,
+                        Customer::class,Employee::class,ProductsOnBill::class],version = 6,exportSchema = false)
 abstract class AppDatabase: RoomDatabase(){
 
     abstract val productDao: ProductDao
@@ -106,7 +104,7 @@ abstract class AppDatabase: RoomDatabase(){
                                 db.execSQL("INSERT INTO Customer VALUES(6,'Ana','Milic',null,0,31000)")
                                 db.execSQL("INSERT INTO Customer VALUES(7,'Tomislav','Knezevic',null,0,31000)")
                                 db.execSQL("INSERT INTO Customer VALUES(8,'Stipe','Piskur',null,0,51000)")
-                                db.execSQL("INSERT INTO Customer VALUES(8,'Ana','Istuk',null,0,51000)")
+                                db.execSQL("INSERT INTO Customer VALUES(9,'Ana','Istuk',null,0,51000)")
                                 db.execSQL("INSERT INTO BILL VALUES(1,1,1,5,'2020-06-01')")
                                 db.execSQL("INSERT INTO BILL VALUES(2,4,2,4,'2020-06-01')")
                                 db.execSQL("INSERT INTO BILL VALUES(3,7,3,3,'2020-06-01')")

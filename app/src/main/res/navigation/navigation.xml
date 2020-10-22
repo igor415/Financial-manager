@@ -33,10 +33,28 @@
         <argument android:name="item"
             app:nullable="false"
             app:argType="string"/>
+        <action
+            android:id="@+id/action_menuListFragment_to_flowListFragment"
+            app:destination="@id/flowListFragment" />
     </fragment>
     <fragment
         android:id="@+id/listFragment"
         android:name="com.varivoda.igor.tvz.financijskimanager.ui.list.ListFragment"
         android:label="fragment_list"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_list" >
+        <argument
+            android:name="text"
+            app:nullable="false"
+            app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/flowListFragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.flow_list.FlowListFragment"
+        android:label="fragment_flow_list"
+        tools:layout="@layout/fragment_flow_list" >
+        <argument
+            android:name="text"
+            app:nullable="false"
+            app:argType="string"/>
+    </fragment>
 </navigation>

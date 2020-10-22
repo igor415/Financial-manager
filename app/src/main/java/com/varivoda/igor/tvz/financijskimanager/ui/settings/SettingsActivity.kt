@@ -30,8 +30,9 @@ class SettingsActivity : AppCompatActivity() {
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
+            val pref = Preferences(requireContext())
+            (activity as SettingsActivity).setBrightness(pref.getSeekBarValue())
             findPreference<SeekBarPreference>("brightness key")?.setOnPreferenceChangeListener { _, newValue ->
-                val pref = Preferences(requireContext())
                     val value = (newValue as Int) * 0.01
                 (activity as SettingsActivity).setBrightness(value.toFloat())
                 pref.setSeekBarValue(value.toFloat())

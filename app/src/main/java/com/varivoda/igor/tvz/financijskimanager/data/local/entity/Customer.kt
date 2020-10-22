@@ -21,7 +21,7 @@ data class Customer (
     var id: Int = 0,
     var customerName: String? = null,
     var customerLastName: String? = null,
-    private val address: String? = null,
+    var address: String? = null,
     var points: Int = 0,
     var locationId: Int = 0
 )
