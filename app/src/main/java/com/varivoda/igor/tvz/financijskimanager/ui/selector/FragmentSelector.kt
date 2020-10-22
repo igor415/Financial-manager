@@ -16,6 +16,9 @@ class FragmentSelector() {
                 //navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToListFragment("Popis proizvoda"))
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToFlowListFragment("Popis proizvoda"))
             }
+            "Popis zaposlenika" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToFlowListFragment("Popis zaposlenika"))
+            }
         }
     }
 }

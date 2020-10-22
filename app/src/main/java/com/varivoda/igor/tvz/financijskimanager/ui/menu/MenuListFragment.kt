@@ -8,11 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.varivoda.igor.tvz.financijskimanager.R
-import com.varivoda.igor.tvz.financijskimanager.ui.flow_list.FlowListAdapter
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import com.varivoda.igor.tvz.financijskimanager.ui.selector.FragmentSelector
 import com.varivoda.igor.tvz.financijskimanager.util.showSelectedToast
-import com.varivoda.igor.tvz.financijskimanager.util.toast
 import kotlinx.android.synthetic.main.menu_list_fragment.view.*
 
 class MenuListFragment : Fragment() {

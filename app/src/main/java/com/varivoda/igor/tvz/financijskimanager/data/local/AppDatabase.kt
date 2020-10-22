@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.dao.CountyDao
+import com.varivoda.igor.tvz.financijskimanager.data.local.dao.EmployeeDao
 import com.varivoda.igor.tvz.financijskimanager.data.local.dao.ProductDao
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.*
 
@@ -15,6 +16,7 @@ abstract class AppDatabase: RoomDatabase(){
 
     abstract val productDao: ProductDao
     abstract val countyDao: CountyDao
+    abstract val employeeDao: EmployeeDao
 
     companion object{
         @Volatile

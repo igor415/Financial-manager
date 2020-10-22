@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 
-class FlowListAdapter : ListAdapter<Product, FlowListViewHolder>(DiffCallback()){
+class FlowListAdapterProducts : ListAdapter<Product, FlowListViewHolder>(DiffCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FlowListViewHolder {
         return FlowListViewHolder.create(parent)
