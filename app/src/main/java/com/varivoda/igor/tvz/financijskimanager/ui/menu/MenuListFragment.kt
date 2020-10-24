@@ -57,7 +57,7 @@ class MenuListFragment : Fragment() {
 
     private fun setRecyclerViewData(view: View,list: List<String>){
         val menuAdapter = MenuListAdapter(MenuItemClickListener { it -> showSelectedToast(requireContext(),it)
-        FragmentSelector().navigate(it,findNavController())
+        FragmentSelector().navigate(it,findNavController(),activity)
         })
         menuAdapter.submitList(list)
         view.menuListRecyclerView.apply {

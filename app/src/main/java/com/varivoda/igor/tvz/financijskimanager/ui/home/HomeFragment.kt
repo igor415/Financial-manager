@@ -93,8 +93,7 @@ class HomeFragment : Fragment() {
                 navController.navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(Menu.PRODUCTS.string))
             }
             stores.setOnClickListener {
-                startActivity(Intent(activity,MapsActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY))
-                //navController.navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(Menu.STORES.string))
+                navController.navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(Menu.STORES.string))
             }
 
         }else{

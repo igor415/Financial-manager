@@ -5,9 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.varivoda.igor.tvz.financijskimanager.data.local.dao.CountyDao
-import com.varivoda.igor.tvz.financijskimanager.data.local.dao.EmployeeDao
-import com.varivoda.igor.tvz.financijskimanager.data.local.dao.ProductDao
+import com.varivoda.igor.tvz.financijskimanager.data.local.dao.*
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.*
 
 @Database(entities = [Product::class,Location::class,County::class, Store::class, Bill::class,
@@ -17,6 +15,8 @@ abstract class AppDatabase: RoomDatabase(){
     abstract val productDao: ProductDao
     abstract val countyDao: CountyDao
     abstract val employeeDao: EmployeeDao
+    abstract val customerDao: CustomerDao
+    abstract val storesDao: StoresDao
 
     companion object{
         @Volatile

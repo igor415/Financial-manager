@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Employee
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeDTO
 
-class FlowListAdapterEmployees : ListAdapter<EmployeeDTO,FlowListViewHolder>(EmployeeDiffCallback()){
+class FlowListAdapterEmployees(private val viewModel: FlowListViewModel) : ListAdapter<EmployeeDTO,FlowListViewHolder>(EmployeeDiffCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FlowListViewHolder {
         return FlowListViewHolder.create(parent)
@@ -25,6 +25,11 @@ class FlowListAdapterEmployees : ListAdapter<EmployeeDTO,FlowListViewHolder>(Emp
             return oldItem == newItem
         }
 
+    }
+
+    fun deleteEmployee(position: Int){
+        val id = getItem(position).id
+        viewModel.deleteEmployee(id)
     }
 
 }

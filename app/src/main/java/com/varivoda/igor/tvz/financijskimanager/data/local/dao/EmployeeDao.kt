@@ -14,4 +14,7 @@ interface EmployeeDao {
 
     @Query("SELECT e.id, e.employeeName, e.employeeLastName,s.storeName FROM Employee e INNER JOIN STORE s ON s.id == storeId")
     fun getEmployeesAndStores(): Flow<List<EmployeeDTO>>
+
+    @Query("DELETE FROM Employee WHERE id = :id")
+    fun deleteEmployee(id: Int)
 }

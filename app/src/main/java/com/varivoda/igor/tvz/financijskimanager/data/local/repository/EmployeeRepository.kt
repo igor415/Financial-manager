@@ -14,4 +14,8 @@ class EmployeeRepository(private val appDatabase: AppDatabase){
     fun getEmployeesAndStores(): Flow<List<EmployeeDTO>> {
         return appDatabase.employeeDao.getEmployeesAndStores()
     }
+
+    fun deleteEmployee(id: Int){
+        appDatabase.employeeDao.deleteEmployee(id)
+    }
 }
