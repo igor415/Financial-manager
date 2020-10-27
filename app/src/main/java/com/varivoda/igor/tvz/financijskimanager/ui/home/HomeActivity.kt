@@ -1,14 +1,17 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.home
 
 import android.content.ActivityNotFoundException
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
+import com.varivoda.igor.tvz.financijskimanager.ui.login.LoginActivity
 import com.varivoda.igor.tvz.financijskimanager.ui.settings.SettingsActivity
 import com.varivoda.igor.tvz.financijskimanager.util.showSelectedToast
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -17,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var preferences: Preferences
+    private var dialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,9 +69,32 @@ class HomeActivity : AppCompatActivity() {
         }else if(item.itemId == R.id.enable_all){
             startActivity(Intent(this,HomeActivity::class.java))
             finish()
+        }else if(item.itemId == R.id.log_out){
+            showLogOutDialog()
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun showLogOutDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.apply {
+            setTitle(getString(R.string.log_out_message))
+            setPositiveButton(getString(R.string.yes)
+            ) { dialog, _ ->
+                listOf("username key","password key","remember me").map { preferences.clear(it) }
+                returnToLogin()
+                dialog.dismiss()
+            }
+            setNegativeButton(getString(R.string.no)) { dialog, _ ->
+                dialog.dismiss()
+            }
+        }
+        dialog?.dismiss()
+        dialog = builder.create()
+        dialog?.show()
+    }
+
+    private fun returnToLogin() = startActivity(Intent(this,LoginActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
 
     override fun onResume() {
         super.onResume()

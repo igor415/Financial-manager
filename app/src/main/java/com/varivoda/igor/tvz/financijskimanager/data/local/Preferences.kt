@@ -30,4 +30,6 @@ class Preferences(appContext: Context) {
 
     fun getSeekBarValue(): Float = sharedPreferences.getFloat("brightness key",0.5f)
 
+    fun clear(value: String) = sharedPreferences.edit().remove(value).apply()
+
 }

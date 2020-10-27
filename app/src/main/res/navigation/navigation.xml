@@ -35,7 +35,14 @@
             app:argType="string"/>
         <action
             android:id="@+id/action_menuListFragment_to_flowListFragment"
-            app:destination="@id/flowListFragment" />
+            app:destination="@id/flowListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_menuListFragment_to_billFragment"
+            app:destination="@id/billFragment" />
     </fragment>
     <fragment
         android:id="@+id/listFragment"
@@ -52,6 +59,16 @@
         android:name="com.varivoda.igor.tvz.financijskimanager.ui.flow_list.FlowListFragment"
         android:label="fragment_flow_list"
         tools:layout="@layout/fragment_flow_list" >
+        <argument
+            android:name="text"
+            app:nullable="false"
+            app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/billFragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.bills.BillFragment"
+        android:label="fragment_bill"
+        tools:layout="@layout/fragment_bill" >
         <argument
             android:name="text"
             app:nullable="false"

@@ -32,6 +32,9 @@ class FragmentSelector() {
             "Lokacije poslovnica" -> {
                 activity?.startActivity(Intent(activity, MapsActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY))
             }
+            "Popis računa" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToBillFragment("Popis računa"))
+            }
         }
     }
 }

@@ -27,6 +27,10 @@
                 android:id="@+id/enable_all"
                 android:icon="@drawable/ic_baseline_settings_24"
                 android:title="@string/enable_all_options" />
+            <item
+                android:id="@+id/log_out"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/log_out"/>
         </menu>
     </item>
 </menu>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.bills.BillFragment">
+
+    <LinearLayout
+        android:id="@+id/linearContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/timePeriod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time_period"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/changePeriod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/change_label"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:gravity="end"
+            android:textSize="20sp"
+            android:textColor="@color/colorAccent"/>
+
+    </LinearLayout>
+
+    <include android:id="@+id/header"
+        layout="@layout/bill_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearContainer"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/billsRecyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:layout_below="@+id/header"/>
+
+
+</RelativeLayout>
