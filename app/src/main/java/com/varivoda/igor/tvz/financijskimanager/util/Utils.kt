@@ -37,3 +37,11 @@ fun getMonthAndYearFormatted(month: Int? = null, year: Int? = null): String{
     }
 
 }
+
+fun getMonthWithZero(month: Int): String{
+    return if(month >= 10){
+        month.toString()
+    }else{
+        "0$month"
+    }
+}
