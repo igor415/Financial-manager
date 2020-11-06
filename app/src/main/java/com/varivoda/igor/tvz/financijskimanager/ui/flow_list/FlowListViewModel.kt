@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class FlowListViewModel(context: Context) : ViewModel(){
@@ -37,6 +38,8 @@ class FlowListViewModel(context: Context) : ViewModel(){
 
     val stores: Flow<List<Store>> = storeRepository.getStores()
         .flowOn(Dispatchers.Default).conflate()
+
+    
 
     fun deleteCustomer(id: Int){
         viewModelScope.launch(Dispatchers.IO) {

@@ -1,9 +1,8 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.list
 
 import android.view.ViewGroup
-import androidx.paging.LoadState
-import androidx.paging.LoadStateAdapter
 
+/*
 class ListLoadStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<ListLoadStateViewHolder>() {
     override fun onBindViewHolder(holder: ListLoadStateViewHolder, loadState: LoadState) {
         holder.bind(loadState)
@@ -12,4 +11,4 @@ class ListLoadStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<Lis
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): ListLoadStateViewHolder {
         return ListLoadStateViewHolder.create(parent, retry)
     }
-}
+}*/

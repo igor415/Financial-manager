@@ -19,7 +19,7 @@ class ListViewModel(private val context: Context) : ViewModel(){
 
     private var currentQueryValue: String? = null
 
-    private var currentCountyResult: Flow<PagingData<County>>? = null
+    /*private var currentCountyResult: Flow<PagingData<County>>? = null
    //private var currentCountyResult: PagingData<County>? = null
 
     fun getCountiesStream(): Flow<PagingData<County>> {
@@ -32,7 +32,7 @@ class ListViewModel(private val context: Context) : ViewModel(){
         currentCountyResult = newResult
        newResult.map { it.map { println("debug : ${it.countyName ?: ""}") } }
         return newResult
-    }
+    }*/
 
    /* fun getCatalogStream() : Flow<PagingData<County>> = flow {
         viewModelScope.launch(Dispatchers.IO) {

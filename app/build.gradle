@@ -79,7 +79,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.1.0'
 
     //paging
-    implementation "androidx.paging:paging-runtime:$pagingVersion"
+    def paging_version = "2.1.2"
+    implementation "androidx.paging:paging-runtime:$paging_version"
 
     //toasts
     implementation 'com.muddzdev:styleabletoast:2.2.3'

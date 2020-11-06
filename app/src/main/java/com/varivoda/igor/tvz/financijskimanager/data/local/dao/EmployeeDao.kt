@@ -17,4 +17,13 @@ interface EmployeeDao {
 
     @Query("DELETE FROM Employee WHERE id = :id")
     fun deleteEmployee(id: Int)
+
+
+    @Query("""SELECT x.employeeName || ' ' || x.employeeLastName || ' je uprihodio/la ' || CAST(total as TEXT) FROM(SELECT e.id,e.employeeName,e.employeeLastName,SUM(pob.quantity*p.price) AS total 
+            FROM Employee e JOIN Bill b ON e.id = b.employeeId JOIN ProductsOnBill pob 
+            ON pob.billId = b.id JOIN Product p ON p.id = pob.productId 
+            WHERE strftime('%m',b.date)= :month AND strftime('%Y',b.date)= :year  
+            GROUP BY e.id,e.employeeName,e.employeeLastName 
+            ORDER BY SUM(pob.quantity*p.price) DESC LIMIT 1) AS x""")
+    fun getEmployeeMostTotalPerMonthAndYear(month: String, year: String): String
 }

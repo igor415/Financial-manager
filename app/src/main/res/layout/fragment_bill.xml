@@ -37,12 +37,30 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/linearContainer"/>
 
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_color"
+        android:layout_below="@id/header"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/billsRecyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
-        android:layout_below="@+id/header"/>
+        android:layout_below="@+id/separator"/>
+
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:visibility="gone"
+        tools:text="Testni podaci"/>
 
 
 </RelativeLayout>

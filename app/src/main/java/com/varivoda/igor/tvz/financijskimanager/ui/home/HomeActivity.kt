@@ -67,8 +67,7 @@ class HomeActivity : AppCompatActivity() {
         }else if(item.itemId == R.id.settings){
             startActivity(Intent(this,SettingsActivity::class.java))
         }else if(item.itemId == R.id.enable_all){
-            startActivity(Intent(this,HomeActivity::class.java))
-            finish()
+            startActivity(Intent(this,HomeActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
         }else if(item.itemId == R.id.log_out){
             showLogOutDialog()
         }

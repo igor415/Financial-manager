@@ -63,4 +63,5 @@
     <string name="yes">Yes</string>
     <string name="no">Cancel</string>
     <string name="choose_month_year">Choose month and year </string>
+    <string name="no_data_for_month_and_year">Za odabrani mjesec i godinu nema podataka!</string>
 </resources>

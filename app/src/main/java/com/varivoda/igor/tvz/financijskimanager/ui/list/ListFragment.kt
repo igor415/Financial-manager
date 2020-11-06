@@ -5,7 +5,6 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
@@ -39,40 +38,40 @@ class ListFragment : Fragment() {
         (activity as HomeActivity).setActionBarText("Popis kupaca")
         listViewModelFactory = ListViewModelFactory(requireContext())
         listViewModel = ViewModelProvider(this,listViewModelFactory).get(ListViewModel::class.java)
-        listRecyclerView.adapter = adapter
-        getCountiesStream()
-        lifecycleScope.launch {
+       // listRecyclerView.adapter = adapter
+        //getCountiesStream()
+        /*lifecycleScope.launch {
             adapter.loadStateFlow
                 // Only emit when REFRESH LoadState changes.
                 .distinctUntilChangedBy { it.refresh }
                 // Only react to cases where REFRESH completes i.e., NotLoading.
                 .filter { it.refresh is LoadState.NotLoading }
                 .collect { listRecyclerView.scrollToPosition(0) }
-        }
-        initAdapter()
+        }*/
+        //initAdapter()
 
 
     }
 
-    private fun initAdapter() {
+  /*  private fun initAdapter() {
         listRecyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
             header = ListLoadStateAdapter { adapter.retry() },
             footer = ListLoadStateAdapter { adapter.retry() }
         )
-    }
+    }*/
 
     private var searchJob: Job? = null
-    private var adapter: ListCountyAdapter = ListCountyAdapter(clickListener = ListItemClickListener {  })
+    //private var adapter: ListCountyAdapter = ListCountyAdapter(clickListener = ListItemClickListener {  })
 
 
-    private fun getCountiesStream() {
+   /* private fun getCountiesStream() {
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
             listViewModel.getCountiesStream().collectLatest {
                 adapter.submitData(it)
             }
         }
-    }
+    }*/
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)

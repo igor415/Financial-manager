@@ -10,4 +10,5 @@ interface ProductDao {
 
     @Query("SELECT * FROM Product")
     fun getAllProducts(): Flow<List<Product>>
+
 }

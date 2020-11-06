@@ -35,6 +35,9 @@ class FragmentSelector() {
             "Popis računa" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToBillFragment("Popis računa"))
             }
+            "Zaposlenik koji je uprihodio najveću svotu novca po mjesecu" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToBillFragment("Zaposlenik koji je uprihodio najveću svotu novca po mjesecu"))
+            }
         }
     }
 }

@@ -25,7 +25,7 @@ class App: Application(), LifecycleObserver{
     }
     private fun setTimerForDatabaseUpdate(){
         val alarmFor: Calendar = Calendar.getInstance()
-        alarmFor.set(Calendar.HOUR_OF_DAY, 15)
+        alarmFor.set(Calendar.HOUR_OF_DAY, 12)
         alarmFor.set(Calendar.MINUTE, 40)
         alarmFor.set(Calendar.SECOND, 0)
 
