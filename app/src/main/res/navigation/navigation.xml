@@ -47,6 +47,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_menuListFragment_to_quarterFragment"
+            app:destination="@id/quarterFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/listFragment"
@@ -73,6 +80,16 @@
         android:name="com.varivoda.igor.tvz.financijskimanager.ui.bills.BillFragment"
         android:label="fragment_bill"
         tools:layout="@layout/fragment_bill" >
+        <argument
+            android:name="text"
+            app:nullable="false"
+            app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/quarterFragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.quarter.QuarterFragment"
+        android:label="fragment_quarter"
+        tools:layout="@layout/fragment_quarter" >
         <argument
             android:name="text"
             app:nullable="false"

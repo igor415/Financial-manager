@@ -38,6 +38,9 @@ class FragmentSelector() {
             "Zaposlenik koji je uprihodio najveću svotu novca po mjesecu" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToBillFragment("Zaposlenik koji je uprihodio najveću svotu novca po mjesecu"))
             }
+            "Proizvod koji se najbolje prodaje po kvartalima godine" ->{
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToQuarterFragment("Proizvod koji se najbolje prodaje po kvartalima godine"))
+            }
         }
     }
 }

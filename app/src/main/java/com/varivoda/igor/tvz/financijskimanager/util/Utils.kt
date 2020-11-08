@@ -38,6 +38,11 @@ fun getMonthAndYearFormatted(month: Int? = null, year: Int? = null): String{
 
 }
 
+fun getCurrentYear(): String{
+    val cal = Calendar.getInstance()
+    return cal.get(Calendar.YEAR).toString()
+}
+
 fun getMonthWithZero(month: Int): String{
     return if(month >= 10){
         month.toString()

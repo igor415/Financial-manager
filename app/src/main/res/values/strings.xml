@@ -64,4 +64,11 @@
     <string name="no">Cancel</string>
     <string name="choose_month_year">Choose month and year </string>
     <string name="no_data_for_month_and_year">Za odabrani mjesec i godinu nema podataka!</string>
+
+    <!--quarter-->
+    <string name="quarter_first" translatable="false">1/4</string>
+    <string name="quarter_second" translatable="false">2/4</string>
+    <string name="quarter_third" translatable="false">3/4</string>
+    <string name="quarter_fourth" translatable="false">4/4</string>
+
 </resources>
