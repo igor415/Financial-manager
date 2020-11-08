@@ -18,7 +18,9 @@ class BillViewModel(context: Context) : ViewModel(){
 
     fun getBills(month: String, year: String): LiveData<PagedList<BillDTO>> {
         //delay(3000)
-        return billRepository.getBills(month, year)
+        val bills = billRepository.getBills(month, year)
+        println("debug bills je ${bills.value?.size}")
+        return bills
         /*viewModelScope.launch(Dispatchers.IO) {
             val list = billRepository.getBills(month, year)
             filteredBills.postValue(list)
