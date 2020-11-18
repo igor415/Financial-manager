@@ -1,34 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/productName"
-        android:layout_width="wrap_content"
+    <data>
+        <variable
+            name="productDTO"
+            type="com.varivoda.igor.tvz.financijskimanager.model.ProductDTO" />
+
+        <variable
+            name="listener"
+            type="com.varivoda.igor.tvz.financijskimanager.ui.top10.Top10Listener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:textSize="20sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/quantity"
-        app:layout_constraintEnd_toStartOf="@+id/quantity"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Ovo je ime" />
+        android:onClick="@{() -> listener.onClick(productDTO)}">
 
-    <TextView
-        android:id="@+id/quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:padding="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/productName"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="20x" />
+        <TextView
+            android:id="@+id/productName"
+            productNameValue="@{productDTO}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:textSize="20sp"
+            android:gravity="start"
+            app:layout_constraintBaseline_toBaselineOf="@+id/quantity"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Ovo je ime" />
+
+        <TextView
+            android:id="@+id/quantity"
+            productQuantityValue="@{productDTO}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:textSize="20sp"
+            android:gravity="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="20x" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
