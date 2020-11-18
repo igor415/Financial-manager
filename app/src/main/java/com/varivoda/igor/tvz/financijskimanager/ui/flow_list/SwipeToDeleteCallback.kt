@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class SwipeToDeleteCallback(private val adapterCustomers: FlowListAdapterCustomers? = null,
                             private val adapterEmployees: FlowListAdapterEmployees? = null,
+                            private val adapterProducts: FlowListAdapterProducts? = null,
                             private val flowListViewModel: FlowListViewModel) : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
     override fun onMove(
         recyclerView: RecyclerView,
@@ -17,6 +18,8 @@ class SwipeToDeleteCallback(private val adapterCustomers: FlowListAdapterCustome
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         if(adapterCustomers != null){
             adapterCustomers.deleteCustomer(viewHolder.adapterPosition)
+        }else if(adapterProducts != null){
+            adapterProducts.deleteProduct(viewHolder.adapterPosition)
         }else{
             adapterEmployees?.deleteEmployee(viewHolder.adapterPosition)
         }

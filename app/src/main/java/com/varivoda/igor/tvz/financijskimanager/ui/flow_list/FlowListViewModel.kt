@@ -55,4 +55,16 @@ class FlowListViewModel(context: Context) : ViewModel(){
 
     }
 
+    fun insertProduct(product: Product){
+        viewModelScope.launch(Dispatchers.IO) {
+            productRepository.insertProduct(product)
+        }
+    }
+
+    fun deleteProduct(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            productRepository.deleteProduct(id)
+        }
+    }
+
 }

@@ -16,4 +16,12 @@ class ProductRepository(private val database: AppDatabase){
     fun getProductPerQuarter(year: String): List<ProductQuarterDTO> {
         return database.productDao.productPerQuarter(year)
     }
+
+    fun insertProduct(product: Product){
+        database.productDao.insertProduct(product)
+    }
+
+    fun deleteProduct(id: Int) {
+        database.productDao.deleteProduct(id)
+    }
 }

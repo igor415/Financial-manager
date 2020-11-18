@@ -29,4 +29,8 @@ class EmployeeRepository(private val appDatabase: AppDatabase){
         }.await()
 
     }
+
+    fun getEmployeeMostDaysIssuedInvoice(year: String): String {
+        return appDatabase.employeeDao.getEmployeeMostDaysIssuedInvoice(year)
+    }
 }

@@ -1,5 +1,6 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.flow_list
 
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,4 +38,5 @@ class FlowListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             return FlowListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.menu_list_item,parent,false))
         }
     }
+
 }

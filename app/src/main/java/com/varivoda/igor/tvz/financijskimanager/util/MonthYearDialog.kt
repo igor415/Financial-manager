@@ -25,4 +25,20 @@ class MonthYearDialog {
             .build()
             .show()
     }
+
+    fun getOnlyYearDialog(activity: Activity,
+                          changeDate: (Int) -> Unit){
+        val today = Calendar.getInstance()
+        val builder: MonthPickerDialog.Builder =
+            MonthPickerDialog.Builder(activity, { _, selectedYear ->
+                changeDate.invoke(selectedYear)
+            }, today[Calendar.YEAR], today[Calendar.MONTH])
+
+        builder.showYearOnly()
+            .setYearRange(1990, 2030)
+            .setActivatedYear(2020)
+            .build()
+            .show()
+
+    }
 }

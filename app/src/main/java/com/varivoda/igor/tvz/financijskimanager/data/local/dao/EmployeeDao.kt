@@ -26,4 +26,14 @@ interface EmployeeDao {
             GROUP BY e.id,e.employeeName,e.employeeLastName 
             ORDER BY SUM(pob.quantity*p.price) DESC LIMIT 1) AS x""")
     fun getEmployeeMostTotalPerMonthAndYear(month: String, year: String): String
+
+    @Query(
+        """select x.firstAndLastName || ' je izdao/la račun u ' || x.counter || ' od 365 dana u godini ' || :year || '.' from 
+                (select e.id,e.employeeName || ' ' || e.employeeLastName as firstAndLastName, COUNT(distinct b.date) as counter from 
+                Bill b join Employee e on b.employeeId = e.id 
+                where strftime('%Y',b.date) = :year 
+                group by e.id,e.employeeName || ' ' || e.employeeLastName 
+                order by COUNT(distinct b.date) desc limit 1) as x"""
+    )
+    fun getEmployeeMostDaysIssuedInvoice(year: String): String
 }

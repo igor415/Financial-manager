@@ -87,16 +87,16 @@ class QuarterView @JvmOverloads constructor(
                 canvas?.drawArc(rectF, 0f, -90f, true, paintQuarter)
             }
             Quarter.SECOND -> {
-                canvas?.drawArc(rectF, 0f, -90f, true, paintQuarter)
+                //canvas?.drawArc(rectF, 0f, -90f, true, paintQuarter)
                 canvas?.drawArc(rectF, 0f, 90f, true, paintQuarter)
             }
             Quarter.THIRD -> {
-                canvas?.drawArc(rectF, 0f, -90f, true, paintQuarter)
-                canvas?.drawArc(rectF, 0f, 180f, true, paintQuarter)
+                //canvas?.drawArc(rectF, 0f, -90f, true, paintQuarter)
+                canvas?.drawArc(rectF, 90f, 90f, true, paintQuarter)
             }
             Quarter.FOURTH -> {
-                canvas?.drawArc(rectF, 0f, -90f, true, paintQuarter)
-                canvas?.drawArc(rectF, 0f, 270f, true, paintQuarter)
+                //canvas?.drawArc(rectF, 0f, -90f, true, paintQuarter)
+                canvas?.drawArc(rectF, 180f, 90f, true, paintQuarter)
             }
         }
 

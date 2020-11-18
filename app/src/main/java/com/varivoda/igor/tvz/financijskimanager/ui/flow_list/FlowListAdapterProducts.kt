@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 
-class FlowListAdapterProducts : ListAdapter<Product, FlowListViewHolder>(DiffCallback()){
+class FlowListAdapterProducts(private val openPopup: (Product) -> Unit,private val viewModel: FlowListViewModel) : ListAdapter<Product, FlowListViewHolder>(DiffCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FlowListViewHolder {
         return FlowListViewHolder.create(parent)
@@ -13,6 +13,10 @@ class FlowListAdapterProducts : ListAdapter<Product, FlowListViewHolder>(DiffCal
 
     override fun onBindViewHolder(holder: FlowListViewHolder, position: Int) {
         holder.bind(getItem(position))
+        holder.itemView.setOnLongClickListener {
+            openPopup.invoke(getItem(position))
+            true
+        }
     }
 
 
@@ -25,6 +29,11 @@ class FlowListAdapterProducts : ListAdapter<Product, FlowListViewHolder>(DiffCal
             return oldItem == newItem
         }
 
+    }
+
+    fun deleteProduct(position: Int){
+        val id = getItem(position).id
+        viewModel.deleteProduct(id)
     }
 
 }

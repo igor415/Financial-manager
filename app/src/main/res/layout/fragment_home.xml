@@ -72,7 +72,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:text="@string/insert_bill_value"
-                        app:drawableTopCompat="@drawable/ic_add" />
+                        app:drawableTopCompat="@drawable/ic_add_invoice" />
 
                 </androidx.cardview.widget.CardView>
 

@@ -8,4 +8,7 @@
     <color name="lightBackgroundColor">#f1f3ff</color>
     <color name="light_color">#b3ab9e</color>
     <color name="dark_color">#1a3c70</color>
+    <color name="form_light">#11ffffff</color>
+    <color name="grey_color">#d6d7d7</color>
+
 </resources>

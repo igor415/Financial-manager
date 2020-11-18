@@ -1,11 +1,8 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.menu
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MenuInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
@@ -75,6 +72,5 @@ class MenuListFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
     }
-
 
 }

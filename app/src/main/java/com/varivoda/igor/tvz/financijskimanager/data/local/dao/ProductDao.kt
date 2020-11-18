@@ -2,6 +2,8 @@ package com.varivoda.igor.tvz.financijskimanager.data.local.dao
 
 import android.database.Cursor
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.model.ProductQuarterDTO
@@ -12,6 +14,12 @@ interface ProductDao {
 
     @Query("SELECT * FROM Product")
     fun getAllProducts(): Flow<List<Product>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertProduct(product: Product)
+
+    @Query("DELETE FROM Product WHERE id = :id")
+    fun deleteProduct(id: Int)
 
     @Query(
         """select x.quarter,x.productName,cast(max(x.total) as text) as number from 

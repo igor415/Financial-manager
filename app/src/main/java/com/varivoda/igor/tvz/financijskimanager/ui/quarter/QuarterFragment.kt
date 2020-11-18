@@ -38,7 +38,7 @@ class QuarterFragment : Fragment() {
         observeProductPerQuarters()
         timePeriod.text = getString(R.string.time_period, getCurrentYear())
         changePeriod.setOnClickListener {
-            MonthYearDialog().getDialog(activity as HomeActivity,changeDate)
+            MonthYearDialog().getOnlyYearDialog(activity as HomeActivity,changeDate)
         }
         quarterViewModel.getProductPerQuarter(getCurrentYear())
         quarterView.setOnClickListener {
@@ -85,8 +85,8 @@ class QuarterFragment : Fragment() {
         if(!isShown) resultTextView.text = "Nema podataka za ovaj kvartal"
     }
 
-    private val changeDate: (month: Int, year: Int) -> Unit = {
-            month, year ->
+    private val changeDate: (year: Int) -> Unit = {
+            year ->
         quarterViewModel.getProductPerQuarter(year.toString())
         timePeriod.text = getString(R.string.time_period, year.toString())
     }

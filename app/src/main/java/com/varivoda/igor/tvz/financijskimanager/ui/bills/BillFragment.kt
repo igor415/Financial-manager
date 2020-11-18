@@ -7,9 +7,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.varivoda.igor.tvz.financijskimanager.R
-import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Bill
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import com.varivoda.igor.tvz.financijskimanager.util.MonthYearDialog
+import com.varivoda.igor.tvz.financijskimanager.util.getCurrentYear
 import com.varivoda.igor.tvz.financijskimanager.util.getMonthAndYearFormatted
 import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 import kotlinx.android.synthetic.main.fragment_bill.*
@@ -32,14 +32,21 @@ class BillFragment : Fragment() {
     ): View? {
         val args = BillFragmentArgs.fromBundle(requireArguments())
         (activity as HomeActivity).setActionBarText(args.text)
+        billViewModelFactory = BillViewModelFactory(requireContext())
+        billViewModel = ViewModelProvider(requireActivity(),billViewModelFactory).get(BillViewModel::class.java)
         argsText = args.text
         val view = inflater.inflate(R.layout.fragment_bill, container, false)
         when(args.text){
             "Zaposlenik koji je uprihodio najveću svotu novca po mjesecu" -> {
-                view.billsRecyclerview.visibility = View.GONE
-                view.header.visibility = View.GONE
-                view.resultTextView.visibility = View.VISIBLE
+                adjustLayout(view)
+                monthAndYear(view)
             }
+            "Prodavač koji je najviše dana u godini izdao račun" -> {
+                adjustLayout(view)
+                onlyYear(view)
+                observeEmployeeMostDaysIssuedInvoice()
+            }
+
         }
         view.billsRecyclerview.apply {
             setHasFixedSize(true)
@@ -49,14 +56,33 @@ class BillFragment : Fragment() {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        timePeriod.text = getString(R.string.time_period, getMonthAndYearFormatted())
-        changePeriod.setOnClickListener {
+    private fun observeEmployeeMostDaysIssuedInvoice() {
+        billViewModel.employeeInvoiceNumberOfDays.observe(viewLifecycleOwner, Observer {
+            if(it==null) {
+                resultTextView.text = getString(R.string.no_data_for_year)
+            }
+            resultTextView.text = it
+        })
+    }
+
+    private fun adjustLayout(view: View) {
+        view.billsRecyclerview.visibility = View.GONE
+        view.header.visibility = View.GONE
+        view.resultTextView.visibility = View.VISIBLE
+    }
+
+    private fun monthAndYear(view: View){
+        view.timePeriod.text = getString(R.string.time_period, getMonthAndYearFormatted())
+        view.changePeriod.setOnClickListener {
             MonthYearDialog().getDialog(activity as HomeActivity,changeDate)
         }
-        billViewModelFactory = BillViewModelFactory(requireContext())
-        billViewModel = ViewModelProvider(requireActivity(),billViewModelFactory).get(BillViewModel::class.java)
+    }
+
+    private fun onlyYear(view: View){
+        view.timePeriod.text = getString(R.string.time_period, getCurrentYear())
+        view.changePeriod.setOnClickListener {
+            MonthYearDialog().getOnlyYearDialog(activity as HomeActivity,changeYear)
+        }
     }
 
 
@@ -80,9 +106,20 @@ class BillFragment : Fragment() {
                         billAdapter.setItems(it)
                     })
             }
+
         }
 
         timePeriod.text = getString(R.string.time_period, getMonthAndYearFormatted(month,year))
+    }
+
+    private val changeYear: (year: Int) -> Unit = {
+        year ->
+        when(argsText){
+            "Prodavač koji je najviše dana u godini izdao račun" -> {
+                billViewModel.getEmployeeMostDaysIssuedInvoice(year.toString())
+            }
+        }
+        timePeriod.text = getString(R.string.time_period,year.toString())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

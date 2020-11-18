@@ -12,10 +12,6 @@ class FragmentSelector() {
 
     fun navigate(text: String,navController: NavController,activity: FragmentActivity?){
         when(text){
-            /*"Popis kupaca" ->{
-                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToListFragment("Popis kupaca"))
-                //navController.navigate(R.id.action_menuListFragment_to_listFragment)
-            }*/
             "Popis proizvoda" -> {
                 //navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToListFragment("Popis proizvoda"))
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToFlowListFragment("Popis proizvoda"))
@@ -40,6 +36,9 @@ class FragmentSelector() {
             }
             "Proizvod koji se najbolje prodaje po kvartalima godine" ->{
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToQuarterFragment("Proizvod koji se najbolje prodaje po kvartalima godine"))
+            }
+            "Prodavač koji je najviše dana u godini izdao račun" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToBillFragment("Prodavač koji je najviše dana u godini izdao račun"))
             }
         }
     }
