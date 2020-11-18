@@ -1,5 +1,6 @@
 package com.varivoda.igor.tvz.financijskimanager.data.local.repository
 
+import androidx.lifecycle.LiveData
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.model.ProductQuarterDTO
@@ -23,5 +24,9 @@ class ProductRepository(private val database: AppDatabase){
 
     fun deleteProduct(id: Int) {
         database.productDao.deleteProduct(id)
+    }
+
+    fun getTop10Products(month: String, year: String): LiveData<List<Product>>{
+        return database.productDao.top10Products(month, year)
     }
 }

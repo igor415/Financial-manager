@@ -54,6 +54,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_menuListFragment_to_top10Fragment"
+            app:destination="@id/top10Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/listFragment"
@@ -95,4 +102,13 @@
             app:nullable="false"
             app:argType="string"/>
     </fragment>
+    <fragment
+        android:id="@+id/top10Fragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.top10.Top10Fragment"
+        android:label="fragment_top10"
+        tools:layout="@layout/fragment_top10" >
+        <argument
+            android:name="text"
+            app:nullable="false"
+            app:argType="string"/></fragment>
 </navigation>

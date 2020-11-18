@@ -1,6 +1,6 @@
 package com.varivoda.igor.tvz.financijskimanager.data.local.dao
 
-import android.database.Cursor
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -34,4 +34,13 @@ interface ProductDao {
                 group by quarter"""
     )
     fun productPerQuarter(year: String): List<ProductQuarterDTO>
+
+    @Query(
+        """SELECT p.id,p.productName,SUM(pob.quantity) as price 
+                FROM Product p JOIN ProductsOnBill pob ON p.id = pob.productId 
+                JOIN Bill b ON b.id = pob.billId where strftime('%m',b.date) = :month 
+                and strftime('%Y',b.date) = :year 
+                GROUP BY p.id,p.productName ORDER BY SUM(pob.quantity) DESC LIMIT 10"""
+    )
+    fun top10Products(month: String?, year: String?): LiveData<List<Product>>
 }

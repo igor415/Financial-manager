@@ -43,6 +43,11 @@ fun getCurrentYear(): String{
     return cal.get(Calendar.YEAR).toString()
 }
 
+fun getCurrentMonth(): String{
+    val cal = Calendar.getInstance()
+    return (cal.get(Calendar.MONTH)+1).toString()
+}
+
 fun getMonthWithZero(month: Int): String{
     return if(month >= 10){
         month.toString()
