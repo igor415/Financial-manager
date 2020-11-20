@@ -43,6 +43,9 @@ class FragmentSelector() {
             "Top 10 najprodavanijih proizvoda" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToTop10Fragment("Top 10 najprodavanijih proizvoda"))
             }
+            "Račun sa najviše stavki po godini" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToBillFragment("Račun sa najviše stavki po godini"))
+            }
         }
     }
 }

@@ -29,4 +29,8 @@ class ProductRepository(private val database: AppDatabase){
     fun getTop10Products(month: String, year: String): LiveData<List<Product>>{
         return database.productDao.top10Products(month, year)
     }
+
+    fun getMostItemsOnBill(year: String?): LiveData<String?> {
+        return database.productDao.mostItemsOnBill(year)
+    }
 }

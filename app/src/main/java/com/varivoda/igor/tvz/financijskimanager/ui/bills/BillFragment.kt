@@ -46,6 +46,12 @@ class BillFragment : Fragment() {
                 onlyYear(view)
                 observeEmployeeMostDaysIssuedInvoice()
             }
+            "Račun sa najviše stavki po godini" -> {
+                adjustLayout(view)
+                onlyYear(view)
+                observeMostItemsOnBill()
+                billViewModel.yearSelected.value = getCurrentYear()
+            }
 
         }
         view.billsRecyclerview.apply {
@@ -54,6 +60,16 @@ class BillFragment : Fragment() {
             adapter = billAdapter
         }
         return view
+    }
+
+    private fun observeMostItemsOnBill() {
+        billViewModel.mostItemsOnBill.observe(viewLifecycleOwner, Observer {
+            if(it==null){
+                resultTextView.text = getString(R.string.no_data_for_year)
+            }else{
+                resultTextView.text = it
+            }
+        })
     }
 
     private fun observeEmployeeMostDaysIssuedInvoice() {
@@ -117,6 +133,9 @@ class BillFragment : Fragment() {
         when(argsText){
             "Prodavač koji je najviše dana u godini izdao račun" -> {
                 billViewModel.getEmployeeMostDaysIssuedInvoice(year.toString())
+            }
+            "Račun sa najviše stavki po godini" -> {
+                billViewModel.yearSelected.value = year.toString()
             }
         }
         timePeriod.text = getString(R.string.time_period,year.toString())

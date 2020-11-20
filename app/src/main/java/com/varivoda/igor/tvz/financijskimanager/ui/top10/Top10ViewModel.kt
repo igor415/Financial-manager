@@ -13,6 +13,7 @@ import com.varivoda.igor.tvz.financijskimanager.util.getCurrentYear
 class Top10ViewModel(private val context: Context) : ViewModel(){
 
     private val productRepository = ProductRepository(AppDatabase.getInstance(context))
+
     var monthAndYear = MutableLiveData<Pair<String,String>>()
     init {
         monthAndYear.value = Pair(getCurrentMonth(),getCurrentYear())

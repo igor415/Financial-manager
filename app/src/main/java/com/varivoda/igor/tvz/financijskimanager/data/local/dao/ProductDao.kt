@@ -43,4 +43,14 @@ interface ProductDao {
                 GROUP BY p.id,p.productName ORDER BY SUM(pob.quantity) DESC LIMIT 10"""
     )
     fun top10Products(month: String?, year: String?): LiveData<List<Product>>
+
+    @Query("""select 'Račun broj ' || x.id || ' je izdan u poslovnici ' || x.storeName || ' sa brojem stavki = ' || x.counter   from 
+                (select b.id,s.id,s.storeName,count(pob.billId) as counter 
+                from Bill b join ProductsOnBill pob on b.id = pob.billId 
+                join Store s on s.id = b.storeId 
+                where strftime('%Y',b.date)=:year 
+                group by b.id,s.id,s.storeName 
+                order by count(pob.billId) desc limit 1) as x"""
+    )
+    fun mostItemsOnBill(year: String?): LiveData<String?>
 }
