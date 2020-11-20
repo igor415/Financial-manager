@@ -5,8 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.databinding.TopSellersItemBinding
 import com.varivoda.igor.tvz.financijskimanager.model.ProductDTO
+import kotlinx.android.synthetic.main.top_sellers_item.view.*
 
 class Top10Adapter(val clickListener: Top10Listener) : ListAdapter<ProductDTO, Top10Adapter.ViewHolder>(Top10DiffCallback()){
 
@@ -23,8 +25,9 @@ class Top10Adapter(val clickListener: Top10Listener) : ListAdapter<ProductDTO, T
             }
         }
 
-        fun bind(productDTO: ProductDTO,clickListener: Top10Listener){
+        fun bind(productDTO: ProductDTO,clickListener: Top10Listener,position: Int){
             binding.productDTO = productDTO
+            binding.position = position
             binding.listener = clickListener
             binding.executePendingBindings()
         }
@@ -36,7 +39,12 @@ class Top10Adapter(val clickListener: Top10Listener) : ListAdapter<ProductDTO, T
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position),clickListener)
+        when(position){
+            0 -> holder.binding.goldImage.setBackgroundResource(R.drawable.ic_gold)
+            1 -> holder.binding.goldImage.setBackgroundResource(R.drawable.ic_silver)
+            2 -> holder.binding.goldImage.setBackgroundResource(R.drawable.ic_bronze)
+        }
+        holder.bind(getItem(position),clickListener,position)
     }
 
     class Top10DiffCallback: DiffUtil.ItemCallback<ProductDTO>(){

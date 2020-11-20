@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="productDTO"
             type="com.varivoda.igor.tvz.financijskimanager.model.ProductDTO" />
@@ -11,12 +12,26 @@
         <variable
             name="listener"
             type="com.varivoda.igor.tvz.financijskimanager.ui.top10.Top10Listener" />
+
+        <variable
+            name="position"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> listener.onClick(productDTO)}">
+
+        <ImageView
+            android:id="@+id/goldImage"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:visibility="@{ position &lt; 3 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/productName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/productName"
@@ -28,7 +43,7 @@
             android:gravity="start"
             app:layout_constraintBaseline_toBaselineOf="@+id/quantity"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/goldImage"
             tools:text="Ovo je ime" />
 
         <TextView
@@ -49,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+            app:layout_constraintGuide_percent="0.6" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
