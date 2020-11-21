@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.view.*
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
+import com.varivoda.igor.tvz.financijskimanager.databinding.ProductPopupBinding
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import kotlinx.android.synthetic.main.fragment_flow_list.view.*
 import kotlinx.android.synthetic.main.product_popup.view.*
@@ -27,7 +31,6 @@ class FlowListFragment : Fragment() {
     private val flowListAdapterStores = FlowListAdapterStores()
     private lateinit var flowListViewModel: FlowListViewModel
     private lateinit var flowListViewModelFactory: FlowListViewModelFactory
-    private var productPopup: AlertDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,9 +63,14 @@ class FlowListFragment : Fragment() {
     }
     private val changeProductInfo: (Product) -> Unit = {
             item ->
-        productPopup?.cancel()
-        productPopup = addProductPopup("Change product info",item)
-        productPopup?.show()
+        flowListViewModel.apply {
+            productPopup?.cancel()
+            productPopup = addProductPopup("Change product info",item)
+            productPopup?.setCancelable(false)
+            productPopup?.setCanceledOnTouchOutside(false)
+            productPopup?.show()
+        }
+
     }
 
     private fun storesFunction(view: View) {
@@ -138,9 +146,14 @@ class FlowListFragment : Fragment() {
         if(item.itemId == R.id.addButton){
             when(FlowListFragmentArgs.fromBundle(requireArguments()).text){
                 "Popis proizvoda" -> {
-                    productPopup?.cancel()
-                    productPopup = addProductPopup("Insert product")
-                    productPopup?.show()
+                    flowListViewModel.apply {
+                        productPopup?.cancel()
+                        productPopup = addProductPopup("Insert product")
+                        productPopup?.setCancelable(false)
+                        productPopup?.setCanceledOnTouchOutside(false)
+                        productPopup?.show()
+                    }
+
                 }
             }
             return true
@@ -153,22 +166,32 @@ class FlowListFragment : Fragment() {
         item: Product? = null
     ): AlertDialog? {
         val builder = AlertDialog.Builder(context)
-        val dialogView = LayoutInflater.from(context)
-            .inflate(R.layout.product_popup, LinearLayout(context), false)
-
-        var edit = false
+        val binding: ProductPopupBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.product_popup, LinearLayout(context), false)
+        //val dialogView = LayoutInflater.from(context)
+          //  .inflate(R.layout.product_popup, LinearLayout(context), false)
+        binding.viewModel = flowListViewModel
+        flowListViewModel.edit = item != null
         if(item != null){
-            dialogView.nameInput.setText(item.productName)
-            dialogView.price_input.setText(item.price.toString())
-            edit = true
+            //binding.item = item
+            //binding.root.nameInput.setText(item.productName)
+            //binding.root.price_input.setText(item.price.toString())
+            flowListViewModel.nameInput = item.productName.split(":")[0]
+            flowListViewModel.priceInput = item.price.toString()
+            flowListViewModel.item = item
+        }else{
+            flowListViewModel.item = null
         }
+        flowListViewModel.title = text
 
-        dialogView.apply {
-            product_popup_title.text = text
-            cancel_button.setOnClickListener {
+
+
+        /*binding.root.apply {
+            //product_popup_title.text = text
+            /*cancel_button.setOnClickListener {
                 productPopup?.dismiss()
-            }
-            ok_button.setOnClickListener {
+                flowListViewModel.clearProductInfo()
+            }*/
+            /*ok_button.setOnClickListener {
                 if(price_input.text.toString().isNotEmpty() && nameInput.text.toString().isNotEmpty()){
                     if(edit){
                         flowListViewModel.insertProduct(Product(item?.id!!, nameInput.text.toString(), price_input.text.toString().toDouble()))
@@ -180,9 +203,9 @@ class FlowListFragment : Fragment() {
                     if(price_input.text.toString().isEmpty()) price_input.error = context.getString(R.string.field_empty)
                     if(nameInput.text.toString().isEmpty()) nameInput.error = context.getString(R.string.field_empty)
                 }
-            }
-        }
-        return builder.setView(dialogView).create()
+            }*/
+        }*/
+        return builder.setView(binding.root).create()
     }
 
 

@@ -1,103 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:id="@+id/linearContainer"
+    <data>
+        <variable
+            name="viewModel"
+            type="com.varivoda.igor.tvz.financijskimanager.ui.flow_list.FlowListViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/grey_color"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/product_popup_title"
+        <LinearLayout
+            android:id="@+id/linearContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp"
-            android:textColor="@color/fontWhiteEnable"
-            android:textSize="22sp"
-            tools:text="Naslov" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/grey_color"
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageView"
+            <TextView
+                android:id="@+id/product_popup_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@{viewModel.title}"
+                android:textColor="@color/fontWhiteEnable"
+                android:textSize="22sp"
+                tools:text="Naslov" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center"
+                android:padding="15dp"
+                imageUrl="@{viewModel.imgSrc}"
+                />
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/nameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:hint="Name"
+            app:error="@{viewModel.errorFieldName}"
+            android:padding="10dp"
+            android:text="@={viewModel.nameInput}"
+            android:background="@drawable/edittext_background"
+            app:layout_constraintBottom_toTopOf="@+id/price_input"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearContainer"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <EditText
+            android:id="@+id/price_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:padding="10dp"
+            android:hint="Price"
+            app:error="@{viewModel.errorFieldPrice}"
+            android:text="@={viewModel.priceInput}"
+            android:inputType="numberDecimal"
+            android:background="@drawable/edittext_background"
+            app:layout_constraintBottom_toTopOf="@+id/ok_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameInput"/>
+
+        <Button
+            android:id="@+id/ok_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="15dp"
-            android:src="@drawable/ic_product_popup_img"
-             />
-    </LinearLayout>
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="20dp"
+            android:text="Confirm"
+            android:onClick="@{() -> viewModel.onConfirmClicked()}"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/cancel_button" />
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="Cancel"
+            android:onClick="@{() -> viewModel.clearProductInfo()}"
+            android:background="@android:color/transparent"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ok_button"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
-
-   <EditText
-       android:id="@+id/nameInput"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_margin="14dp"
-       android:hint="Name"
-       android:padding="10dp"
-        android:background="@drawable/edittext_background"
-       app:layout_constraintBottom_toTopOf="@+id/price_input"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintHorizontal_bias="0.5"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toBottomOf="@+id/linearContainer"
-       app:layout_constraintVertical_chainStyle="packed" />
-
-    <EditText
-        android:id="@+id/price_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="14dp"
-        android:padding="10dp"
-        android:hint="Price"
-        android:inputType="numberDecimal"
-        android:background="@drawable/edittext_background"
-        app:layout_constraintBottom_toTopOf="@+id/ok_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameInput"
-        >
-    </EditText>
-
-    <Button
-        android:id="@+id/ok_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="20dp"
-        android:text="Confirm"
-        android:textColor="#fff"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/cancel_button" />
-
-    <Button
-        android:id="@+id/cancel_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="Cancel"
-        android:background="@android:color/transparent"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ok_button"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,7 +1,9 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.flow_list
 
+import android.app.AlertDialog
 import android.content.Context
 import androidx.lifecycle.*
+import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Customer
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Employee
@@ -12,6 +14,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.repository.EmployeeRe
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.ProductRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.StoreRepository
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeDTO
+import kotlinx.android.synthetic.main.product_popup.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -67,4 +70,38 @@ class FlowListViewModel(context: Context) : ViewModel(){
         }
     }
 
+
+
+
+    /***product popup***/
+    var nameInput: String = ""
+    var priceInput: String = ""
+    var title: String = ""
+    var edit: Boolean = false
+    var item: Product? = null
+    var productPopup: AlertDialog? = null
+    var errorFieldPrice: String? = null
+    var errorFieldName: String? = null
+    var imgSrc = "https://img.imageupload.net/2020/11/20/shopping-cart-1.png"
+
+    fun clearProductInfo() {
+        nameInput = ""
+        priceInput = ""
+        title = ""
+        productPopup?.dismiss()
+    }
+
+    fun onConfirmClicked(){
+        if(priceInput.isNotEmpty() && nameInput.isNotEmpty()){
+            if(edit){
+                insertProduct(Product(item?.id!!, nameInput, priceInput.toDouble()))
+            }else{
+                insertProduct(Product(productName = nameInput,price = priceInput.toDouble()))
+            }
+            clearProductInfo()
+        }else{
+            if(priceInput.isEmpty()) errorFieldPrice = productPopup?.context?.getString(R.string.field_empty)
+            if(nameInput.isEmpty()) errorFieldName = productPopup?.context?.getString(R.string.field_empty)
+        }
+    }
 }

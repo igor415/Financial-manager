@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -27,7 +27,8 @@
             android:text="@{item}"
             android:textColor="@color/homeTextColor"
             android:textSize="18sp"
-            tools:text="test" />
+            tools:text="test"
+            />
 
 
     </androidx.cardview.widget.CardView>
