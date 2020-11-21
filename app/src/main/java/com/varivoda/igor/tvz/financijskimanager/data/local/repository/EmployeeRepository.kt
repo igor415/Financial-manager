@@ -23,14 +23,14 @@ class EmployeeRepository(private val appDatabase: AppDatabase){
         appDatabase.employeeDao.deleteEmployee(id)
     }
 
-    suspend fun getEmployeeTotalPerMonthAndYear(month: String, year: String): String{
+    suspend fun getEmployeeTotalPerMonthAndYear(month: String, year: String): String?{
         return GlobalScope.async {
             appDatabase.employeeDao.getEmployeeMostTotalPerMonthAndYear(month, year)
         }.await()
 
     }
 
-    fun getEmployeeMostDaysIssuedInvoice(year: String): String {
+    fun getEmployeeMostDaysIssuedInvoice(year: String): String? {
         return appDatabase.employeeDao.getEmployeeMostDaysIssuedInvoice(year)
     }
 }

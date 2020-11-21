@@ -21,6 +21,9 @@ interface ProductDao {
     @Query("DELETE FROM Product WHERE id = :id")
     fun deleteProduct(id: Int)
 
+    @Query("SELECT COUNT(*) FROM Product")
+    fun getProductCount(): Int
+
     @Query(
         """select x.quarter,x.productName,cast(max(x.total) as text) as number from 
                 (select case when strftime('%m',b.date) between '01' and '03' then 'first' 

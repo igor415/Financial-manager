@@ -18,6 +18,8 @@ abstract class AppDatabase: RoomDatabase(){
     abstract val customerDao: CustomerDao
     abstract val storesDao: StoresDao
     abstract val billDao: BillDao
+    abstract val productOnBillDao: ProductOnBillDao
+    abstract val locationDao: LocationDao
 
     companion object{
         @Volatile
