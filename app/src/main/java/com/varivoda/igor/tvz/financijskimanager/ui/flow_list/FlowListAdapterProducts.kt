@@ -1,20 +1,21 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.flow_list
 
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 
-class FlowListAdapterProducts(private val openPopup: (Product) -> Unit,private val viewModel: FlowListViewModel) : ListAdapter<Product, FlowListViewHolder>(DiffCallback()){
+class FlowListAdapterProducts(private val openPopup: (Product) -> Unit,private val viewModel: FlowListViewModel) : PagingDataAdapter<Product, FlowListViewHolder>(DiffCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FlowListViewHolder {
         return FlowListViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: FlowListViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        getItem(position)?.let { holder.bind(it) }
         holder.itemView.setOnLongClickListener {
-            openPopup.invoke(getItem(position))
+            getItem(position)?.let { it1 -> openPopup.invoke(it1) }
             true
         }
     }
@@ -32,8 +33,10 @@ class FlowListAdapterProducts(private val openPopup: (Product) -> Unit,private v
     }
 
     fun deleteProduct(position: Int){
-        val id = getItem(position).id
-        viewModel.deleteProduct(id)
+        val id = getItem(position)?.id
+        if (id != null) {
+            viewModel.deleteProduct(id)
+        }
     }
 
 }

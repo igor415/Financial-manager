@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.*
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -30,6 +31,8 @@ import java.util.*
 class HomeFragment : Fragment() {
 
     private lateinit var navController: NavController
+    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var homeViewModelFactory: HomeViewModelFactory
     private lateinit var binding: FragmentHomeBinding
     private var currentViewClicked: View? = null
 
@@ -38,19 +41,21 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        setListeners()
+        homeViewModelFactory = HomeViewModelFactory(navController)
+        homeViewModel = ViewModelProvider(requireActivity(),homeViewModelFactory).get(HomeViewModel::class.java)
+        binding.viewModel = homeViewModel
         (activity as HomeActivity).setActionBarText(getString(R.string.home_title))
         createChannel()
         listOf(statistics,customers,employees,insertInvoice,products,stores).forEach {
             registerForContextMenu(it)
         }
-
         //setTimerForDatabaseUpdate()
     }
 
@@ -75,32 +80,6 @@ class HomeFragment : Fragment() {
         return super.onContextItemSelected(item)
     }
 
-    private fun setListeners() {
-        if(this::navController.isInitialized){
-            statistics.setOnClickListener {
-                navController.navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(Menu.STATISTICS.string))
-            }
-            customers.setOnClickListener {
-                navController.navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(Menu.CUSTOMERS.string))
-            }
-            employees.setOnClickListener {
-                navController.navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(Menu.EMPLOYEES.string))
-            }
-            insertInvoice.setOnClickListener {
-                navController.navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(Menu.INSERT_BILL.string))
-            }
-            products.setOnClickListener {
-                navController.navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(Menu.PRODUCTS.string))
-            }
-            stores.setOnClickListener {
-                navController.navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(Menu.STORES.string))
-            }
-
-        }else{
-            showSelectedToast(requireContext(),getString(R.string.navigation_problem))
-        }
-
-    }
 
     private fun createChannel() {
 

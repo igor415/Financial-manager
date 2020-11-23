@@ -135,7 +135,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         get() = findOptional<ViewGroup>(android.R.id.content)?.getChildAt(0)*/
 
     private fun showSnackBar() {
-        /*contentView?.getSnackBar("uk")?.setAction(android.R.string.ok){
+
+        /*applicationContext!!.findViewById(android.R.id.content)  .getSnackBar("uk")?.setAction(android.R.string.ok){
             checkDeviceLocationSettings()
         }?.show()*/
 

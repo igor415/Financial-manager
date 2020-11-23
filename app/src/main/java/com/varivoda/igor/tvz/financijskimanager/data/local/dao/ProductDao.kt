@@ -1,6 +1,7 @@
 package com.varivoda.igor.tvz.financijskimanager.data.local.dao
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -14,6 +15,9 @@ interface ProductDao {
 
     @Query("SELECT * FROM Product")
     fun getAllProducts(): Flow<List<Product>>
+
+    @Query("SELECT * FROM Product")
+    fun getAllProductsPaging(): PagingSource<Int,Product>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertProduct(product: Product)

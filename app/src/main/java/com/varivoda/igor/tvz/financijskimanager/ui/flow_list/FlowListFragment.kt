@@ -8,6 +8,8 @@ import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.map
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -17,10 +19,10 @@ import com.varivoda.igor.tvz.financijskimanager.databinding.ProductPopupBinding
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import kotlinx.android.synthetic.main.fragment_flow_list.view.*
 import kotlinx.android.synthetic.main.product_popup.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collectLatest
+import kotlin.coroutines.CoroutineContext
 
 
 class FlowListFragment : Fragment() {
@@ -116,11 +118,12 @@ class FlowListFragment : Fragment() {
 
     private fun productsFunction(view: View) {
 
-        CoroutineScope(Dispatchers.Main).launch{
+       /* CoroutineScope(Dispatchers.Main).launch{
             flowListViewModel.allProducts.collect{
                 flowListAdapter.submitList(it)
             }
-        }
+        }*/
+        getProductsStream()
         view.flowListRecyclerView.apply {
             setHasFixedSize(true)
             adapter = flowListAdapter
@@ -129,7 +132,22 @@ class FlowListFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(view.flowListRecyclerView)
     }
 
+    private var searchJob: Job? = null
 
+    private fun getProductsStream() {
+        // Make sure we cancel the previous job before creating a new one
+        searchJob?.cancel()
+        searchJob = lifecycleScope.launch {
+
+
+                flowListViewModel.getProducts().collectLatest {
+                    delay(2000)
+                    flowListAdapter.submitData(it)
+
+            }
+
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

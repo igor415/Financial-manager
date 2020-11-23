@@ -3,10 +3,13 @@ package com.varivoda.igor.tvz.financijskimanager.ui.flow_list
 import android.app.AlertDialog
 import android.content.Context
 import androidx.lifecycle.*
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Customer
-import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Employee
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.CustomerRepository
@@ -14,13 +17,9 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.repository.EmployeeRe
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.ProductRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.StoreRepository
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeDTO
-import kotlinx.android.synthetic.main.product_popup.view.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 class FlowListViewModel(context: Context) : ViewModel(){
 
@@ -70,6 +69,23 @@ class FlowListViewModel(context: Context) : ViewModel(){
         }
     }
 
+    /***products pager**/
+
+    //private var currentProductResult: Flow<PagingData<Product>>? = null
+
+    fun getProducts(): Flow<PagingData<Product>> {
+        /*var result: Flow<PagingData<Product>>? = null
+        viewModelScope.launch(Dispatchers.IO) {
+            result = productRepository.getProductStream()
+                .cachedIn(viewModelScope)
+        }
+        return result*/
+        /*Pager(config = PagingConfig(pageSize = 10, enablePlaceholders = false),
+            pagingSourceFactory = {ProductPagingSource(productRepository)}).flow.cachedIn(viewModelScope)*/
+        return productRepository.getProductStream()
+       /* return productRepository.getProductStream()
+            .cachedIn(viewModelScope)*/
+    }
 
 
 

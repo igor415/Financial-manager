@@ -1,12 +1,13 @@
 package com.varivoda.igor.tvz.financijskimanager.data.local.repository
 
 import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.model.ProductQuarterDTO
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flow
 
 class ProductRepository(private val database: AppDatabase){
 
@@ -32,5 +33,12 @@ class ProductRepository(private val database: AppDatabase){
 
     fun getMostItemsOnBill(year: String?): LiveData<String?> {
         return database.productDao.mostItemsOnBill(year)
+    }
+
+    fun getProductStream(): Flow<PagingData<Product>>{
+        val pagingSourceFactory = {database.productDao.getAllProductsPaging()}
+
+        return Pager(config = PagingConfig(pageSize = 1, enablePlaceholders = true),
+        pagingSourceFactory = pagingSourceFactory).flow
     }
 }

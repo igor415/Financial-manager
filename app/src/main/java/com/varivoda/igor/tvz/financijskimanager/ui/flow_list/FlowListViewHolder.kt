@@ -18,7 +18,7 @@ class FlowListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val item = itemView.menuItem
 
     fun bind(product: Product){
-        item.text = product.productName
+        item.text = "${product.productName} : ${product.price} kn"
     }
 
     fun bindEmployee(employee: EmployeeDTO){
