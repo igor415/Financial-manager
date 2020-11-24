@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.*
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.paging.map
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.bumptech.glide.Glide
@@ -16,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.databinding.ProductPopupBinding
+import com.varivoda.igor.tvz.financijskimanager.ui.flow_list.loadstate.MyLoadStateAdapter
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import kotlinx.android.synthetic.main.fragment_flow_list.view.*
 import kotlinx.android.synthetic.main.product_popup.view.*
@@ -123,11 +126,29 @@ class FlowListFragment : Fragment() {
                 flowListAdapter.submitList(it)
             }
         }*/
+        view.retry_button.setOnClickListener {
+            flowListAdapter.retry()
+        }
+        flowListAdapter.withLoadStateHeaderAndFooter(
+            header = MyLoadStateAdapter { flowListAdapter.retry() },
+            footer = MyLoadStateAdapter { flowListAdapter.retry() }
+        )
+
+        flowListAdapter.addLoadStateListener { loadState ->
+            // Only show the list if refresh succeeds.
+            view.flowListRecyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
+            // Show loading spinner during initial load or refresh.
+            view.progress_bar.isVisible = loadState.source.refresh is LoadState.Loading
+            // Show the retry state if initial load or refresh fails.
+            view.retry_button.isVisible = loadState.source.refresh is LoadState.Error
+
+        }
         getProductsStream()
         view.flowListRecyclerView.apply {
             setHasFixedSize(true)
             adapter = flowListAdapter
         }
+
         val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(null,null,flowListAdapter,flowListViewModel))
         itemTouchHelper.attachToRecyclerView(view.flowListRecyclerView)
     }
