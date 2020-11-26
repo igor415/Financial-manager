@@ -51,13 +51,13 @@ class AppDatabaseTest {
 
     @Test
     fun addProduct(){
-        productDao.insertProduct(Product(1,"voda",8.50))
+        productDao.insertProduct(Product(1,"voda",8.50,1))
         assertEquals(1,productDao.getProductCount())
     }
 
     @Test
     fun deleteProduct(){
-        productDao.insertProduct(Product(1,"voda",8.50))
+        productDao.insertProduct(Product(1,"voda",8.50,1))
         productDao.deleteProduct(1)
         productDao.deleteProduct(1)
         assertThat(productDao.getProductCount(),`is`(equalTo(0)))
@@ -71,7 +71,7 @@ class AppDatabaseTest {
 
     @Test
     fun getTop10(){
-        productDao.insertProduct(Product(1,"voda",8.50))
+        productDao.insertProduct(Product(1,"voda",8.50,1))
         billDao.insertBill(Bill(1,1,1,1,"2020-06-01"))
         productOnBillDao.insertProductOnBill(ProductsOnBill(1,1,1,2))
         assertThat(productDao.top10Products("06","2020").getOrAwaitValue()[0].price, `is`(closeTo(2.0,0.01)))
@@ -79,7 +79,7 @@ class AppDatabaseTest {
 
     @Test
     fun productPerQuarter(){
-        productDao.insertProduct(Product(1,"voda",8.50))
+        productDao.insertProduct(Product(1,"voda",8.50,1))
         billDao.insertBill(Bill(1,1,1,1,"2020-06-01"))
         productOnBillDao.insertProductOnBill(ProductsOnBill(1,1,1,2))
         assertEquals("second",productDao.productPerQuarter("2020")[0].quarter)

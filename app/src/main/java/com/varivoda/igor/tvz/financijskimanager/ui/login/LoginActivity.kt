@@ -7,10 +7,12 @@ import android.transition.ChangeBounds
 import android.transition.TransitionManager
 import android.view.animation.AnticipateOvershootInterpolator
 import android.view.animation.OvershootInterpolator
+import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.databinding.ActivityLoginBinding
@@ -24,15 +26,18 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var loginViewModel: LoginViewModel
-    private lateinit var loginViewModelFactory: LoginViewModelFactory
+    //private lateinit var loginViewModel: LoginViewModel
+    //private lateinit var loginViewModelFactory: LoginViewModelFactory
+    private val loginViewModel by viewModels<LoginViewModel> {
+        LoginViewModelFactory((applicationContext as App).preferences)
+    }
     private val constraintSetLoginProgress = ConstraintSet()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_login)
-        loginViewModelFactory = LoginViewModelFactory(Preferences(this))
-        loginViewModel = ViewModelProvider(this,loginViewModelFactory).get(LoginViewModel::class.java)
+        //loginViewModelFactory = LoginViewModelFactory(Preferences(this))
+        //loginViewModel = ViewModelProvider(this,loginViewModelFactory).get(LoginViewModel::class.java)
         binding.viewModel = loginViewModel
         constraintSetLoginProgress.clone(this,R.layout.activity_login_alt)
         observeLoginSuccess()

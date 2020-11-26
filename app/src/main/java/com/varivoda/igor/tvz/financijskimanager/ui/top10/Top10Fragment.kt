@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.model.ProductDTO
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
@@ -26,8 +28,11 @@ import timber.log.Timber
 
 class Top10Fragment : Fragment() {
 
-    private lateinit var top10ViewModel: Top10ViewModel
-    private lateinit var top10ViewModelFactory: Top10ViewModelFactory
+    //private lateinit var top10ViewModel: Top10ViewModel
+    //private lateinit var top10ViewModelFactory: Top10ViewModelFactory
+    private val top10ViewModel by viewModels<Top10ViewModel> {
+        Top10ViewModelFactory((requireContext().applicationContext as App).productRepository)
+    }
     private var top10Adapter = Top10Adapter(Top10Listener {
         Timber.d("debug: $it")
     })
@@ -47,8 +52,8 @@ class Top10Fragment : Fragment() {
         view.changePeriod.setOnClickListener {
             MonthYearDialog().getDialog(activity as HomeActivity,changeDate)
         }
-        top10ViewModelFactory = Top10ViewModelFactory(requireContext())
-        top10ViewModel = ViewModelProvider(requireActivity(),top10ViewModelFactory).get(Top10ViewModel::class.java)
+        //top10ViewModelFactory = Top10ViewModelFactory(requireContext())
+        //top10ViewModel = ViewModelProvider(requireActivity(),top10ViewModelFactory).get(Top10ViewModel::class.java)
         observeTopProducts()
         view.topRecyclerView.adapter = top10Adapter
         return view

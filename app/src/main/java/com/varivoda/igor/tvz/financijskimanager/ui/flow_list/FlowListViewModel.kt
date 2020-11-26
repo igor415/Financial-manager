@@ -18,12 +18,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class FlowListViewModel(context: Context) : ViewModel(){
+class FlowListViewModel(private val storeRepository: StoreRepository,
+                        private val productRepository: ProductRepository,
+                        private val employeeRepository: EmployeeRepository,
+                        private val customerRepository: CustomerRepository) : ViewModel(){
 
-    private val productRepository = ProductRepository(AppDatabase.getInstance(context))
-    private val employeeRepository = EmployeeRepository(AppDatabase.getInstance(context))
-    private val customerRepository = CustomerRepository(AppDatabase.getInstance(context))
-    private val storeRepository = StoreRepository(AppDatabase.getInstance(context))
+    //private val productRepository = ProductRepository(AppDatabase.getInstance(context))
+    //private val employeeRepository = EmployeeRepository(AppDatabase.getInstance(context))
+    //private val customerRepository = CustomerRepository(AppDatabase.getInstance(context))
+    //private val storeRepository = StoreRepository(AppDatabase.getInstance(context))
 
     val allProducts: Flow<List<Product>> = productRepository.getAllProducts()
         .onEach { it.map { product -> product.productName = "${product.productName} : ${product.price} kn" } } .flowOn(Dispatchers.Main).conflate()

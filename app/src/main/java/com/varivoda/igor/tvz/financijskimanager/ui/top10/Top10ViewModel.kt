@@ -10,9 +10,9 @@ import com.varivoda.igor.tvz.financijskimanager.util.asDomainModel
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentMonth
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentYear
 
-class Top10ViewModel(private val context: Context) : ViewModel(){
+class Top10ViewModel(private val productRepository: ProductRepository) : ViewModel(){
 
-    private val productRepository = ProductRepository(AppDatabase.getInstance(context))
+    //private val productRepository = ProductRepository(AppDatabase.getInstance(context))
 
     var monthAndYear = MutableLiveData<Pair<String,String>>()
     init {

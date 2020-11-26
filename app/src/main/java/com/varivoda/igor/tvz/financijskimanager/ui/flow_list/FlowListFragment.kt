@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -15,6 +16,7 @@ import androidx.paging.map
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.databinding.ProductPopupBinding
@@ -35,8 +37,13 @@ class FlowListFragment : Fragment() {
     private lateinit var flowListAdapterEmployees: FlowListAdapterEmployees
     private lateinit var flowListAdapterCustomers: FlowListAdapterCustomers
     private val flowListAdapterStores = FlowListAdapterStores()
-    private lateinit var flowListViewModel: FlowListViewModel
-    private lateinit var flowListViewModelFactory: FlowListViewModelFactory
+
+    private val flowListViewModel by viewModels<FlowListViewModel> {
+        FlowListViewModelFactory((requireContext().applicationContext as App).storeRepository,
+            (requireContext().applicationContext as App).productRepository,
+            (requireContext().applicationContext as App).employeeRepository,
+            (requireContext().applicationContext as App).customerRepository)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,8 +52,6 @@ class FlowListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_flow_list, container, false)
         val args = FlowListFragmentArgs.fromBundle(requireArguments())
         (activity as HomeActivity).setActionBarText(args.text)
-        flowListViewModelFactory = FlowListViewModelFactory(requireContext())
-        flowListViewModel = ViewModelProvider(this,flowListViewModelFactory).get(FlowListViewModel::class.java)
         flowListAdapterEmployees = FlowListAdapterEmployees(flowListViewModel)
         flowListAdapterCustomers = FlowListAdapterCustomers(flowListViewModel)
         flowListAdapter = FlowListAdapterProducts(changeProductInfo,flowListViewModel)

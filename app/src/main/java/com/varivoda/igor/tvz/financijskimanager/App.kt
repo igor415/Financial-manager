@@ -8,7 +8,13 @@ import android.content.Intent
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
+import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.CustomerRepository
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.EmployeeRepository
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.ProductRepository
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.StoreRepository
 import com.varivoda.igor.tvz.financijskimanager.monitoring.NetworkChangeReceiver
+import com.varivoda.igor.tvz.financijskimanager.service_locator.ServiceLocator
 import com.varivoda.igor.tvz.financijskimanager.workmanager.BroadcastNotification
 import timber.log.Timber
 import timber.log.Timber.DebugTree
@@ -16,6 +22,22 @@ import java.util.*
 
 
 class App: Application(), LifecycleObserver{
+
+    val storeRepository: StoreRepository
+        get() = ServiceLocator.provideStoreRepository(this)
+
+    val productRepository: ProductRepository
+        get() = ServiceLocator.provideProductRepository(this)
+
+    val customerRepository: CustomerRepository
+        get() = ServiceLocator.provideCustomerRepository(this)
+
+    val employeeRepository: EmployeeRepository
+        get() = ServiceLocator.provideEmployeeRepository(this)
+
+    val preferences: Preferences
+        get() = ServiceLocator.providePreferences(this)
+
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
