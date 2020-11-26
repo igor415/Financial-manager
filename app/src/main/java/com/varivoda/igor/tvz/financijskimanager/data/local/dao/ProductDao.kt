@@ -16,7 +16,7 @@ interface ProductDao {
     @Query("SELECT * FROM Product")
     fun getAllProducts(): Flow<List<Product>>
 
-    @Query("SELECT * FROM Product")
+    @Query("SELECT * FROM Product ORDER BY categoryId ASC")
     fun getAllProductsPaging(): PagingSource<Int,Product>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -43,7 +43,7 @@ interface ProductDao {
     fun productPerQuarter(year: String): List<ProductQuarterDTO>
 
     @Query(
-        """SELECT p.id,p.productName,SUM(pob.quantity) as price 
+        """SELECT p.id,p.productName,SUM(pob.quantity) as price,p.categoryId 
                 FROM Product p JOIN ProductsOnBill pob ON p.id = pob.productId 
                 JOIN Bill b ON b.id = pob.billId where strftime('%m',b.date) = :month 
                 and strftime('%Y',b.date) = :year 

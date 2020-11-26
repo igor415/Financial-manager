@@ -3,10 +3,7 @@ package com.varivoda.igor.tvz.financijskimanager.ui.flow_list
 import android.app.AlertDialog
 import android.content.Context
 import androidx.lifecycle.*
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
+import androidx.paging.*
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Customer
@@ -71,23 +68,54 @@ class FlowListViewModel(context: Context) : ViewModel(){
 
     /***products pager**/
 
-    //private var currentProductResult: Flow<PagingData<Product>>? = null
+    fun getProducts(): Flow<PagingData<ProductModel>> {
+        return productRepository.getProductStream().map { pagingData -> pagingData.map { ProductModel.ProductItem(it) } }
+            .map {
+                it.insertSeparators<ProductModel.ProductItem, ProductModel> { before, after ->
+                    if (after == null) {
+                        // we're at the end of the list
+                        return@insertSeparators null
+                    }
 
-    fun getProducts(): Flow<PagingData<Product>> {
-        /*var result: Flow<PagingData<Product>>? = null
-        viewModelScope.launch(Dispatchers.IO) {
-            result = productRepository.getProductStream()
-                .cachedIn(viewModelScope)
-        }
-        return result*/
-        /*Pager(config = PagingConfig(pageSize = 10, enablePlaceholders = false),
-            pagingSourceFactory = {ProductPagingSource(productRepository)}).flow.cachedIn(viewModelScope)*/
-        return productRepository.getProductStream()
-       /* return productRepository.getProductStream()
-            .cachedIn(viewModelScope)*/
+                    if (before == null) {
+                        // we're at the beginning of the list
+                        return@insertSeparators ProductModel.SeparatorItem("Komponente")
+                    }
+                    if(before.category < after.category){
+                        ProductModel.SeparatorItem("Monitori")
+                    }else{
+                        null
+                    }
+
+                    /// check between 2 items
+                    /*if (before.priceTitle > after.priceTitle) {
+                        if (after.priceTitle >= 1) {
+                            ProductModel.SeparatorItem("${after.priceTitle}0.000+ stars")
+                        } else {
+                            ProductModel.SeparatorItem("< 10.000+ stars")
+                        }
+                    } else {
+                        // no separator
+                        null
+                    }*/
+                    //null
+                }
+            }.cachedIn(viewModelScope)
+
     }
 
+    sealed class ProductModel {
+        data class ProductItem(val product: Product) : ProductModel()
+        data class SeparatorItem(val description: String) : ProductModel()
 
+
+    }
+
+    val ProductModel.ProductItem.category: Int
+        get() = this.product.categoryId
+
+    private val ProductModel.ProductItem.priceTitle: Double
+        get() = this.product.price / 10_000
 
     /***product popup***/
     var nameInput: String = ""
@@ -110,9 +138,9 @@ class FlowListViewModel(context: Context) : ViewModel(){
     fun onConfirmClicked(){
         if(priceInput.isNotEmpty() && nameInput.isNotEmpty()){
             if(edit){
-                insertProduct(Product(item?.id!!, nameInput, priceInput.toDouble()))
+                insertProduct(Product(item?.id!!, nameInput, priceInput.toDouble(),1))
             }else{
-                insertProduct(Product(productName = nameInput,price = priceInput.toDouble()))
+                insertProduct(Product(productName = nameInput,price = priceInput.toDouble(),categoryId = 1))
             }
             clearProductInfo()
         }else{

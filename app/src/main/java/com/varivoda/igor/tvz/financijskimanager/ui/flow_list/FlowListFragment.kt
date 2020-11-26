@@ -162,7 +162,7 @@ class FlowListFragment : Fragment() {
 
 
                 flowListViewModel.getProducts().collectLatest {
-                    delay(2000)
+                    //delay(2000)
                     flowListAdapter.submitData(it)
 
             }

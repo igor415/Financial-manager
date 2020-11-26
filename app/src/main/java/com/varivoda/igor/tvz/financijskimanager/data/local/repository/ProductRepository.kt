@@ -38,7 +38,7 @@ class ProductRepository(private val database: AppDatabase){
     fun getProductStream(): Flow<PagingData<Product>>{
         val pagingSourceFactory = {database.productDao.getAllProductsPaging()}
 
-        return Pager(config = PagingConfig(pageSize = 1, enablePlaceholders = true),
+        return Pager(config = PagingConfig(pageSize = 10, enablePlaceholders = false),
         pagingSourceFactory = pagingSourceFactory).flow
     }
 }

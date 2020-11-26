@@ -9,7 +9,8 @@ data class Product(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var productName: String,
-    var price: Double
+    var price: Double,
+    var categoryId: Int
 ){
     fun toDTO(): ProductDTO{
         return ProductDTO(productName,price)
