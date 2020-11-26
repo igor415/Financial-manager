@@ -20,6 +20,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.databinding.ProductPopupBinding
 import com.varivoda.igor.tvz.financijskimanager.ui.flow_list.loadstate.MyLoadStateAdapter
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
+import kotlinx.android.synthetic.main.fragment_flow_list.*
 import kotlinx.android.synthetic.main.fragment_flow_list.view.*
 import kotlinx.android.synthetic.main.product_popup.view.*
 import kotlinx.coroutines.*
@@ -79,6 +80,7 @@ class FlowListFragment : Fragment() {
     }
 
     private fun storesFunction(view: View) {
+        progressAndRetryInvisible(view)
         CoroutineScope(Dispatchers.Main).launch{
             flowListViewModel.stores.collect{
                 flowListAdapterStores.submitList(it)
@@ -90,11 +92,38 @@ class FlowListFragment : Fragment() {
         }
     }
 
+    var customerJob: Job? = null
     private fun customersFunction(view: View) {
-        CoroutineScope(Dispatchers.Main).launch{
+       /* CoroutineScope(Dispatchers.Main).launch{
             flowListViewModel.customers.collect{
                 flowListAdapterCustomers.submitList(it)
             }
+        }*/
+        customerJob?.cancel()
+        customerJob = lifecycleScope.launch {
+
+
+            flowListViewModel.getCustomersPaging().collectLatest {
+                //delay(2000)
+                flowListAdapterCustomers.submitData(it)
+
+            }
+
+        }
+
+        flowListAdapterCustomers.withLoadStateHeaderAndFooter(
+            header = MyLoadStateAdapter { flowListAdapter.retry() },
+            footer = MyLoadStateAdapter { flowListAdapter.retry() }
+        )
+
+        flowListAdapterCustomers.addLoadStateListener { loadState ->
+            // Only show the list if refresh succeeds.
+            view.flowListRecyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
+            // Show loading spinner during initial load or refresh.
+            view.progress_bar.isVisible = loadState.source.refresh is LoadState.Loading
+            // Show the retry state if initial load or refresh fails.
+            view.retry_button.isVisible = loadState.source.refresh is LoadState.Error
+
         }
         view.flowListRecyclerView.apply {
             setHasFixedSize(true)
@@ -106,6 +135,7 @@ class FlowListFragment : Fragment() {
 
     private fun employeesFunction(view: View) {
 
+        progressAndRetryInvisible(view)
         CoroutineScope(Dispatchers.Main).launch{
             flowListViewModel.employees.collect{
                 flowListAdapterEmployees.submitList(it)
@@ -151,6 +181,11 @@ class FlowListFragment : Fragment() {
 
         val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(null,null,flowListAdapter,flowListViewModel))
         itemTouchHelper.attachToRecyclerView(view.flowListRecyclerView)
+    }
+
+    fun progressAndRetryInvisible(view: View){
+        view.progress_bar.visibility = View.GONE
+        view.retry_button.visibility = View.GONE
     }
 
     private var searchJob: Job? = null

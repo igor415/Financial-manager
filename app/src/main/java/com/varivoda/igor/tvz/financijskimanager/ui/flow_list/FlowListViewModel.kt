@@ -76,7 +76,6 @@ class FlowListViewModel(context: Context) : ViewModel(){
                         // we're at the end of the list
                         return@insertSeparators null
                     }
-
                     if (before == null) {
                         // we're at the beginning of the list
                         return@insertSeparators ProductModel.SeparatorItem("Komponente")
@@ -86,19 +85,6 @@ class FlowListViewModel(context: Context) : ViewModel(){
                     }else{
                         null
                     }
-
-                    /// check between 2 items
-                    /*if (before.priceTitle > after.priceTitle) {
-                        if (after.priceTitle >= 1) {
-                            ProductModel.SeparatorItem("${after.priceTitle}0.000+ stars")
-                        } else {
-                            ProductModel.SeparatorItem("< 10.000+ stars")
-                        }
-                    } else {
-                        // no separator
-                        null
-                    }*/
-                    //null
                 }
             }.cachedIn(viewModelScope)
 
@@ -116,6 +102,10 @@ class FlowListViewModel(context: Context) : ViewModel(){
 
     private val ProductModel.ProductItem.priceTitle: Double
         get() = this.product.price / 10_000
+
+    fun getCustomersPaging(): Flow<PagingData<Customer>>{
+        return customerRepository.getCustomersPaging().cachedIn(viewModelScope)
+    }
 
     /***product popup***/
     var nameInput: String = ""

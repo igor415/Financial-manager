@@ -1,11 +1,12 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.flow_list
 
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Customer
 
-class FlowListAdapterCustomers(private val viewModel: FlowListViewModel) : ListAdapter<Customer,FlowListViewHolder>(CustomerDiffCallback()){
+class FlowListAdapterCustomers(private val viewModel: FlowListViewModel) : PagingDataAdapter<Customer,FlowListViewHolder>(CustomerDiffCallback()){
 
     class CustomerDiffCallback : DiffUtil.ItemCallback<Customer>(){
         override fun areItemsTheSame(oldItem: Customer, newItem: Customer): Boolean {
@@ -23,12 +24,14 @@ class FlowListAdapterCustomers(private val viewModel: FlowListViewModel) : ListA
     }
 
     override fun onBindViewHolder(holder: FlowListViewHolder, position: Int) {
-        holder.bindCustomer(getItem(position))
+        val customer = getItem(position)
+        customer?.let { holder.bindCustomer(customer) }
+
     }
 
     fun deleteCustomer(position: Int){
-        val id = getItem(position).id
-        viewModel.deleteCustomer(id)
+        val id = getItem(position)?.id
+        id?.let { viewModel.deleteCustomer(id) }
     }
 
 }
