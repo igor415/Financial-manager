@@ -9,10 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
-import com.varivoda.igor.tvz.financijskimanager.data.local.repository.CustomerRepository
-import com.varivoda.igor.tvz.financijskimanager.data.local.repository.EmployeeRepository
-import com.varivoda.igor.tvz.financijskimanager.data.local.repository.ProductRepository
-import com.varivoda.igor.tvz.financijskimanager.data.local.repository.StoreRepository
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.*
 import com.varivoda.igor.tvz.financijskimanager.monitoring.NetworkChangeReceiver
 import com.varivoda.igor.tvz.financijskimanager.service_locator.ServiceLocator
 import com.varivoda.igor.tvz.financijskimanager.workmanager.BroadcastNotification
@@ -34,6 +31,9 @@ class App: Application(), LifecycleObserver{
 
     val employeeRepository: EmployeeRepository
         get() = ServiceLocator.provideEmployeeRepository(this)
+
+    val billRepository: BillRepository
+        get() = ServiceLocator.provideBillRepository(this)
 
     val preferences: Preferences
         get() = ServiceLocator.providePreferences(this)

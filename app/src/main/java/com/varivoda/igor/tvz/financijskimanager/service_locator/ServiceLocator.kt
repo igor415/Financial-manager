@@ -6,11 +6,9 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Bill
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Customer
-import com.varivoda.igor.tvz.financijskimanager.data.local.repository.CustomerRepository
-import com.varivoda.igor.tvz.financijskimanager.data.local.repository.EmployeeRepository
-import com.varivoda.igor.tvz.financijskimanager.data.local.repository.ProductRepository
-import com.varivoda.igor.tvz.financijskimanager.data.local.repository.StoreRepository
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.*
 
 object ServiceLocator{
 
@@ -29,10 +27,25 @@ object ServiceLocator{
     private var customerRepository: CustomerRepository? = null
 
     @Volatile
+    private var billRepository: BillRepository? = null
+
+    @Volatile
     private var preferences: Preferences? = null
 
     fun providePreferences(context: Context): Preferences{
         return preferences ?: createPreferences(context)
+    }
+
+    fun provideBillRepository(context: Context): BillRepository{
+        synchronized(this){
+            return billRepository ?: createBillRepository(context)
+        }
+    }
+
+    private fun createBillRepository(context: Context): BillRepository {
+        val new = BillRepository(database ?: createDatabase(context))
+        billRepository = new
+        return new
     }
 
     private fun createPreferences(context: Context): Preferences {

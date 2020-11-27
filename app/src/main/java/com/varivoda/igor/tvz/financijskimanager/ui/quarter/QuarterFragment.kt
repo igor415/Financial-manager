@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.model.ProductQuarterDTO
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
@@ -20,9 +22,11 @@ import java.util.*
 
 class QuarterFragment : Fragment() {
 
-    private lateinit var quarterViewModel: QuarterViewModel
-    private lateinit var quarterViewModelFactory: QuarterViewModelFactory
-
+    //private lateinit var quarterViewModel: QuarterViewModel
+    //private lateinit var quarterViewModelFactory: QuarterViewModelFactory
+    private val quarterViewModel by viewModels<QuarterViewModel> {
+        QuarterViewModelFactory((requireContext().applicationContext as App).productRepository)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,8 +37,8 @@ class QuarterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        quarterViewModelFactory = QuarterViewModelFactory(requireContext())
-        quarterViewModel = ViewModelProvider(this,quarterViewModelFactory).get(QuarterViewModel::class.java)
+        //quarterViewModelFactory = QuarterViewModelFactory(requireContext())
+        //quarterViewModel = ViewModelProvider(this,quarterViewModelFactory).get(QuarterViewModel::class.java)
         observeProductPerQuarters()
         timePeriod.text = getString(R.string.time_period, getCurrentYear())
         changePeriod.setOnClickListener {

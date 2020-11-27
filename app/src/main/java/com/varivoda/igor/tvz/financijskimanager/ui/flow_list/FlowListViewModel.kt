@@ -1,27 +1,26 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.flow_list
 
 import android.app.AlertDialog
-import android.content.Context
 import androidx.lifecycle.*
 import androidx.paging.*
 import com.varivoda.igor.tvz.financijskimanager.R
-import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Customer
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
-import com.varivoda.igor.tvz.financijskimanager.data.local.repository.CustomerRepository
-import com.varivoda.igor.tvz.financijskimanager.data.local.repository.EmployeeRepository
-import com.varivoda.igor.tvz.financijskimanager.data.local.repository.ProductRepository
-import com.varivoda.igor.tvz.financijskimanager.data.local.repository.StoreRepository
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseCustomerRepository
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseEmployeeRepository
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseStoreRepository
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeDTO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class FlowListViewModel(private val storeRepository: StoreRepository,
-                        private val productRepository: ProductRepository,
-                        private val employeeRepository: EmployeeRepository,
-                        private val customerRepository: CustomerRepository) : ViewModel(){
+class FlowListViewModel(private val storeRepository: BaseStoreRepository,
+                        private val productRepository: BaseProductRepository,
+                        private val employeeRepository: BaseEmployeeRepository,
+                        private val customerRepository: BaseCustomerRepository
+) : ViewModel(){
 
     //private val productRepository = ProductRepository(AppDatabase.getInstance(context))
     //private val employeeRepository = EmployeeRepository(AppDatabase.getInstance(context))
@@ -72,7 +71,7 @@ class FlowListViewModel(private val storeRepository: StoreRepository,
     /***products pager**/
 
     fun getProducts(): Flow<PagingData<ProductModel>> {
-        return productRepository.getProductStream().map { pagingData -> pagingData.map { ProductModel.ProductItem(it) } }
+        return productRepository.getProductStream()!!.map { pagingData -> pagingData.map { ProductModel.ProductItem(it) } }
             .map {
                 it.insertSeparators<ProductModel.ProductItem, ProductModel> { before, after ->
                     if (after == null) {
@@ -107,7 +106,7 @@ class FlowListViewModel(private val storeRepository: StoreRepository,
         get() = this.product.price / 10_000
 
     fun getCustomersPaging(): Flow<PagingData<Customer>>{
-        return customerRepository.getCustomersPaging().cachedIn(viewModelScope)
+        return customerRepository.getCustomersPaging()!!.cachedIn(viewModelScope)
     }
 
     /***product popup***/

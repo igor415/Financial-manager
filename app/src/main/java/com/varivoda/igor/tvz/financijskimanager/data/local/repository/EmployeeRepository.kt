@@ -2,35 +2,35 @@ package com.varivoda.igor.tvz.financijskimanager.data.local.repository
 
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Employee
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseEmployeeRepository
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeDTO
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
 
-class EmployeeRepository(private val appDatabase: AppDatabase){
+class EmployeeRepository(private val appDatabase: AppDatabase) :
+    BaseEmployeeRepository {
 
-    fun getEmployees(): Flow<List<Employee>> {
+    override fun getEmployees(): Flow<List<Employee>> {
         return appDatabase.employeeDao.getEmployees()
     }
 
-    fun getEmployeesAndStores(): Flow<List<EmployeeDTO>> {
+    override fun getEmployeesAndStores(): Flow<List<EmployeeDTO>> {
         return appDatabase.employeeDao.getEmployeesAndStores()
     }
 
-    fun deleteEmployee(id: Int){
+    override fun deleteEmployee(id: Int){
         appDatabase.employeeDao.deleteEmployee(id)
     }
 
-    suspend fun getEmployeeTotalPerMonthAndYear(month: String, year: String): String?{
+    override suspend fun getEmployeeTotalPerMonthAndYear(month: String, year: String): String?{
         return GlobalScope.async {
             appDatabase.employeeDao.getEmployeeMostTotalPerMonthAndYear(month, year)
         }.await()
 
     }
 
-    fun getEmployeeMostDaysIssuedInvoice(year: String): String? {
+    override fun getEmployeeMostDaysIssuedInvoice(year: String): String? {
         return appDatabase.employeeDao.getEmployeeMostDaysIssuedInvoice(year)
     }
 }

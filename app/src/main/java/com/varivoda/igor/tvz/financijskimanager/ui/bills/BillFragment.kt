@@ -3,9 +3,11 @@ package com.varivoda.igor.tvz.financijskimanager.ui.bills
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import com.varivoda.igor.tvz.financijskimanager.util.MonthYearDialog
@@ -21,8 +23,12 @@ import kotlinx.coroutines.launch
 
 class BillFragment : Fragment() {
 
-    private lateinit var billViewModelFactory: BillViewModelFactory
-    private lateinit var billViewModel: BillViewModel
+    //private lateinit var billViewModelFactory: BillViewModelFactory
+    //private lateinit var billViewModel: BillViewModel
+    private val billViewModel by viewModels<BillViewModel> {
+        BillViewModelFactory((requireContext().applicationContext as App).billRepository,
+            (requireContext().applicationContext as App).employeeRepository, (requireContext().applicationContext as App).productRepository)
+    }
     private lateinit var argsText: String
     private var billAdapter: BillAdapter = BillAdapter()
 
@@ -32,8 +38,8 @@ class BillFragment : Fragment() {
     ): View? {
         val args = BillFragmentArgs.fromBundle(requireArguments())
         (activity as HomeActivity).setActionBarText(args.text)
-        billViewModelFactory = BillViewModelFactory(requireContext())
-        billViewModel = ViewModelProvider(requireActivity(),billViewModelFactory).get(BillViewModel::class.java)
+        //billViewModelFactory = BillViewModelFactory(requireContext())
+        //billViewModel = ViewModelProvider(requireActivity(),billViewModelFactory).get(BillViewModel::class.java)
         argsText = args.text
         val view = inflater.inflate(R.layout.fragment_bill, container, false)
         when(args.text){

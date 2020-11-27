@@ -12,11 +12,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BillViewModel(context: Context) : ViewModel(){
+class BillViewModel(private val billRepository: BillRepository,
+                    private val employeeRepository: EmployeeRepository,
+                    private val productRepository: ProductRepository) : ViewModel(){
 
-    private val billRepository = BillRepository(AppDatabase.getInstance(context))
-    private val employeeRepository = EmployeeRepository(AppDatabase.getInstance(context))
-    private val productRepository = ProductRepository(AppDatabase.getInstance(context))
+   // private val billRepository = BillRepository(AppDatabase.getInstance(context))
+    //private val employeeRepository = EmployeeRepository(AppDatabase.getInstance(context))
+    //private val productRepository = ProductRepository(AppDatabase.getInstance(context))
     //var filteredBills = MutableLiveData<List<BillDTO>>()
     var employeeInvoiceNumberOfDays = MutableLiveData<String>()
 

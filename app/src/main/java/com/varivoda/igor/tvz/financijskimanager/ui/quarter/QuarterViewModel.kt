@@ -10,9 +10,9 @@ import com.varivoda.igor.tvz.financijskimanager.model.ProductQuarterDTO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class QuarterViewModel (private val context: Context): ViewModel(){
+class QuarterViewModel (private val productRepository: ProductRepository): ViewModel(){
 
-    private val productRepository = ProductRepository(AppDatabase.getInstance(context))
+    //private val productRepository = ProductRepository(AppDatabase.getInstance(context))
 
     var productsPerQuarter = MutableLiveData<List<ProductQuarterDTO>>()
 
