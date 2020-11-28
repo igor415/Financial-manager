@@ -6,10 +6,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.BillRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.EmployeeRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.ProductRepository
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 
 class BillViewModelFactory(private val billRepository: BillRepository,
                            private val employeeRepository: EmployeeRepository,
-                           private val productRepository: ProductRepository
+                           private val productRepository: BaseProductRepository
 ) : ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(BillViewModel::class.java)){

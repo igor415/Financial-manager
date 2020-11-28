@@ -7,12 +7,13 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.repository.CustomerRe
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.EmployeeRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.ProductRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.StoreRepository
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 
 class FlowListViewModelFactory(
     private val storeRepository: StoreRepository,
-                               private val productRepository: ProductRepository,
-                               private val employeeRepository: EmployeeRepository,
-                               private val customerRepository: CustomerRepository
+    private val productRepository: BaseProductRepository,
+    private val employeeRepository: EmployeeRepository,
+    private val customerRepository: CustomerRepository
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

@@ -7,6 +7,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.BillRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.EmployeeRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.ProductRepository
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 import com.varivoda.igor.tvz.financijskimanager.model.BillDTO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,7 +15,8 @@ import kotlinx.coroutines.withContext
 
 class BillViewModel(private val billRepository: BillRepository,
                     private val employeeRepository: EmployeeRepository,
-                    private val productRepository: ProductRepository) : ViewModel(){
+                    private val productRepository: BaseProductRepository
+) : ViewModel(){
 
    // private val billRepository = BillRepository(AppDatabase.getInstance(context))
     //private val employeeRepository = EmployeeRepository(AppDatabase.getInstance(context))

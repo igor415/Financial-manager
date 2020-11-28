@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -51,7 +52,7 @@ class HomeFragment : Fragment() {
         homeViewModelFactory = HomeViewModelFactory(navController)
         homeViewModel = ViewModelProvider(requireActivity(),homeViewModelFactory).get(HomeViewModel::class.java)
         binding.viewModel = homeViewModel
-        (activity as HomeActivity).setActionBarText(getString(R.string.home_title))
+        //(activity as HomeActivity).setActionBarText(getString(R.string.home_title))
         createChannel()
         listOf(statistics,customers,employees,insertInvoice,products,stores).forEach {
             registerForContextMenu(it)

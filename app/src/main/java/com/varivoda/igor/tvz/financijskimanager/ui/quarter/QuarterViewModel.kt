@@ -6,11 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.ProductRepository
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 import com.varivoda.igor.tvz.financijskimanager.model.ProductQuarterDTO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class QuarterViewModel (private val productRepository: ProductRepository): ViewModel(){
+class QuarterViewModel (private val productRepository: BaseProductRepository): ViewModel(){
 
     //private val productRepository = ProductRepository(AppDatabase.getInstance(context))
 

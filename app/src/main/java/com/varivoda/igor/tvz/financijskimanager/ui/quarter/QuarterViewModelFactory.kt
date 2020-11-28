@@ -4,9 +4,10 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.ProductRepository
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 import java.lang.IllegalArgumentException
 
-class QuarterViewModelFactory(private val productRepository: ProductRepository) : ViewModelProvider.Factory{
+class QuarterViewModelFactory(private val productRepository: BaseProductRepository) : ViewModelProvider.Factory{
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(QuarterViewModel::class.java)){

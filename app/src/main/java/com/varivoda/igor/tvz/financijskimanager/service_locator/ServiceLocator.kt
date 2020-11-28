@@ -1,6 +1,7 @@
 package com.varivoda.igor.tvz.financijskimanager.service_locator
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -9,8 +10,12 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Bill
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Customer
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.*
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
+import kotlinx.coroutines.runBlocking
 
 object ServiceLocator{
+
+    private val lock = Any()
 
     private var database: AppDatabase? = null
 
@@ -18,7 +23,8 @@ object ServiceLocator{
     private var storeRepository: StoreRepository? = null
 
     @Volatile
-    private var productRepository: ProductRepository? = null
+    var productRepository: BaseProductRepository? = null
+        @VisibleForTesting set
 
     @Volatile
     private var employeeRepository: EmployeeRepository? = null
@@ -31,6 +37,23 @@ object ServiceLocator{
 
     @Volatile
     private var preferences: Preferences? = null
+
+    @VisibleForTesting
+    fun resetRepository() {
+        synchronized(lock) {
+            // Clear all data to avoid test pollution.
+            database?.apply {
+                clearAllTables()
+                close()
+            }
+            database = null
+            productRepository = null
+            employeeRepository = null
+            billRepository = null
+            customerRepository = null
+            storeRepository = null
+        }
+    }
 
     fun providePreferences(context: Context): Preferences{
         return preferences ?: createPreferences(context)
@@ -60,7 +83,7 @@ object ServiceLocator{
         }
     }
 
-    fun provideProductRepository(context: Context): ProductRepository{
+    fun provideProductRepository(context: Context): BaseProductRepository{
         synchronized(this){
             return productRepository ?: createProductRepository(context)
         }
