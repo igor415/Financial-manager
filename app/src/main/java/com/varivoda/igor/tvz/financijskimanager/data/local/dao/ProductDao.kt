@@ -28,6 +28,12 @@ interface ProductDao {
     @Query("SELECT COUNT(*) FROM Product")
     fun getProductCount(): Int
 
+    @Query("SELECT * FROM product")
+    fun getProducts(): List<Product>
+
+    @Query("UPDATE Product SET image = :image WHERE id = :id")
+    fun updateProductImage(image: String, id: Int)
+
     @Query(
         """select x.quarter,x.productName,cast(max(x.total) as text) as number from 
                 (select case when strftime('%m',b.date) between '01' and '03' then 'first' 

@@ -10,7 +10,8 @@ data class Product(
     var id: Int = 0,
     var productName: String,
     var price: Double,
-    var categoryId: Int
+    var categoryId: Int,
+    var image: String? = null
 ){
     fun toDTO(): ProductDTO{
         return ProductDTO(productName,price)

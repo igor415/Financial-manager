@@ -43,4 +43,14 @@ class ProductRepository(private val database: AppDatabase) :
         return Pager(config = PagingConfig(pageSize = 10, enablePlaceholders = false),
         pagingSourceFactory = pagingSourceFactory).flow
     }
+
+    override fun getProducts(): List<Product> {
+        return database.productDao.getProducts()
+    }
+
+    override fun updateProductImage(image: String, id: Int) {
+        database.productDao.updateProductImage(image, id)
+    }
+
+
 }

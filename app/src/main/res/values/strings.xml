@@ -78,5 +78,8 @@
     <string name="product_name">Product name</string>
     <string name="quantity">Quantity</string>
     <string name="top_products">Top 10 products</string>
+    <string name="click_on_the_product_and_take_a_picture"><u>Click on the product and take a picture.</u></string>
+    <string name="unable_to_open_camera_resource">Unable to open camera.</string>
+
 
 </resources>

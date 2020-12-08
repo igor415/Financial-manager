@@ -61,6 +61,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_menuListFragment_to_pictureFragment"
+            app:destination="@id/pictureFragment" />
     </fragment>
     <fragment
         android:id="@+id/listFragment"
@@ -111,4 +114,9 @@
             android:name="text"
             app:nullable="false"
             app:argType="string"/></fragment>
+    <fragment
+        android:id="@+id/pictureFragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.picture.PictureFragment"
+        android:label="fragment_picture"
+        tools:layout="@layout/fragment_picture" />
 </navigation>

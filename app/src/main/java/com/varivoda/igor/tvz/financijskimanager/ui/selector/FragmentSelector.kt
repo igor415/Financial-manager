@@ -46,6 +46,9 @@ class FragmentSelector() {
             "Račun sa najviše stavki po godini" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToBillFragment("Račun sa najviše stavki po godini"))
             }
+            "Unesite sliku proizvoda" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToPictureFragment())
+            }
         }
     }
 }
