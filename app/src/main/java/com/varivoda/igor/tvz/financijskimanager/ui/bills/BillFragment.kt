@@ -10,10 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
-import com.varivoda.igor.tvz.financijskimanager.util.MonthYearDialog
-import com.varivoda.igor.tvz.financijskimanager.util.getCurrentYear
-import com.varivoda.igor.tvz.financijskimanager.util.getMonthAndYearFormatted
-import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
+import com.varivoda.igor.tvz.financijskimanager.util.*
 import kotlinx.android.synthetic.main.fragment_bill.*
 import kotlinx.android.synthetic.main.fragment_bill.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -23,11 +20,9 @@ import kotlinx.coroutines.launch
 
 class BillFragment : Fragment() {
 
-    //private lateinit var billViewModelFactory: BillViewModelFactory
-    //private lateinit var billViewModel: BillViewModel
     private val billViewModel by viewModels<BillViewModel> {
         BillViewModelFactory((requireContext().applicationContext as App).billRepository,
-            (requireContext().applicationContext as App).employeeRepository, (requireContext().applicationContext as App).productRepository)
+            (requireContext().applicationContext as App).employeeRepository, (requireContext().applicationContext as App).productRepository, requireContext())
     }
     private lateinit var argsText: String
     private var billAdapter: BillAdapter = BillAdapter()
@@ -38,8 +33,7 @@ class BillFragment : Fragment() {
     ): View? {
         val args = BillFragmentArgs.fromBundle(requireArguments())
         (activity as HomeActivity).setActionBarText(args.text)
-        //billViewModelFactory = BillViewModelFactory(requireContext())
-        //billViewModel = ViewModelProvider(requireActivity(),billViewModelFactory).get(BillViewModel::class.java)
+
         argsText = args.text
         val view = inflater.inflate(R.layout.fragment_bill, container, false)
         when(args.text){
@@ -57,6 +51,12 @@ class BillFragment : Fragment() {
                 onlyYear(view)
                 observeMostItemsOnBill()
                 billViewModel.yearSelected.value = getCurrentYear()
+            }
+            "Proizvod koji ima najmanji udio u ukupnoj prodaji po mjesecu" -> {
+                adjustLayout(view)
+                monthAndYear(view)
+                observeProductSmallestShare()
+                billViewModel.productSmallestShare(getCurrentMonth(), getCurrentYear())
             }
 
         }
@@ -78,6 +78,14 @@ class BillFragment : Fragment() {
         })
     }
 
+    private fun observeProductSmallestShare(){
+        billViewModel.productSmallestShareResult.observe(viewLifecycleOwner, Observer {
+            if(it==null) {
+                resultTextView.text = getString(R.string.no_data_for_year)
+            }
+            resultTextView.text = it
+        })
+    }
     private fun observeEmployeeMostDaysIssuedInvoice() {
         billViewModel.employeeInvoiceNumberOfDays.observe(viewLifecycleOwner, Observer {
             if(it==null) {
@@ -128,6 +136,10 @@ class BillFragment : Fragment() {
                         billAdapter.setItems(it)
                     })
             }
+            "Proizvod koji ima najmanji udio u ukupnoj prodaji po mjesecu" -> {
+                billViewModel.productSmallestShare(getMonthWithZero(month),year.toString())
+            }
+
 
         }
 

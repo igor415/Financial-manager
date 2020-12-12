@@ -3,10 +3,11 @@
     <string-array name="statisticsOptions">
         <item>Proizvod koji se najbolje prodaje po kvartalima godine</item>
         <item>Prodavač koji je ostvario najveći postotak prodaje po kvartalima godine</item>
+        <item>Grafički prikaz cjelokupne zarade po mjesecima</item>
         <item>Poslovnica koja je ostvarila rast ili pad prodaje u odnosu na prvi i drugi dio godine</item>
         <item>Kupci koji su najviše potrošili po kvartalima godine</item>
         <item>Prodavači koji su uprihodili više novca od određene cifre</item>
-        <item>Prodavač koji je najviše dana u godini izdao račun</item>
+        <!--item>Prodavač koji je najviše dana u godini izdao račun</item-->
     </string-array>
     <string-array name="billsOptions">
         <item>Unesi novi račun</item>
@@ -27,7 +28,7 @@
     <string-array name="storesOptions">
         <item>Popis poslovnica</item>
         <item>Poslovnica koja je ostvarila najveći prihod po mjesecu</item>
-        <item>Udio određene poslovnice u ukupnom mjesečnom profitu</item>
+        <item>Udio određene poslovnice u ukupnom godišnjem profitu</item>
         <item>Lokacije poslovnica</item>
         <item>Poslovnica koja najbolje prodaje određeni proizvod</item>
         <item>Koje poslovnice su premašile mjesečni cilj zarade</item>
@@ -38,7 +39,7 @@
         <item>Komparativna analiza</item>
         <item>Unesite sliku proizvoda</item>
         <item>Proizvod koji ima najmanji udio u ukupnoj prodaji po mjesecu</item>
-        <item>Županija u kojoj se određeni proizvod najbolje prodaje</item>
+        <!--item>Županija u kojoj se određeni proizvod najbolje prodaje</item-->
     </string-array>
     <string-array name="employeesOptions">
         <item>Popis zaposlenika</item>

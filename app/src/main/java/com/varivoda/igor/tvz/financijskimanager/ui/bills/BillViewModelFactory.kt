@@ -10,11 +10,12 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseP
 
 class BillViewModelFactory(private val billRepository: BillRepository,
                            private val employeeRepository: EmployeeRepository,
-                           private val productRepository: BaseProductRepository
+                           private val productRepository: BaseProductRepository,
+                           private val context: Context
 ) : ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(BillViewModel::class.java)){
-            return BillViewModel(billRepository, employeeRepository, productRepository) as T
+            return BillViewModel(billRepository, employeeRepository, productRepository,context) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

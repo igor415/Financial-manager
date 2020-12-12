@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.bills.BillFragment">
+    tools:context=".ui.bar_chart.BarChartFragment">
 
     <LinearLayout
         android:id="@+id/linearContainer"
@@ -31,37 +31,38 @@
 
     </LinearLayout>
 
-    <include android:id="@+id/header"
-        layout="@layout/bill_item"
+    <TextView
+        android:id="@+id/xLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linearContainer"/>
+        android:text="@string/months_x_label"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/linearContainer"
+        android:textColor="@android:color/darker_gray"
+        android:textStyle="italic"
+        android:textSize="17sp"/>
 
-    <View
-        android:id="@+id/separator"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/light_color"
-        android:layout_below="@id/header"/>
+    <com.varivoda.igor.tvz.financijskimanager.util.VerticalTextView
+        android:id="@+id/totalLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linearContainer"
+        android:layout_alignParentStart="true"
+        android:paddingStart="70dp"
+        android:gravity="bottom"
+        android:text="@string/total_y_label"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="17sp"
+        android:textStyle="italic"
+        tools:ignore="RtlSymmetry" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/billsRecyclerview"
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barChart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        android:layout_below="@+id/separator"/>
-
-    <TextView
-        android:id="@+id/resultTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:padding="10dp"
-        android:textColor="@color/colorPrimary"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:visibility="gone"
-        tools:text="Testni podaci"/>
-
+        android:layout_below="@id/xLabel"
+        android:layout_toEndOf="@id/totalLabel"
+        android:layout_margin="5dp"/>
 
 </RelativeLayout>

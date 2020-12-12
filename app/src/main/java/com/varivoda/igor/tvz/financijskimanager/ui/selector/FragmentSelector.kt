@@ -52,6 +52,12 @@ class FragmentSelector() {
             "Komparativna analiza" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToAnalysisFragment("Komparativna analiza"))
             }
+            "Proizvod koji ima najmanji udio u ukupnoj prodaji po mjesecu" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToBillFragment("Proizvod koji ima najmanji udio u ukupnoj prodaji po mjesecu"))
+            }
+            "Grafički prikaz cjelokupne zarade po mjesecima" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToBarChartFragment())
+            }
         }
     }
 }

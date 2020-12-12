@@ -90,5 +90,9 @@
     <string name="wrong_username_or_password">Wrong username or password!</string>
     <string name="quantity_x_label">quantity</string>
     <string name="day_of_the_month">Day of the month</string>
+    <string name="product_smallest_share">Proizvod %1$s je doprinio ukupnoj prodaji sa %2$s%% unutar izabranog vremenskog razdoblja.</string>
+    <string name="months_label">mjeseci</string>
+    <string name="total_y_label">Total</string>
+    <string name="months_x_label">Months</string>
 
 </resources>

@@ -75,4 +75,23 @@ interface ProductDao {
                 and strftime('%Y',b.date) = :year and strftime('%d',b.date) = :day and p.id = :id"""
     )
     fun getStatisticsForProduct(day: String, month: String, year: String, id: Int): Int
+
+    @Query(
+        """SELECT x.productName || '#' || x.total FROM 
+                (SELECT p.id,p.productName,SUM(pob.quantity*p.price) as total 
+                FROM Product p JOIN ProductsOnBill pob ON p.id = pob.productId 
+                JOIN Bill b ON b.id = pob.billId where strftime('%m',b.date) = :month 
+                and strftime('%Y',b.date) = :year 
+                GROUP BY p.id,p.productName ORDER BY SUM(pob.quantity*p.price) LIMIT 1 ) as x;"""
+    )
+    fun productSmallestShare(month: String, year: String): String?
+
+    @Query(
+        """SELECT SUM(pob.quantity*p.price) as total 
+                FROM Product p JOIN ProductsOnBill pob ON p.id = pob.productId 
+                JOIN Bill b ON b.id = pob.billId where strftime('%m',b.date) = :month 
+                and strftime('%Y',b.date) = :year """
+    )
+    fun totalPerMonth(month: String?, year: String?): String?
+
 }
