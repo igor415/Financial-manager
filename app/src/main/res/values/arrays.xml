@@ -35,7 +35,7 @@
     <string-array name="productsOptions">
         <item>Popis proizvoda</item>
         <item>Top 10 najprodavanijih proizvoda</item>
-        <item>Proizvod koji je ostvario najveći profit po mjesecu i županiji</item>
+        <item>Komparativna analiza</item>
         <item>Unesite sliku proizvoda</item>
         <item>Proizvod koji ima najmanji udio u ukupnoj prodaji po mjesecu</item>
         <item>Županija u kojoj se određeni proizvod najbolje prodaje</item>

@@ -32,4 +32,11 @@ class Preferences(appContext: Context) {
 
     fun clear(value: String) = sharedPreferences.edit().remove(value).apply()
 
+    fun insertUserToken(token: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("user token",token).apply()
+    }
+
+    fun getUserToken(): String? = sharedPreferences.getString("user token",null)
+
 }

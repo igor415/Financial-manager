@@ -8,7 +8,10 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 import com.varivoda.igor.tvz.financijskimanager.model.ProductQuarterDTO
+import com.varivoda.igor.tvz.financijskimanager.model.StatisticsEntry
+import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 import kotlinx.coroutines.flow.Flow
+import java.util.*
 
 class ProductRepository(private val database: AppDatabase) :
     BaseProductRepository {
@@ -50,6 +53,20 @@ class ProductRepository(private val database: AppDatabase) :
 
     override fun updateProductImage(image: String, id: Int) {
         database.productDao.updateProductImage(image, id)
+    }
+
+    override fun getEntries(dateSelected: String, firstProduct: Product): List<StatisticsEntry>? {
+        val splitted = dateSelected.split(".")
+
+        val monthStart = GregorianCalendar(splitted[0].toInt()-1, splitted[0].toInt(), 1)
+        val totalDays = monthStart.getActualMaximum(Calendar.DAY_OF_MONTH)
+        val list = mutableListOf<StatisticsEntry>()
+        for (i in 1 until totalDays+1){
+            val num = database.productDao.getStatisticsForProduct(getMonthWithZero(i),splitted[0],splitted[1],firstProduct.id)
+            list.add(StatisticsEntry(i.toString(),num))
+        }
+
+        return list
     }
 
 

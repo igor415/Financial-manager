@@ -80,6 +80,13 @@
     <string name="top_products">Top 10 products</string>
     <string name="click_on_the_product_and_take_a_picture"><u>Click on the product and take a picture.</u></string>
     <string name="unable_to_open_camera_resource">Unable to open camera.</string>
-
+    <string name="show_filters">Show filters</string>
+    <string name="hide_filters">Hide filters</string>
+    <string name="insert_date">Insert Date</string>
+    <string name="first_selection">First selection</string>
+    <string name="second_selection">Second selection</string>
+    <string name="insert_product">Insert product</string>
+    <string name="select_product">Select product</string>
+    <string name="wrong_username_or_password">Wrong username or password!</string>
 
 </resources>

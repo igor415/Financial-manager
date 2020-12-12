@@ -49,6 +49,9 @@ class FragmentSelector() {
             "Unesite sliku proizvoda" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToPictureFragment())
             }
+            "Komparativna analiza" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToAnalysisFragment("Komparativna analiza"))
+            }
         }
     }
 }

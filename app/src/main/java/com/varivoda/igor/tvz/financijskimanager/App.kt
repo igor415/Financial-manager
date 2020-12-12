@@ -5,13 +5,10 @@ import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.*
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
-import com.varivoda.igor.tvz.financijskimanager.monitoring.NetworkChangeReceiver
 import com.varivoda.igor.tvz.financijskimanager.service_locator.ServiceLocator
 import com.varivoda.igor.tvz.financijskimanager.workmanager.BroadcastNotification
 import timber.log.Timber
@@ -38,6 +35,9 @@ class App: Application(), LifecycleObserver{
 
     val preferences: Preferences
         get() = ServiceLocator.providePreferences(this)
+
+    val loginRepository: LoginRepository
+        get() = ServiceLocator.provideLoginRepository(this)
 
     override fun onCreate() {
         super.onCreate()

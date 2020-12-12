@@ -66,4 +66,13 @@ interface ProductDao {
                 order by count(pob.billId) desc limit 1) as x"""
     )
     fun mostItemsOnBill(year: String?): LiveData<String?>
+
+    @Query(
+        """
+                SELECT SUM(pob.quantity) as quantity 
+                FROM Product p JOIN ProductsOnBill pob ON p.id = pob.productId 
+                JOIN Bill b ON b.id = pob.billId where strftime('%m',b.date) = :month 
+                and strftime('%Y',b.date) = :year and strftime('%d',b.date) = :day and p.id = :id"""
+    )
+    fun getStatisticsForProduct(day: String, month: String, year: String, id: Int): Int
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagingData
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.model.ProductQuarterDTO
+import com.varivoda.igor.tvz.financijskimanager.model.StatisticsEntry
 import kotlinx.coroutines.flow.Flow
 
 interface BaseProductRepository {
@@ -16,4 +17,5 @@ interface BaseProductRepository {
     fun getProductStream(): Flow<PagingData<Product>>?
     fun getProducts(): List<Product>
     fun updateProductImage(image: String, id: Int)
+    fun getEntries(dateSelected: String, firstProduct: Product): List<StatisticsEntry>?
 }

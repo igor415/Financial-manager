@@ -11,6 +11,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Bill
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Customer
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.*
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
+import com.varivoda.igor.tvz.financijskimanager.monitoring.ConnectivityAgent
 import kotlinx.coroutines.runBlocking
 
 object ServiceLocator{
@@ -34,6 +35,9 @@ object ServiceLocator{
 
     @Volatile
     private var billRepository: BillRepository? = null
+
+    @Volatile
+    private var loginRepository: LoginRepository? = null
 
     @Volatile
     private var preferences: Preferences? = null
@@ -68,6 +72,12 @@ object ServiceLocator{
     private fun createBillRepository(context: Context): BillRepository {
         val new = BillRepository(database ?: createDatabase(context))
         billRepository = new
+        return new
+    }
+
+    fun provideLoginRepository(context: Context): LoginRepository{
+        val new = LoginRepository(providePreferences(context), ConnectivityAgent(context))
+        loginRepository = new
         return new
     }
 

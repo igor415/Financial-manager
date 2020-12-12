@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:id="@+id/filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <EditText
+            android:id="@+id/fullDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:focusableInTouchMode="false"
+            android:hint="@string/insert_date" />
+
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fullDate"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/firstRadioButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/first_radio_button_selector"
+                android:button="@android:color/transparent"
+                android:checked="true"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="@string/first_selection"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/secondRadioButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/second_radio_button_selector"
+                android:button="@android:color/transparent"
+                android:checked="false"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="@string/second_selection"
+                android:textAllCaps="true"
+                android:textColor="@android:color/darker_gray" />
+
+        </RadioGroup>
+
+        <RelativeLayout
+            android:id="@+id/relativeSalesPoint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroup">
+
+            <EditText
+                android:id="@+id/btnSalesPointSelected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="false"
+                android:gravity="center_vertical"
+                android:hint="@string/insert_product"
+                android:maxLines="1"
+                android:paddingEnd="30dp"
+                android:singleLine="true"
+                tools:ignore="RtlSymmetry" />
+
+            <ImageButton
+                android:id="@+id/etSelectedSalesPoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="4dp"
+                android:background="@android:color/transparent"
+                android:paddingBottom="5dp"
+                android:src="@drawable/ic_cancel_black_18dp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btnFullScreen"
+        android:layout_below="@+id/filterLayout"
+        android:layout_margin="5dp" />
+
+    <Button
+        android:id="@+id/btnFullScreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent"
+        android:text="@string/show_filters"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>
