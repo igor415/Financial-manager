@@ -1,6 +1,7 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.analysis
 
 import android.app.AlertDialog
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
@@ -52,17 +53,23 @@ class AnalysisFragment : Fragment() {
         secondRadioButton.setOnClickListener {
             handleRadioButtonClick(secondRadioButton)
         }
+        //initial
+            analysisViewModel.setSelectionFlag(1)
+            filterLayout.visibility = View.GONE
+            btnFullScreen.text = getString(R.string.show_filters)
+            btnFullScreen.setTextColor(requireContext().getColor(R.color.colorPrimary))
+
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            filterLayout.visibility = View.GONE
+            btnFullScreen.visibility = View.GONE
+        }
         observeDateSelected()
         reloadGraph()
         observeStatisticsData()
         observeFirstAndSecondProduct()
         removeProductSelection()
-        //intial
-        analysisViewModel.setSelectionFlag(1)
-        filterLayout.visibility = View.GONE
-        btnFullScreen.text = getString(R.string.show_filters)
-        btnFullScreen.setTextColor(requireContext().getColor(R.color.colorPrimary))
     }
+
 
     private fun removeProductSelection() {
         etSelectedSalesPoint.setOnClickListener{
@@ -109,10 +116,9 @@ class AnalysisFragment : Fragment() {
     }
 
     private fun reloadGraph() {
-        //Entry(it.salesDate.toFloat(), it.total.toFloat(), salesDate.toString())
         val firstEntries = mutableListOf<Entry>()
         analysisViewModel.firstProductStatistics.value?.forEach { stat ->
-            firstEntries.add(Entry(stat.day.toFloat(),stat.total.toFloat()))
+            firstEntries.add(Entry(stat.day.toFloat(),stat.total.toFloat(),stat.day))
         }
 
         val firstDataSet = LineDataSet(
@@ -138,6 +144,7 @@ class AnalysisFragment : Fragment() {
 
         val data = LineData(dataSet)
         chart.data = data
+        chart.axisLeft.isEnabled = true
         chart.axisRight.isEnabled = false
         chart.description.isEnabled = false
         chart.invalidate()

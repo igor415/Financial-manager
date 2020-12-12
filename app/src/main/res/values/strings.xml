@@ -88,5 +88,7 @@
     <string name="insert_product">Insert product</string>
     <string name="select_product">Select product</string>
     <string name="wrong_username_or_password">Wrong username or password!</string>
+    <string name="quantity_x_label">quantity</string>
+    <string name="day_of_the_month">Day of the month</string>
 
 </resources>
