@@ -94,4 +94,12 @@ interface ProductDao {
     )
     fun totalPerMonth(month: String?, year: String?): String?
 
+    @Query(
+        """SELECT SUM(pob.quantity*p.price) as total 
+                FROM Product p JOIN ProductsOnBill pob ON p.id = pob.productId 
+                JOIN Bill b ON b.id = pob.billId where 
+                 strftime('%Y',b.date) = :year """
+    )
+    fun totalPerYear( year: String?): String?
+
 }

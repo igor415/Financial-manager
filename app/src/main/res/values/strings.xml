@@ -94,5 +94,7 @@
     <string name="months_label">mjeseci</string>
     <string name="total_y_label">Total</string>
     <string name="months_x_label">Months</string>
+    <string name="stores_label">stores</string>
+    <string name="other_stores_label">Other</string>
 
 </resources>

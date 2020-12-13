@@ -58,6 +58,9 @@ class FragmentSelector() {
             "Grafički prikaz cjelokupne zarade po mjesecima" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToBarChartFragment())
             }
+            "Udio određene poslovnice u ukupnom godišnjem profitu" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToPieChartFragment())
+            }
         }
     }
 }

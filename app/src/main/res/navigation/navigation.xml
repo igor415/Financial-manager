@@ -82,6 +82,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_menuListFragment_to_pieChartFragment"
+            app:destination="@id/pieChartFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/listFragment"
@@ -151,4 +158,9 @@
         android:name="com.varivoda.igor.tvz.financijskimanager.ui.bar_chart.BarChartFragment"
         android:label="fragment_bar_chart"
         tools:layout="@layout/fragment_bar_chart" />
+    <fragment
+        android:id="@+id/pieChartFragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.pie_chart.PieChartFragment"
+        android:label="fragment_pie_chart"
+        tools:layout="@layout/fragment_pie_chart" />
 </navigation>
