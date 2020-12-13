@@ -26,6 +26,8 @@ class MonthYearDialog {
             .show()
     }
 
+
+
     fun getOnlyYearDialog(activity: Activity,
                           changeDate: (Int) -> Unit){
         val today = Calendar.getInstance()

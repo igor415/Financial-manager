@@ -10,6 +10,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Bill
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Customer
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.*
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseInventoryRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 import com.varivoda.igor.tvz.financijskimanager.monitoring.ConnectivityAgent
 import kotlinx.coroutines.runBlocking
@@ -38,6 +39,9 @@ object ServiceLocator{
 
     @Volatile
     private var loginRepository: LoginRepository? = null
+
+    @Volatile
+    private var inventoryRepository: BaseInventoryRepository?= null
 
     @Volatile
     private var preferences: Preferences? = null
@@ -72,6 +76,12 @@ object ServiceLocator{
     private fun createBillRepository(context: Context): BillRepository {
         val new = BillRepository(database ?: createDatabase(context))
         billRepository = new
+        return new
+    }
+
+    fun provideInventoryRepository(context: Context): BaseInventoryRepository{
+        val new = InventoryRepository(database ?: createDatabase(context))
+        inventoryRepository = new
         return new
     }
 
@@ -258,6 +268,8 @@ object ServiceLocator{
                     db.execSQL("INSERT INTO ProductsOnBill VALUES(4,4,7,1)")
                     db.execSQL("INSERT INTO ProductsOnBill VALUES(5,5,8,1)")
                     db.execSQL("INSERT INTO ProductsOnBill VALUES(6,6,9,3)")
+                    db.execSQL("INSERT INTO InventoryItem VALUES(1,'Jankomir','2020-06-30',1,'Marko Marulic')")
+                    db.execSQL("INSERT INTO InventoryItem VALUES(2,'Rijeka','2020-07-30',0,'Ivo Kustra')")
                 }
             })
             .fallbackToDestructiveMigration()

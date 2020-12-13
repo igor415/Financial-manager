@@ -91,7 +91,18 @@
             app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_menuListFragment_to_dateAndProductFragment"
-            app:destination="@id/dateAndProductFragment" />
+            app:destination="@id/dateAndProductFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_menuListFragment_to_inventoryFragment"
+            app:destination="@id/inventoryFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/listFragment"
@@ -171,4 +182,22 @@
         android:name="com.varivoda.igor.tvz.financijskimanager.ui.date_product.DateAndProductFragment"
         android:label="fragment_date_and_product"
         tools:layout="@layout/fragment_date_and_product" />
+    <fragment
+        android:id="@+id/inventoryFragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.inventory.InventoryFragment"
+        android:label="fragment_inventory"
+        tools:layout="@layout/fragment_inventory" >
+        <argument
+            android:name="text"
+            app:nullable="false"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_inventoryFragment_to_checkInventoryFragment"
+            app:destination="@id/checkInventoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkInventoryFragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.check_inventory.CheckInventoryFragment"
+        android:label="fragment_check_inventory"
+        tools:layout="@layout/fragment_check_inventory" />
 </navigation>

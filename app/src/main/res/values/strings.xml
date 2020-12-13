@@ -98,5 +98,8 @@
     <string name="stores_label">stores</string>
     <string name="other_stores_label">Other</string>
     <string name="pick_product">Pick product</string>
+    <string name="inventory">Inventory</string>
+    <string name="confirm">Confirm</string>
+    <string name="enter_info">You need to enter required info!</string>
 
 </resources>

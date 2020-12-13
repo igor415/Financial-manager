@@ -8,6 +8,7 @@ import android.content.Intent
 import androidx.lifecycle.LifecycleObserver
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.*
+import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseInventoryRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 import com.varivoda.igor.tvz.financijskimanager.service_locator.ServiceLocator
 import com.varivoda.igor.tvz.financijskimanager.workmanager.BroadcastNotification
@@ -38,6 +39,9 @@ class App: Application(), LifecycleObserver{
 
     val loginRepository: LoginRepository
         get() = ServiceLocator.provideLoginRepository(this)
+
+    val inventoryRepository: BaseInventoryRepository
+        get() = ServiceLocator.provideInventoryRepository(this)
 
     override fun onCreate() {
         super.onCreate()

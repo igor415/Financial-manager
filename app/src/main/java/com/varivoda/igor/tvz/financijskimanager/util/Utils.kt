@@ -38,6 +38,12 @@ fun getMonthAndYearFormatted(month: Int? = null, year: Int? = null): String{
 
 }
 
+fun getFullMonthFormatted(day: Int, month: Int, year: Int): String{
+    val m = getMonthWithZero(month+1)
+    val d = getMonthWithZero(day)
+    return "$d.$m.$year."
+}
+
 fun getCurrentYear(): String{
     val cal = Calendar.getInstance()
     return cal.get(Calendar.YEAR).toString()
@@ -54,4 +60,14 @@ fun getMonthWithZero(month: Int): String{
     }else{
         "0$month"
     }
+}
+
+fun getTodayDate(): String{
+    val cal = Calendar.getInstance()
+    val monthValue: Int = cal.get(Calendar.MONTH) + 1
+    val yearValue: Int = cal.get(Calendar.YEAR)
+    val dayValue: Int = cal.get(Calendar.DAY_OF_MONTH)
+    val m = getMonthWithZero(monthValue)
+    val d = getMonthWithZero(dayValue)
+    return "$d.$m.$yearValue."
 }

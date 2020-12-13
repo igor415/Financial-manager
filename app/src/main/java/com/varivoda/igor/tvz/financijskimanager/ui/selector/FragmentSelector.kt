@@ -64,6 +64,10 @@ class FragmentSelector() {
             "Poslovnica koja najbolje prodaje određeni proizvod" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToDateAndProductFragment())
             }
+            "Inventura" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToInventoryFragment("Inventura"))
+
+            }
         }
     }
 }

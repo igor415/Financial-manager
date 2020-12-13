@@ -16,6 +16,10 @@ class StoreRepository (private val database: AppDatabase) :
         return database.storesDao.getStores()
     }
 
+    override fun getAllStores(): List<Store> {
+        return database.storesDao.getAllStores()
+    }
+
     override fun storeTotalPerYear(year: String): List<PieChartEntry> {
         val list = mutableListOf<PieChartEntry>()
         val allStores = database.storesDao.getAllStores()
