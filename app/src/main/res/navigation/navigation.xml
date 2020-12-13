@@ -89,6 +89,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_menuListFragment_to_dateAndProductFragment"
+            app:destination="@id/dateAndProductFragment" />
     </fragment>
     <fragment
         android:id="@+id/listFragment"
@@ -163,4 +166,9 @@
         android:name="com.varivoda.igor.tvz.financijskimanager.ui.pie_chart.PieChartFragment"
         android:label="fragment_pie_chart"
         tools:layout="@layout/fragment_pie_chart" />
+    <fragment
+        android:id="@+id/dateAndProductFragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.date_product.DateAndProductFragment"
+        android:label="fragment_date_and_product"
+        tools:layout="@layout/fragment_date_and_product" />
 </navigation>

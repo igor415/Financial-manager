@@ -7,4 +7,10 @@ import kotlinx.coroutines.flow.Flow
 interface BaseStoreRepository {
     fun getStores(): Flow<List<Store>>
     fun storeTotalPerYear(year: String): List<PieChartEntry>
+    fun storeBestSellProduct(
+        month: String,
+        year: String,
+        productId: Int,
+        productName: String
+    ): String
 }

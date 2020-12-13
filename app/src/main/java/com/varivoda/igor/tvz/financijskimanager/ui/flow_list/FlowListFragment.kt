@@ -218,7 +218,15 @@ class FlowListFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
-        inflater.inflate(R.menu.add_menu,menu)
+        when(FlowListFragmentArgs.fromBundle(requireArguments()).text){
+            "Popis proizvoda" ->{
+                inflater.inflate(R.menu.add_menu,menu)
+            }
+            "Popis zaposlenika" -> {
+                inflater.inflate(R.menu.add_menu,menu)
+            }
+
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

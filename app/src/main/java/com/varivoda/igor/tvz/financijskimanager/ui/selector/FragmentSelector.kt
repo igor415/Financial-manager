@@ -61,6 +61,9 @@ class FragmentSelector() {
             "Udio određene poslovnice u ukupnom godišnjem profitu" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToPieChartFragment())
             }
+            "Poslovnica koja najbolje prodaje određeni proizvod" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToDateAndProductFragment())
+            }
         }
     }
 }

@@ -27,11 +27,12 @@
     </string-array>
     <string-array name="storesOptions">
         <item>Popis poslovnica</item>
-        <item>Poslovnica koja je ostvarila najveći prihod po mjesecu</item>
+        <!--item>Poslovnica koja je ostvarila najveći prihod po mjesecu</item-->
+        <item>Inventura</item>
         <item>Udio određene poslovnice u ukupnom godišnjem profitu</item>
         <item>Lokacije poslovnica</item>
         <item>Poslovnica koja najbolje prodaje određeni proizvod</item>
-        <item>Koje poslovnice su premašile mjesečni cilj zarade</item>
+        <!--item>Koje poslovnice su premašile mjesečni cilj zarade</item-->
     </string-array>
     <string-array name="productsOptions">
         <item>Popis proizvoda</item>

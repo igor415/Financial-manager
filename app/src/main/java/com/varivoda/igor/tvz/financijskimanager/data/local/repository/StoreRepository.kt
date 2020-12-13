@@ -32,4 +32,12 @@ class StoreRepository (private val database: AppDatabase) :
 
         return list
     }
+
+    override fun storeBestSellProduct(month: String, year: String, productId: Int, productName: String): String {
+        val result = database.storesDao.storeBestSellProduct(month, year, productId)
+        if(result == null){
+            return ""
+        }
+        return "$result $productName unutar izabranog vremenskog razdoblja."
+    }
 }

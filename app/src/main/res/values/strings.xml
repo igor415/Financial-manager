@@ -64,6 +64,7 @@
     <string name="no">Cancel</string>
     <string name="choose_month_year">Choose month and year </string>
     <string name="no_data_for_month_and_year">Za odabrani mjesec i godinu nema podataka!</string>
+    <string name="no_data_for_month_and_year_for_product">Za odabrani mjesec i godinu nema podataka za navedeni proizvod!</string>
     <string name="no_data_for_year">Za odabranu godinu nema podataka.</string>
 
     <!--quarter-->
@@ -96,5 +97,6 @@
     <string name="months_x_label">Months</string>
     <string name="stores_label">stores</string>
     <string name="other_stores_label">Other</string>
+    <string name="pick_product">Pick product</string>
 
 </resources>
