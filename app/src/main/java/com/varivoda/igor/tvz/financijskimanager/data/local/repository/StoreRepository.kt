@@ -1,6 +1,7 @@
 package com.varivoda.igor.tvz.financijskimanager.data.local.repository
 
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Location
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseStoreRepository
 import com.varivoda.igor.tvz.financijskimanager.model.BarChartEntry
@@ -43,5 +44,9 @@ class StoreRepository (private val database: AppDatabase) :
             return ""
         }
         return "$result $productName unutar izabranog vremenskog razdoblja."
+    }
+
+    override fun getAllLocations(): List<Location> {
+        return database.locationDao.getAllLocations()
     }
 }

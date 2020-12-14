@@ -24,8 +24,8 @@ import androidx.room.PrimaryKey
 data class Employee (
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
-    var employeeName: String? = null,
-    var employeeLastName: String? = null,
+    var employeeName: String,
+    var employeeLastName: String,
     var address: String? = null,
     var storeId: Int,
     var locationId: Int

@@ -68,6 +68,9 @@ class FragmentSelector() {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToInventoryFragment("Inventura"))
 
             }
+            "Zaposlenik koji je izdao najviše računa po mjesecu" -> {
+
+            }
         }
     }
 }

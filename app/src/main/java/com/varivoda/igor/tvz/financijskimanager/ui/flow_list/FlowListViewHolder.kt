@@ -22,7 +22,7 @@ class FlowListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun bindEmployee(employee: EmployeeDTO){
-        item.text = employee.employeeName
+        item.text = "${employee.employeeName} ${employee.employeeLastName} (${employee.storeName})"
     }
 
     fun bindCustomer(customer: Customer){

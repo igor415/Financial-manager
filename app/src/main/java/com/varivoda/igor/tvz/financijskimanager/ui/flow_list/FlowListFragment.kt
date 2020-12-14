@@ -9,26 +9,22 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.paging.map
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
+import com.varivoda.igor.tvz.financijskimanager.databinding.EmployeeItemBinding
 import com.varivoda.igor.tvz.financijskimanager.databinding.ProductPopupBinding
+import com.varivoda.igor.tvz.financijskimanager.model.EmployeeDTO
 import com.varivoda.igor.tvz.financijskimanager.ui.flow_list.loadstate.MyLoadStateAdapter
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
-import kotlinx.android.synthetic.main.fragment_flow_list.*
 import kotlinx.android.synthetic.main.fragment_flow_list.view.*
-import kotlinx.android.synthetic.main.product_popup.view.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlin.coroutines.CoroutineContext
 
 
 class FlowListFragment : Fragment() {
@@ -52,7 +48,7 @@ class FlowListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_flow_list, container, false)
         val args = FlowListFragmentArgs.fromBundle(requireArguments())
         (activity as HomeActivity).setActionBarText(args.text)
-        flowListAdapterEmployees = FlowListAdapterEmployees(flowListViewModel)
+        flowListAdapterEmployees = FlowListAdapterEmployees(changeEmployeeInfo, flowListViewModel)
         flowListAdapterCustomers = FlowListAdapterCustomers(flowListViewModel)
         flowListAdapter = FlowListAdapterProducts(changeProductInfo,flowListViewModel)
         when(args.text){
@@ -80,6 +76,18 @@ class FlowListFragment : Fragment() {
             productPopup?.setCancelable(false)
             productPopup?.setCanceledOnTouchOutside(false)
             productPopup?.show()
+        }
+
+    }
+
+    private val changeEmployeeInfo: (EmployeeDTO) -> Unit = {
+            item ->
+        flowListViewModel.apply {
+            employeePopup?.cancel()
+            employeePopup = addEmployeePopup("Change employee info",item)
+            employeePopup?.setCancelable(false)
+            employeePopup?.setCanceledOnTouchOutside(false)
+            employeePopup?.show()
         }
 
     }
@@ -242,6 +250,15 @@ class FlowListFragment : Fragment() {
                     }
 
                 }
+                "Popis zaposlenika" -> {
+                    flowListViewModel.apply {
+                        employeePopup?.cancel()
+                        employeePopup = addEmployeePopup("Insert employee")
+                        employeePopup?.setCancelable(false)
+                        employeePopup?.setCanceledOnTouchOutside(false)
+                        employeePopup?.show()
+                    }
+                }
             }
             return true
         }
@@ -254,14 +271,9 @@ class FlowListFragment : Fragment() {
     ): AlertDialog? {
         val builder = AlertDialog.Builder(context)
         val binding: ProductPopupBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.product_popup, LinearLayout(context), false)
-        //val dialogView = LayoutInflater.from(context)
-          //  .inflate(R.layout.product_popup, LinearLayout(context), false)
         binding.viewModel = flowListViewModel
         flowListViewModel.edit = item != null
         if(item != null){
-            //binding.item = item
-            //binding.root.nameInput.setText(item.productName)
-            //binding.root.price_input.setText(item.price.toString())
             flowListViewModel.nameInput = item.productName.split(":")[0]
             flowListViewModel.priceInput = item.price.toString()
             flowListViewModel.item = item
@@ -270,29 +282,78 @@ class FlowListFragment : Fragment() {
         }
         flowListViewModel.title = text
 
-
-
-        /*binding.root.apply {
-            //product_popup_title.text = text
-            /*cancel_button.setOnClickListener {
-                productPopup?.dismiss()
-                flowListViewModel.clearProductInfo()
-            }*/
-            /*ok_button.setOnClickListener {
-                if(price_input.text.toString().isNotEmpty() && nameInput.text.toString().isNotEmpty()){
-                    if(edit){
-                        flowListViewModel.insertProduct(Product(item?.id!!, nameInput.text.toString(), price_input.text.toString().toDouble()))
-                    }else{
-                        flowListViewModel.insertProduct(Product(productName = nameInput.text.toString(),price = price_input.text.toString().toDouble()))
-                    }
-                    productPopup?.dismiss()
-                }else{
-                    if(price_input.text.toString().isEmpty()) price_input.error = context.getString(R.string.field_empty)
-                    if(nameInput.text.toString().isEmpty()) nameInput.error = context.getString(R.string.field_empty)
-                }
-            }*/
-        }*/
         return builder.setView(binding.root).create()
+    }
+
+    private fun addEmployeePopup(
+        text: String,
+        item: EmployeeDTO? = null
+    ): AlertDialog? {
+        val builder = AlertDialog.Builder(context)
+        val binding: EmployeeItemBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.employee_item, LinearLayout(context), false)
+        binding.viewModel = flowListViewModel
+        flowListViewModel.editEmployee = item != null
+        if(item != null){
+            flowListViewModel.firstNameInput = item.employeeName
+            flowListViewModel.lastNameInput = item.employeeLastName
+            flowListViewModel.address = item.address ?: ""
+            flowListViewModel.employee = item
+            flowListViewModel.selectedLocation = flowListViewModel.locations.value?.find { it.locationId == item.locationId}
+            flowListViewModel.selectedStore = flowListViewModel.allStores.value?.find { it.id == item.storeId}
+            binding.location.setText(flowListViewModel.locations.value?.find { it.locationId == item.locationId}?.locationName ?: "")
+            binding.store.setText(flowListViewModel.allStores.value?.find { it.id == item.storeId}?.storeName ?: "")
+
+        }else{
+
+            flowListViewModel.employee = null
+        }
+        binding.store.setOnClickListener {
+            storeDialog(binding)
+        }
+        binding.location.setOnClickListener {
+            locationDialog(binding)
+        }
+        flowListViewModel.employeeTitle = text
+
+        return builder.setView(binding.root).create()
+    }
+
+    var storeDialog: AlertDialog? = null
+    private fun storeDialog(binding: EmployeeItemBinding) {
+        flowListViewModel.getAllStores()
+        flowListViewModel.allStores.observe(viewLifecycleOwner, Observer {
+            if(it==null) return@Observer
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            builder.setTitle(getString(R.string.select_store))
+            builder.setItems(it.map { itt -> itt.storeName }.toTypedArray()
+            ) { dialog, which ->
+                flowListViewModel.selectedStore = it[which]
+                binding.store.setText(it[which].storeName!!)
+                dialog?.dismiss() }
+            storeDialog?.cancel()
+            storeDialog = builder.create()
+            storeDialog?.show()
+        })
+
+    }
+
+    var locationDialog: AlertDialog? = null
+    private fun locationDialog(binding: EmployeeItemBinding) {
+        flowListViewModel.getAllLocations()
+        flowListViewModel.locations.observe(viewLifecycleOwner, Observer {
+            if(it==null) return@Observer
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            builder.setTitle(getString(R.string.select_location_resource))
+            builder.setItems(it.map { itt -> itt.locationName }.toTypedArray()
+            ) { dialog, which ->
+                flowListViewModel.selectedLocation = it[which]
+                binding.location.setText(it[which].locationName!!)
+                dialog?.dismiss() }
+            locationDialog?.cancel()
+            locationDialog = builder.create()
+            locationDialog?.show()
+        })
+
     }
 
 

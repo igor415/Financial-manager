@@ -10,4 +10,5 @@ interface BaseEmployeeRepository {
     fun deleteEmployee(id: Int)
     suspend fun getEmployeeTotalPerMonthAndYear(month: String, year: String): String?
     fun getEmployeeMostDaysIssuedInvoice(year: String): String?
+    fun insertEmployee(employee: Employee)
 }

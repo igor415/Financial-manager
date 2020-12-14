@@ -33,4 +33,8 @@ class EmployeeRepository(private val appDatabase: AppDatabase) :
     override fun getEmployeeMostDaysIssuedInvoice(year: String): String? {
         return appDatabase.employeeDao.getEmployeeMostDaysIssuedInvoice(year)
     }
+
+    override fun insertEmployee(employee: Employee) {
+        appDatabase.employeeDao.insertEmployee(employee)
+    }
 }

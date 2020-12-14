@@ -2,6 +2,7 @@ package com.varivoda.igor.tvz.financijskimanager.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Employee
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeDTO
@@ -13,13 +14,13 @@ interface EmployeeDao {
     @Query("SELECT * FROM Employee")
     fun getEmployees() : Flow<List<Employee>>
 
-    @Query("SELECT e.id, e.employeeName, e.employeeLastName,s.storeName FROM Employee e INNER JOIN STORE s ON s.id == storeId")
+    @Query("SELECT e.id, e.employeeName, e.employeeLastName,e.address, e.storeId, e.locationId, s.storeName FROM Employee e INNER JOIN STORE s ON s.id == storeId")
     fun getEmployeesAndStores(): Flow<List<EmployeeDTO>>
 
     @Query("DELETE FROM Employee WHERE id = :id")
     fun deleteEmployee(id: Int)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertEmployee(employee: Employee)
 
 

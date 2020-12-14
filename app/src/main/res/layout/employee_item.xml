@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.varivoda.igor.tvz.financijskimanager.ui.flow_list.FlowListViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linearContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/grey_color"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/product_popup_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@{viewModel.employeeTitle}"
+                android:textColor="@color/fontWhiteEnable"
+                android:textSize="22sp"
+                tools:text="Naslov" />
+
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/firstNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:hint="First Name"
+            app:error="@{viewModel.errorFieldName}"
+            android:padding="10dp"
+            android:text="@={viewModel.firstNameInput}"
+            android:background="@drawable/edittext_background"
+            app:layout_constraintBottom_toTopOf="@+id/lastNameInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearContainer"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <EditText
+            android:id="@+id/lastNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:padding="10dp"
+            android:hint="Last name"
+            app:error="@{viewModel.employeeErrorFieldPrice}"
+            android:text="@={viewModel.lastNameInput}"
+            android:background="@drawable/edittext_background"
+            app:layout_constraintBottom_toTopOf="@+id/address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/firstNameInput"/>
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:padding="10dp"
+            android:hint="Address"
+            app:error="@{viewModel.employeeErrorFieldPrice}"
+            android:text="@={viewModel.address}"
+            android:background="@drawable/edittext_background"
+            app:layout_constraintBottom_toTopOf="@+id/store"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lastNameInput"/>
+
+        <EditText
+            android:id="@+id/store"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:padding="10dp"
+            android:hint="Store"
+            android:focusableInTouchMode="false"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/edittext_background"
+            app:layout_constraintBottom_toTopOf="@+id/location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/address"/>
+
+        <EditText
+            android:id="@+id/location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:padding="10dp"
+            android:hint="Location"
+            android:focusableInTouchMode="false"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/edittext_background"
+            app:layout_constraintBottom_toTopOf="@+id/ok_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/store"/>
+
+
+        <Button
+            android:id="@+id/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="20dp"
+            android:text="Confirm"
+            android:onClick="@{() -> viewModel.onEmployeeConfirmClicked()}"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/cancel_button" />
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="Cancel"
+            android:onClick="@{() -> viewModel.clearEmployeeInfo()}"
+            android:background="@android:color/transparent"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ok_button"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

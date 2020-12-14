@@ -4,9 +4,7 @@ import android.app.AlertDialog
 import androidx.lifecycle.*
 import androidx.paging.*
 import com.varivoda.igor.tvz.financijskimanager.R
-import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Customer
-import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
-import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.*
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseCustomerRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseEmployeeRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
@@ -31,7 +29,7 @@ class FlowListViewModel(private val storeRepository: BaseStoreRepository,
         .onEach { it.map { product -> product.productName = "${product.productName} : ${product.price} kn" } } .flowOn(Dispatchers.Main).conflate()
 
     val employees: Flow<List<EmployeeDTO>> = employeeRepository.getEmployeesAndStores()
-        .onEach { it.map { employee -> employee.employeeName = "${employee.employeeName} ${employee.employeeLastName} (${employee.storeName})" } }
+        //.onEach { it.map { employee -> employee.employeeName = "${employee.employeeName} ${employee.employeeLastName} (${employee.storeName})" } }
         .flowOn(Dispatchers.Default).conflate()
 
     val customers: Flow<List<Customer>> = customerRepository.getAllCustomers()
@@ -40,6 +38,13 @@ class FlowListViewModel(private val storeRepository: BaseStoreRepository,
     val stores: Flow<List<Store>> = storeRepository.getStores()
         .flowOn(Dispatchers.Default).conflate()
 
+    var locations = MutableLiveData<List<Location>>()
+    var allStores = MutableLiveData<List<Store>>()
+
+    init {
+        getAllLocations()
+        getAllStores()
+    }
     
 
     fun deleteCustomer(id: Int){
@@ -54,6 +59,12 @@ class FlowListViewModel(private val storeRepository: BaseStoreRepository,
             employeeRepository.deleteEmployee(id)
         }
 
+    }
+
+    fun insertEmployee(employee: Employee){
+        viewModelScope.launch(Dispatchers.IO) {
+            employeeRepository.insertEmployee(employee)
+        }
     }
 
     fun insertProduct(product: Product){
@@ -140,4 +151,61 @@ class FlowListViewModel(private val storeRepository: BaseStoreRepository,
             if(nameInput.isEmpty()) errorFieldName = productPopup?.context?.getString(R.string.field_empty)
         }
     }
+
+
+    /***employee popup***/
+    var firstNameInput: String = ""
+    var lastNameInput: String = ""
+    var address: String = ""
+    var employeeTitle: String = ""
+    var editEmployee: Boolean = false
+    var employee: EmployeeDTO? = null
+    var employeePopup: AlertDialog? = null
+    var employeeErrorFieldPrice: String? = null
+    var employeeErrorFieldName: String? = null
+    var selectedStore: Store? = null
+    var selectedLocation: Location? = null
+    var selectedStoreName: String = ""
+    var selectedLocationName: String = ""
+
+    fun clearEmployeeInfo() {
+        firstNameInput = ""
+        lastNameInput = ""
+        address = ""
+        employeeTitle = ""
+        employeePopup?.dismiss()
+        selectedStore = null
+        selectedLocation = null
+        selectedStoreName = ""
+        selectedLocationName = ""
+    }
+
+    fun onEmployeeConfirmClicked(){
+        if(firstNameInput.isNotEmpty() && lastNameInput.isNotEmpty() && selectedLocation != null && selectedStore != null){
+            if(editEmployee){
+                insertEmployee(Employee(employee!!.id,firstNameInput,lastNameInput,address,selectedStore!!.id,selectedLocation!!.locationId))
+            }else{
+                insertEmployee(Employee(employeeName = firstNameInput, employeeLastName = lastNameInput, address = address, storeId = selectedStore!!.id, locationId = selectedLocation!!.locationId))
+            }
+            clearEmployeeInfo()
+        }else{
+            if(priceInput.isEmpty()) employeeErrorFieldPrice = productPopup?.context?.getString(R.string.field_empty)
+            if(nameInput.isEmpty()) employeeErrorFieldName = productPopup?.context?.getString(R.string.field_empty)
+        }
+    }
+
+
+    fun getAllLocations(){
+        viewModelScope.launch(Dispatchers.IO) {
+            locations.postValue(storeRepository.getAllLocations())
+        }
+    }
+
+    fun getAllStores(){
+        viewModelScope.launch(Dispatchers.IO) {
+            allStores.postValue(storeRepository.getAllStores())
+        }
+    }
+
+
 }
