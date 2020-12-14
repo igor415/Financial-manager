@@ -14,6 +14,9 @@ interface EmployeeDao {
     @Query("SELECT * FROM Employee")
     fun getEmployees() : Flow<List<Employee>>
 
+    @Query("SELECT * FROM Employee")
+    fun getAll() : List<Employee>
+
     @Query("SELECT e.id, e.employeeName, e.employeeLastName,e.address, e.storeId, e.locationId, s.storeName FROM Employee e INNER JOIN STORE s ON s.id == storeId")
     fun getEmployeesAndStores(): Flow<List<EmployeeDTO>>
 
@@ -41,4 +44,10 @@ interface EmployeeDao {
                 order by COUNT(distinct b.date) desc limit 1) as x"""
     )
     fun getEmployeeMostDaysIssuedInvoice(year: String): String?
+
+    @Query("""select COUNT(b.id) from Bill b
+        WHERE strftime('%m',b.date) = :month and strftime('%Y',b.date) = :year
+        and b.employeeId = :id
+    """)
+    fun getEmployeeTotalInvoicesPerMonth(month: String, year: String, id: Int): String?
 }

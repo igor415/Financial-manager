@@ -69,8 +69,10 @@ class FragmentSelector() {
 
             }
             "Zaposlenik koji je izdao najviše računa po mjesecu" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToHorizontalBarChartFragment())
 
             }
+
         }
     }
 }

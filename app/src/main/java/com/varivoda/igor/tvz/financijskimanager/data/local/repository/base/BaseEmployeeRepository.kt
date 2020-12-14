@@ -2,6 +2,7 @@ package com.varivoda.igor.tvz.financijskimanager.data.local.repository.base
 
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Employee
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeDTO
+import com.varivoda.igor.tvz.financijskimanager.model.HorizontalBarChartEntry
 import kotlinx.coroutines.flow.Flow
 
 interface BaseEmployeeRepository {
@@ -11,4 +12,5 @@ interface BaseEmployeeRepository {
     suspend fun getEmployeeTotalPerMonthAndYear(month: String, year: String): String?
     fun getEmployeeMostDaysIssuedInvoice(year: String): String?
     fun insertEmployee(employee: Employee)
+    fun getHorizontalBarChartData(dateSelected: String): List<HorizontalBarChartEntry>
 }

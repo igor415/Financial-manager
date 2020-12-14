@@ -63,7 +63,6 @@ class BarChartFragment : Fragment() {
         barChartViewModel.barChartStatistics.value?.forEach {
             firstEntries.add(BarEntry(it.month.toFloat(),it.total.toFloat()))
         }
-
         val barDataSet = BarDataSet(firstEntries,getString(R.string.months_label))
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS.toList())
         barDataSet.valueTextColor = Color.BLACK

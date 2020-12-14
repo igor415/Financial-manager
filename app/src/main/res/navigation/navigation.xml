@@ -103,6 +103,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_menuListFragment_to_horizontalBarChartFragment"
+            app:destination="@id/horizontalBarChartFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/listFragment"
@@ -200,4 +207,9 @@
         android:name="com.varivoda.igor.tvz.financijskimanager.ui.check_inventory.CheckInventoryFragment"
         android:label="fragment_check_inventory"
         tools:layout="@layout/fragment_check_inventory" />
+    <fragment
+        android:id="@+id/horizontalBarChartFragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.horizontal_bar_chart.HorizontalBarChartFragment"
+        android:label="fragment_horizontal_bar_chart"
+        tools:layout="@layout/fragment_horizontal_bar_chart" />
 </navigation>
