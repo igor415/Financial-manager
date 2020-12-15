@@ -26,7 +26,8 @@ class DateAndProductFragment : Fragment() {
 
     private val dateAndProductViewModel by viewModels<DateAndProductViewModel> {
         DateAndProductViewModelFactory((requireContext().applicationContext as App).storeRepository,
-            (requireContext().applicationContext as App).productRepository)
+            (requireContext().applicationContext as App).productRepository,
+            (requireContext().applicationContext as App).employeeRepository)
     }
     private var productDialog: AlertDialog? = null
 
@@ -41,13 +42,34 @@ class DateAndProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val args = DateAndProductFragmentArgs.fromBundle(requireArguments())
+        when(args.text){
+            "Poslovnica koja najbolje prodaje određeni proizvod" -> {
+                observeResult()
+            }
+            "Zaposlenik koji je prodao najveću količinu nekog proizvoda po mjesecu" ->{
+                observeEmployeeResult()
+            }
+        }
         observeDateChange()
         changePeriod.setOnClickListener {
             MonthYearDialog().getDialog(activity as HomeActivity,changeDate)
         }
-        observeResult()
+
         pickProduct.setOnClickListener { productDialog() }
         observeProductSelected()
+    }
+
+    private fun observeEmployeeResult() {
+        dateAndProductViewModel.employeeResult.observe(viewLifecycleOwner, Observer {
+            if(it==null) return@Observer
+            if(it==""){
+                resultTextView.text = getString(R.string.no_data_for_month_and_year_for_product)
+            }else{
+                resultTextView.text = it
+            }
+
+        })
     }
 
     private fun observeProductSelected() {

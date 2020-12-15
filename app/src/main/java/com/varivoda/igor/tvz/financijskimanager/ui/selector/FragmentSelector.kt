@@ -62,15 +62,18 @@ class FragmentSelector() {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToPieChartFragment())
             }
             "Poslovnica koja najbolje prodaje određeni proizvod" -> {
-                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToDateAndProductFragment())
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToDateAndProductFragment("Poslovnica koja najbolje prodaje određeni proizvod"))
             }
             "Inventura" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToInventoryFragment("Inventura"))
 
             }
-            "Zaposlenik koji je izdao najviše računa po mjesecu" -> {
+            "Grafički prikaz izdanih računa po zaposleniku" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToHorizontalBarChartFragment())
 
+            }
+            "Zaposlenik koji je prodao najveću količinu nekog proizvoda po mjesecu" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToDateAndProductFragment("Zaposlenik koji je prodao najveću količinu nekog proizvoda po mjesecu"))
             }
 
         }

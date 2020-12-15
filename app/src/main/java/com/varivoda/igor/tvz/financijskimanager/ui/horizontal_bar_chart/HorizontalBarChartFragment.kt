@@ -41,7 +41,7 @@ class HorizontalBarChartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadChart()
-
+        (activity as HomeActivity).setActionBarText("Zaposlenici - statistika")
         timePeriod.text = getString(R.string.time_period, getMonthAndYearFormatted())
         changePeriod.setOnClickListener {
             MonthYearDialog().getDialog(activity as HomeActivity,changeDate)

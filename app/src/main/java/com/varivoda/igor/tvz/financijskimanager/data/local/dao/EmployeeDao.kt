@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Employee
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeDTO
+import com.varivoda.igor.tvz.financijskimanager.model.EmployeeProductDTO
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -50,4 +51,19 @@ interface EmployeeDao {
         and b.employeeId = :id
     """)
     fun getEmployeeTotalInvoicesPerMonth(month: String, year: String, id: Int): String?
+
+    @Query(
+        """select x.employeeName, x.employeeLastName, x.num  FROM 
+                (SELECT e.id, e.employeeName, e.employeeLastName, SUM(pob.quantity) as num 
+                            FROM Employee e JOIN Bill b ON e.id = b.employeeId JOIN ProductsOnBill pob
+                ON b.id = pob.billId JOIN Product pr ON pr.id =pob.productId 
+                            WHERE strftime('%m',b.date)= :month and strftime('%Y',b.date) = :year and pr.id = :productId
+                GROUP BY e.id, e.employeeName, e.employeeLastName 
+                           ORDER BY SUM(pob.quantity) DESC LIMIT 1) AS x;"""
+    )
+    fun employeeMostProductSell(
+        month: String,
+        year: String,
+        productId: Int
+    ): EmployeeProductDTO?
 }

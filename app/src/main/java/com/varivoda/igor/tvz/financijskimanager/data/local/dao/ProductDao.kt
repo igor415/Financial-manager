@@ -49,7 +49,7 @@ interface ProductDao {
     fun productPerQuarter(year: String): List<ProductQuarterDTO>
 
     @Query(
-        """SELECT p.id,p.productName,SUM(pob.quantity) as price,p.categoryId 
+        """SELECT p.id,p.productName,SUM(pob.quantity) as price,p.categoryId , p.image
                 FROM Product p JOIN ProductsOnBill pob ON p.id = pob.productId 
                 JOIN Bill b ON b.id = pob.billId where strftime('%m',b.date) = :month 
                 and strftime('%Y',b.date) = :year 

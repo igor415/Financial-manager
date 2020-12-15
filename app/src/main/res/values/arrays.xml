@@ -45,9 +45,9 @@
     <string-array name="employeesOptions">
         <item>Popis zaposlenika</item>
         <item>Zaposlenik koji je uprihodio najveću svotu novca po mjesecu</item>
-        <item>Zaposlenik koji je izdao najviše računa po mjesecu</item>
-        <item>Zaposlenik koji je najveći broj dana zaredom izdao račun</item>
-        <item>Zaposlenici koji su ostvarili najveći prihod po mjesecu i županiji</item>
+        <item>Grafički prikaz izdanih računa po zaposleniku</item>
+        <!--item>Zaposlenik koji je najveći broj dana zaredom izdao račun</item-->
+        <!--item>Zaposlenici koji su ostvarili najveći prihod po mjesecu i županiji</item-->
         <item>Zaposlenik koji je prodao najveću količinu nekog proizvoda po mjesecu</item>
     </string-array>
 
