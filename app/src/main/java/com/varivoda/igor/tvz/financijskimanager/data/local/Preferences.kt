@@ -15,6 +15,18 @@ class Preferences(appContext: Context) {
 
     fun getCachedPassword(): String = sharedPreferences.getString("password key","") ?: ""
 
+    fun setCachedUsername(username: String){
+        sharedPreferences.edit().putString("username key",username).apply()
+    }
+
+    fun setCachedPassword(username: String){
+        sharedPreferences.edit().putString("password key",username).apply()
+    }
+
+    fun setRememberMe(b: Boolean){
+        sharedPreferences.edit().putBoolean("remember me",b).apply()
+    }
+
     fun getCachedRememberMeOption(): Boolean = sharedPreferences.getBoolean("remember me",false)
 
     fun getVibrationsOption(): Boolean = appPreferences.getBoolean("vibrations key",true)

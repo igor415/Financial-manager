@@ -47,27 +47,19 @@ fun Bitmap.bitmapToBase64(): String? {
     return Base64.encodeToString(b, Base64.DEFAULT)
 }
 
-fun String.toSHA1(): String? {
-    return try {
-        val digest = MessageDigest.getInstance("SHA-1")
-        val textBytes = this.toByteArray(charset("iso-8859-1"))
-        digest.update(textBytes, 0, textBytes.size)
-        val sha1hash = digest.digest()
-        convertToHex(sha1hash)
-    } catch (e: Exception) {
-        null
+fun String.toSha2(): String {
+    val HEX_CHARS = "0123456789ABCDEF"
+    val bytes = MessageDigest
+        .getInstance("SHA-256")
+        .digest(this.toByteArray())
+    val result = StringBuilder(bytes.size * 2)
+
+    bytes.forEach {
+        val i = it.toInt()
+        result.append(HEX_CHARS[i shr 4 and 0x0f])
+        result.append(HEX_CHARS[i and 0x0f])
     }
+
+    return result.toString()
 }
 
-private fun convertToHex(data: ByteArray): String? {
-    val buf = java.lang.StringBuilder()
-    for (b in data) {
-        var halfbyte: Int = b.toInt() shr 4 and 0x0F
-        var two_halfs = 0
-        do {
-            buf.append(if (halfbyte in 0..9) ('0'.toInt() + halfbyte).toChar() else ('a'.toInt() + (halfbyte - 10)).toChar())
-            halfbyte = (b and 0x0F).toInt()
-        } while (two_halfs++ < 1)
-    }
-    return buf.toString()
-}

@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.databinding.FragmentHomeBinding
@@ -31,7 +32,6 @@ import java.util.*
 
 class HomeFragment : Fragment() {
 
-    private lateinit var navController: NavController
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var homeViewModelFactory: HomeViewModelFactory
     private lateinit var binding: FragmentHomeBinding
@@ -48,8 +48,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navController = Navigation.findNavController(view)
-        homeViewModelFactory = HomeViewModelFactory(navController)
+        homeViewModelFactory = HomeViewModelFactory(findNavController())
         homeViewModel = ViewModelProvider(requireActivity(),homeViewModelFactory).get(HomeViewModel::class.java)
         binding.viewModel = homeViewModel
         //(activity as HomeActivity).setActionBarText(getString(R.string.home_title))

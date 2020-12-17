@@ -26,8 +26,8 @@ class LoginViewModel(preferences: Preferences,
         doAnimation.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             delay(1300)
-            //loginSuccess.postValue(loginRepository.login(currentUsername,currentPassword))
-            loginSuccess.postValue(NetworkResult.Success(true))
+            loginSuccess.postValue(loginRepository.login(currentUsername,currentPassword))
+            //loginSuccess.postValue(NetworkResult.Success(true))
         }
 
     }

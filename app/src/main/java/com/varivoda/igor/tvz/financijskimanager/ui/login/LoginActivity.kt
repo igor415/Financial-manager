@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
+import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.databinding.ActivityLoginBinding
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import com.varivoda.igor.tvz.financijskimanager.util.NetworkResult
@@ -22,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private var preferences: Preferences? = null
     //private lateinit var loginViewModel: LoginViewModel
     //private lateinit var loginViewModelFactory: LoginViewModelFactory
     private val loginViewModel by viewModels<LoginViewModel> {
@@ -37,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
         binding.viewModel = loginViewModel
         constraintSetLoginProgress.clone(this,R.layout.activity_login_alt)
         observeLoginSuccess()
+        preferences = Preferences(applicationContext)
         doAnimation()
     }
 
@@ -57,6 +60,11 @@ class LoginActivity : AppCompatActivity() {
             if(it==null) return@Observer
             when(it){
                 is NetworkResult.Success -> {
+                    if(loginViewModel.rememberMe){
+                        preferences?.setCachedPassword(loginViewModel.currentPassword)
+                        preferences?.setCachedUsername(loginViewModel.currentUsername)
+                        preferences?.setRememberMe(loginViewModel.rememberMe)
+                    }
                     startActivity(Intent(this,HomeActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
                 }
                 is NetworkResult.NoNetworkConnection -> {
