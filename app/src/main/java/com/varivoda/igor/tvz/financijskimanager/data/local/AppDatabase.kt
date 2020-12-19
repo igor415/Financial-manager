@@ -9,7 +9,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.dao.*
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.*
 
 @Database(entities = [Product::class,Location::class,County::class, Store::class, Bill::class,
-                        Customer::class,Employee::class,ProductsOnBill::class, InventoryItem::class],version = 3,exportSchema = false)
+                        Customer::class,Employee::class,ProductsOnBill::class, InventoryItem::class, Category::class],version = 4,exportSchema = false)
 abstract class AppDatabase: RoomDatabase(){
 
     abstract val productDao: ProductDao
@@ -21,6 +21,7 @@ abstract class AppDatabase: RoomDatabase(){
     abstract val productOnBillDao: ProductOnBillDao
     abstract val locationDao: LocationDao
     abstract val inventoryDao: InventoryDao
+    abstract val categoryDao: CategoryDao
 
     companion object{
         @Volatile

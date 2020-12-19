@@ -5,7 +5,8 @@
         <item>Prodavač koji je ostvario najveći postotak prodaje po kvartalima godine</item>
         <item>Grafički prikaz cjelokupne zarade po mjesecima</item>
         <item>Poslovnica koja je ostvarila rast ili pad prodaje u odnosu na prvi i drugi dio godine</item>
-        <item>Kupci koji su najviše potrošili po kvartalima godine</item>
+        <item>Top 3 tipova proizvoda koji su se najrjeđe kupovali po godini</item>
+        <!--item>Kupci koji su najviše potrošili po kvartalima godine</item-->
         <item>Prodavači koji su uprihodili više novca od određene cifre</item>
         <!--item>Prodavač koji je najviše dana u godini izdao račun</item-->
     </string-array>

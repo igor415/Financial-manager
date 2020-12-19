@@ -24,20 +24,18 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private var preferences: Preferences? = null
-    //private lateinit var loginViewModel: LoginViewModel
-    //private lateinit var loginViewModelFactory: LoginViewModelFactory
     private val loginViewModel by viewModels<LoginViewModel> {
         LoginViewModelFactory((applicationContext as App).preferences,(applicationContext as App).loginRepository)
     }
     private val constraintSetLoginProgress = ConstraintSet()
+    private val constraintFirst = ConstraintSet()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_login)
-        //loginViewModelFactory = LoginViewModelFactory(Preferences(this))
-        //loginViewModel = ViewModelProvider(this,loginViewModelFactory).get(LoginViewModel::class.java)
         binding.viewModel = loginViewModel
         constraintSetLoginProgress.clone(this,R.layout.activity_login_alt)
+        constraintFirst .clone(this,R.layout.activity_login)
         observeLoginSuccess()
         preferences = Preferences(applicationContext)
         doAnimation()
@@ -55,6 +53,14 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
+    private fun backToFirstLayout(){
+        val transition = ChangeBounds()
+        transition.interpolator = AnticipateOvershootInterpolator(0.5f)
+        TransitionManager.beginDelayedTransition(root,transition)
+        constraintFirst.applyTo(root)
+        guidelineHorizontal.setGuidelinePercent(0.47f)
+    }
+
     private fun observeLoginSuccess() {
         loginViewModel.loginSuccess.observe(this, Observer {
             if(it==null) return@Observer
@@ -69,6 +75,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 is NetworkResult.NoNetworkConnection -> {
                     showSelectedToast(this,getString(R.string.no_internet))
+                    backToFirstLayout()
                 }
                 is NetworkResult.Error -> {
                     if(it.exception.message=="401"){
@@ -76,10 +83,15 @@ class LoginActivity : AppCompatActivity() {
                     }else{
                         showSelectedToast(this,getString(R.string.general_error))
                     }
-
+                    listOf("username key","password key","remember me").map { item -> preferences?.clear(item) }
+                    backToFirstLayout()
                 }
 
-                else -> showSelectedToast(this,getString(R.string.general_error))
+                else -> {
+                    showSelectedToast(this,getString(R.string.general_error))
+                    listOf("username key","password key","remember me").map { item ->preferences?.clear(item) }
+                    backToFirstLayout()
+                }
             }
             loginViewModel.loginSuccess.value = null
         })

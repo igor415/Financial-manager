@@ -80,7 +80,6 @@ class HomeActivity : AppCompatActivity() {
             setTitle(getString(R.string.log_out_message))
             setPositiveButton(getString(R.string.yes)
             ) { dialog, _ ->
-                listOf("username key","password key","remember me").map { preferences.clear(it) }
                 returnToLogin()
                 dialog.dismiss()
             }

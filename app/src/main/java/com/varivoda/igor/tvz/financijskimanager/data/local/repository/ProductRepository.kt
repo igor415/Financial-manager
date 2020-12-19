@@ -8,6 +8,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 import com.varivoda.igor.tvz.financijskimanager.model.BarChartEntry
+import com.varivoda.igor.tvz.financijskimanager.model.CategoryDTO
 import com.varivoda.igor.tvz.financijskimanager.model.ProductQuarterDTO
 import com.varivoda.igor.tvz.financijskimanager.model.StatisticsEntry
 import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
@@ -92,6 +93,31 @@ class ProductRepository(private val database: AppDatabase) :
         }
 
         return list
+    }
+
+    override fun getTop3CategoriesAtLeastSold(month: String, year: String,storeId: Int): List<CategoryDTO> {
+        val allCategories = database.categoryDao.getAllCategories()
+        val categoriesDTO = mutableListOf<CategoryDTO>()
+        allCategories.forEach {
+            val count = if(storeId == -1){
+                if(month == "-1"){
+                    database.categoryDao.getTop3CategoriesAtLeastSoldInOnlyYear(year, it.id)
+                }else{
+                    database.categoryDao.getTop3CategoriesAtLeastSoldInYearAndMonth(month, year, it.id)
+                }
+
+            }else{
+                if(month == "-1") {
+                    database.categoryDao.getTop3CategoriesAtLeastSoldInOnlyYearWithStore(year, it.id, storeId)
+                }else{
+                    database.categoryDao.getTop3CategoriesAtLeastSoldInYearAndMonthWithStore(month, year, it.id, storeId)
+                }
+
+            }
+
+            categoriesDTO.add(CategoryDTO(it.id,it.name,count))
+        }
+        return categoriesDTO.sortedBy { it.count }.take(3)
     }
 
 
