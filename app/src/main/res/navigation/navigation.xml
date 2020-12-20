@@ -112,7 +112,18 @@
             app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_menuListFragment_to_top3Fragment"
-            app:destination="@id/top3Fragment" />
+            app:destination="@id/top3Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_menuListFragment_to_radarChartFragment"
+            app:destination="@id/radarChartFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/listFragment"
@@ -226,4 +237,9 @@
         android:name="com.varivoda.igor.tvz.financijskimanager.ui.top3.Top3Fragment"
         android:label="fragment_top3"
         tools:layout="@layout/fragment_top3" />
+    <fragment
+        android:id="@+id/radarChartFragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.radar_chart.RadarChartFragment"
+        android:label="fragment_radar_chart"
+        tools:layout="@layout/fragment_radar_chart" />
 </navigation>

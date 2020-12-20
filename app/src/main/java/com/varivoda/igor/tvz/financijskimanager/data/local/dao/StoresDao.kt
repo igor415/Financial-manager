@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
+import com.varivoda.igor.tvz.financijskimanager.model.AttendanceForStore
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -42,4 +43,12 @@ interface StoresDao {
         year: String,
         productId: Int
     ): String?
+
+    @Query("""SELECT COUNT(b.id) FROM Bill b WHERE b.storeId = :id and strftime('%Y',b.date) = :year
+        and strftime('%m',b.date) = :month and strftime('%d',b.date) = :day
+    """)
+    fun getAttendanceForPeriod(id: Int, year: String, month: String, day: String): Int
+
+    @Query("SELECT COUNT(*) FROM Bill")
+    fun getBillCount(): Int
 }

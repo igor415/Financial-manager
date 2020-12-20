@@ -75,9 +75,13 @@ class FragmentSelector() {
             "Zaposlenik koji je prodao najveću količinu nekog proizvoda po mjesecu" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToDateAndProductFragment("Zaposlenik koji je prodao najveću količinu nekog proizvoda po mjesecu"))
             }
-            "Top 3 tipova proizvoda koji su se najrjeđe kupovali po godini" ->
+            "Top 3 tipova proizvoda koji su se najrjeđe prodavali" ->
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToTop3Fragment())
 
+            "Top 4 najčešće posjećene trgovine tijekom izabranog razdoblja" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToRadarChartFragment())
+            }
         }
+
     }
 }

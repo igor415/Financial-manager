@@ -4,8 +4,10 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Location
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseStoreRepository
+import com.varivoda.igor.tvz.financijskimanager.model.AttendanceForStore
 import com.varivoda.igor.tvz.financijskimanager.model.BarChartEntry
 import com.varivoda.igor.tvz.financijskimanager.model.PieChartEntry
+import com.varivoda.igor.tvz.financijskimanager.util.CustomPeriod
 import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 import kotlinx.coroutines.flow.Flow
 import java.util.*
@@ -39,14 +41,88 @@ class StoreRepository (private val database: AppDatabase) :
     }
 
     override fun storeBestSellProduct(month: String, year: String, productId: Int, productName: String): String {
-        val result = database.storesDao.storeBestSellProduct(month, year, productId)
-        if(result == null){
-            return ""
-        }
+        val result = database.storesDao.storeBestSellProduct(month, year, productId) ?: return ""
         return "$result $productName unutar izabranog vremenskog razdoblja."
     }
 
     override fun getAllLocations(): List<Location> {
         return database.locationDao.getAllLocations()
+    }
+
+    override fun getAttendanceForPeriod(enum: CustomPeriod, year: String): List<AttendanceForStore> {
+        return when(enum){
+            CustomPeriod.CHRISTMAS -> getChristmasData(year).sortedByDescending{ it.number }.take(5)
+            CustomPeriod.BLACK_FRIDAY -> getBlackFridayData(year).sortedByDescending{ it.number }.take(5)
+            CustomPeriod.EASTER -> getEasterData(year).sortedByDescending{ it.number }.take(5)
+            CustomPeriod.SCHOOL_START -> getSchoolData(year).sortedByDescending{ it.number }.take(5)
+        }
+    }
+
+    private fun getEasterData(year: String): MutableList<AttendanceForStore> {
+        val all = database.storesDao.getAllStores()
+        val result = mutableListOf<AttendanceForStore>()
+        all.forEach {
+            var total = 0
+            for (i in 1 until 32){
+                total += if(i < 10){
+                    database.storesDao.getAttendanceForPeriod(it.id,year,"04", getMonthWithZero(i))
+                }else{
+                    database.storesDao.getAttendanceForPeriod(it.id,year,"04",i.toString())
+                }
+            }
+            result.add(AttendanceForStore(it.storeName!!,total))
+        }
+        return result
+    }
+
+    private fun getBlackFridayData(year: String): MutableList<AttendanceForStore> {
+        val all = database.storesDao.getAllStores()
+        val result = mutableListOf<AttendanceForStore>()
+        all.forEach {
+            var total = 0
+            for (i in 27 until 31){
+                val prvo = database.storesDao.getAttendanceForPeriod(it.id, year, "11", i.toString())
+                total += prvo
+            }
+            result.add(AttendanceForStore(it.storeName!!,total))
+        }
+        return result
+    }
+
+    private fun getSchoolData(year: String): MutableList<AttendanceForStore>{
+        val all = database.storesDao.getAllStores()
+        val result = mutableListOf<AttendanceForStore>()
+        all.forEach {
+            var total = 0
+                for (i in 15 until 32){
+                    total += database.storesDao.getAttendanceForPeriod(it.id,year,"08",i.toString())
+                }
+
+            for (i in 1 until 16){
+                total += if(i < 10){
+                    database.storesDao.getAttendanceForPeriod(it.id,year,"09", getMonthWithZero(i))
+                }else{
+                    database.storesDao.getAttendanceForPeriod(it.id,year,"09",i.toString())
+                }
+
+            }
+
+            result.add(AttendanceForStore(it.storeName!!,total))
+        }
+
+        return result
+    }
+
+    private fun getChristmasData(year: String): MutableList<AttendanceForStore>{
+        val all = database.storesDao.getAllStores()
+        val result = mutableListOf<AttendanceForStore>()
+        all.forEach {
+            var total = 0
+                for (i in 15 until 32){
+                    total += database.storesDao.getAttendanceForPeriod(it.id,year,"12",i.toString())
+                }
+            result.add(AttendanceForStore(it.storeName!!,total))
+        }
+        return result
     }
 }

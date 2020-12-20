@@ -105,5 +105,6 @@
     <string name="select_location_resource">Select location</string>
     <string name="category">Category</string>
     <string name="use_month_and_year_selection">Use month and year selection</string>
+    <string name="select_discount_period">Select discount period</string>
 
 </resources>
