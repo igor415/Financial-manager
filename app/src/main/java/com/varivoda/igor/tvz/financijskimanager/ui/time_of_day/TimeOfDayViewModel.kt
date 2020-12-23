@@ -1,37 +1,35 @@
-package com.varivoda.igor.tvz.financijskimanager.ui.top3
+package com.varivoda.igor.tvz.financijskimanager.ui.time_of_day
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
-import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseStoreRepository
-import com.varivoda.igor.tvz.financijskimanager.model.CategoryDTO
+import com.varivoda.igor.tvz.financijskimanager.model.TimeOfDayData
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentMonth
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentYear
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class Top3ViewModel(private val productRepository: BaseProductRepository,
-                    private val storeRepository: BaseStoreRepository): ViewModel(){
+class TimeOfDayViewModel (private val storeRepository: BaseStoreRepository) : ViewModel(){
 
-    var top3Categories = MediatorLiveData<List<CategoryDTO>>()
+    var timeOfDayData = MediatorLiveData<List<TimeOfDayData>>()
     var allStores = MutableLiveData<List<Store>>()
     var currentStore = MutableLiveData<Store>()
     var monthAndYear = MutableLiveData<Pair<String, String>>()
 
     init {
-        top3Categories.addSource(currentStore){ getTop3Categories()}
-        top3Categories.addSource(monthAndYear){ getTop3Categories()}
+        timeOfDayData.addSource(currentStore){ getTimeOfDayData()}
+        timeOfDayData.addSource(monthAndYear){ getTimeOfDayData()}
         getAllStores()
         monthAndYear.value = Pair(getCurrentMonth(), getCurrentYear())
     }
 
-    fun getTop3Categories(){
+    fun getTimeOfDayData(){
         viewModelScope.launch(Dispatchers.IO) {
             if(currentStore.value != null && monthAndYear.value != null){
-                top3Categories.postValue(productRepository.getTop3CategoriesAtLeastSold(monthAndYear.value!!.first, monthAndYear.value!!.second, currentStore.value!!.id))
+                timeOfDayData.postValue(storeRepository.getChartDataForTimeOfDay(monthAndYear.value!!.first, monthAndYear.value!!.second, currentStore.value!!))
             }
 
         }

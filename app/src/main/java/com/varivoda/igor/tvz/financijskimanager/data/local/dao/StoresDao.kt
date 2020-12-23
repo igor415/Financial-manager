@@ -49,6 +49,14 @@ interface StoresDao {
     """)
     fun getAttendanceForPeriod(id: Int, year: String, month: String, day: String): Int
 
+    @Query(""" SELECT COUNT(b.id) FROM Bill b WHERE b.storeId = :id and strftime('%Y',b.date) = :year
+        and strftime('%m',b.date) = :month and strftime('%H',b.time) >= :bottomValue and strftime('%H',b.time) < :topValue""")
+    fun getAttendanceForTimeOfDay(month: String, year: String, id: Int, topValue: String, bottomValue: String): Int
+
+    @Query(""" SELECT COUNT(b.id) FROM Bill b WHERE strftime('%Y',b.date) = :year
+        and strftime('%m',b.date) = :month and strftime('%H',b.time) >= :bottomValue and strftime('%H',b.time) < :topValue""")
+    fun getAttendanceForTimeOfDayWithoutStore(month: String, year: String, topValue: String, bottomValue: String): Int
+
     @Query("SELECT COUNT(*) FROM Bill")
     fun getBillCount(): Int
 }

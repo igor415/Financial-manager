@@ -1,31 +1,33 @@
-package com.varivoda.igor.tvz.financijskimanager.ui.top3
+package com.varivoda.igor.tvz.financijskimanager.ui.time_of_day
 
 import android.app.AlertDialog
-import android.content.pm.ActivityInfo
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
-import com.varivoda.igor.tvz.financijskimanager.util.*
+import com.varivoda.igor.tvz.financijskimanager.util.MonthYearDialog
+import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 import kotlinx.android.synthetic.main.fragment_horizontal_bar_chart.*
-import kotlinx.android.synthetic.main.fragment_horizontal_bar_chart.changePeriod
-import kotlinx.android.synthetic.main.fragment_horizontal_bar_chart.timePeriod
-import kotlinx.android.synthetic.main.fragment_top3.*
-import kotlinx.android.synthetic.main.fragment_top3.view.*
+import kotlinx.android.synthetic.main.fragment_time_of_day.*
+import kotlinx.android.synthetic.main.fragment_time_of_day.changePeriod
+import kotlinx.android.synthetic.main.fragment_time_of_day.timePeriod
 
 
-class Top3Fragment : Fragment() {
+class TimeOfDayFragment : Fragment() {
 
-    private val viewModel by viewModels<Top3ViewModel> {
-        Top3ViewModelFactory((requireContext().applicationContext as App).productRepository,
-            (requireContext().applicationContext as App).storeRepository)
+    private val viewModel by viewModels<TimeOfDayViewModel> {
+        TimeOfDayViewModelFactory((requireContext().applicationContext as App).storeRepository)
     }
-    private val top3Adapter = Top3Adapter()
     private var storeDialog: AlertDialog? = null
 
     override fun onCreateView(
@@ -33,27 +35,53 @@ class Top3Fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_top3, container, false)
-        view.recyclerViewTopThree.layoutManager = LinearLayoutManager(context)
-        view.recyclerViewTopThree.adapter = top3Adapter
-        return view
+        return inflater.inflate(R.layout.fragment_time_of_day, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressBar.visibility = View.VISIBLE
         changePeriod.setOnClickListener {
-            if(useMonthAndYearSwitch.isChecked) {
                 MonthYearDialog().getDialog(activity as HomeActivity, changeDate)
-            }else{
-                MonthYearDialog().getOnlyYearDialog(activity as HomeActivity, changeYear)
-            }
         }
-        observeTop3Categories()
-        pickStore.setOnClickListener { storeDialog() }
+        selectStore.setOnClickListener { storeDialog() }
         observeStoreSelected()
         observeDateSelected()
+        observeTimeOfDayResult()
     }
+
+    private fun observeTimeOfDayResult() {
+        viewModel.timeOfDayData.observe(viewLifecycleOwner, Observer {
+            if(it==null) return@Observer
+            println("debug it je $it")
+            loadChart()
+        })
+    }
+
+    private fun loadChart() {
+        val firstEntries = mutableListOf<BarEntry>()
+        var i = 1
+        viewModel.timeOfDayData.value?.forEach {
+            firstEntries.add(BarEntry(i.toFloat(),it.number.toFloat()))
+            i += 1
+        }
+
+        val barDataSet = BarDataSet(firstEntries.reversed(),"Attendance")
+        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS.toList())
+        barDataSet.valueTextColor = Color.BLACK
+        barDataSet.valueTextSize = 0f
+        val barData = BarData(barDataSet)
+        timeOfDayChart.setFitBars(true)
+        timeOfDayChart.xAxis.labelCount = viewModel.timeOfDayData.value?.size ?: 0
+        val names = mutableListOf<String>()
+        names.add("")
+        viewModel.timeOfDayData.value?.map { it.time }?.let { names.addAll(it) }
+        timeOfDayChart.xAxis.valueFormatter = IndexAxisValueFormatter(names)
+        timeOfDayChart.data = barData
+        timeOfDayChart.description.text = ""
+        timeOfDayChart.setExtraOffsets(10f,10f,10f,15f)
+        timeOfDayChart.animateY(2000)
+    }
+
 
     private fun observeDateSelected() {
         viewModel.monthAndYear.observe(viewLifecycleOwner, Observer {
@@ -70,28 +98,12 @@ class Top3Fragment : Fragment() {
     private fun observeStoreSelected() {
         viewModel.currentStore.observe(viewLifecycleOwner, Observer {
             if(it==null) return@Observer
-            pickStore.setText(it.storeName)
+            selectStore.setText(it.storeName)
         })
-    }
-
-
-    private fun observeTop3Categories() {
-        viewModel.top3Categories.observe(viewLifecycleOwner, Observer {
-            if(it==null) return@Observer
-            progressBar.visibility = View.GONE
-            top3Adapter.setListAndInvalidate(it)
-
-        })
-    }
-
-    private val changeYear: (year: Int) -> Unit = {
-            year ->
-        viewModel.monthAndYear.value = Pair("-1",year.toString())
     }
 
     private val changeDate: (month: Int, year: Int) -> Unit = {
             month, year ->
-        progressBar.visibility = View.VISIBLE
         viewModel.monthAndYear.value = Pair(getMonthWithZero(month), year.toString())
     }
 
@@ -111,8 +123,6 @@ class Top3Fragment : Fragment() {
 
     }
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -121,16 +131,6 @@ class Top3Fragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-    }
-
-    override fun onPause() {
-        super.onPause()
-        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
     }
 
 }

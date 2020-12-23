@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.time_of_day.TimeOfDayFragment">
+
+
+    <LinearLayout
+        android:id="@+id/linearContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/timePeriod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time_period"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/changePeriod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@string/change_label"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/selectStore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearContainer"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:focusableInTouchMode="false"
+        android:gravity="center_vertical"
+        android:hint="@string/select_store"
+        android:maxLines="1"
+        android:paddingEnd="30dp"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearContainer"
+        tools:ignore="RtlSymmetry" />
+
+    <com.github.mikephil.charting.charts.HorizontalBarChart
+        android:id="@+id/timeOfDayChart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectStore" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

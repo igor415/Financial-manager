@@ -7,6 +7,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseS
 import com.varivoda.igor.tvz.financijskimanager.model.AttendanceForStore
 import com.varivoda.igor.tvz.financijskimanager.model.BarChartEntry
 import com.varivoda.igor.tvz.financijskimanager.model.PieChartEntry
+import com.varivoda.igor.tvz.financijskimanager.model.TimeOfDayData
 import com.varivoda.igor.tvz.financijskimanager.util.CustomPeriod
 import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 import kotlinx.coroutines.flow.Flow
@@ -56,6 +57,63 @@ class StoreRepository (private val database: AppDatabase) :
             CustomPeriod.EASTER -> getEasterData(year).sortedByDescending{ it.number }.take(5)
             CustomPeriod.SCHOOL_START -> getSchoolData(year).sortedByDescending{ it.number }.take(5)
         }
+    }
+
+    override fun getChartDataForTimeOfDay(month: String, year: String, store: Store): List<TimeOfDayData> {
+        val timeOfDayData = mutableListOf<TimeOfDayData>()
+        if(store.id != -1) {
+            timeOfDayData.add(
+                TimeOfDayData(
+                    "10h-12h",
+                    database.storesDao.getAttendanceForTimeOfDay(month, year, store.id, "10", "8")
+                )
+            )
+            timeOfDayData.add(
+                TimeOfDayData(
+                    "12h-14h",
+                    database.storesDao.getAttendanceForTimeOfDay(month, year, store.id, "12", "10")
+                )
+            )
+            timeOfDayData.add(
+                TimeOfDayData(
+                    "14h-16h",
+                    database.storesDao.getAttendanceForTimeOfDay(month, year, store.id, "14", "12")
+                )
+            )
+            timeOfDayData.add(
+                TimeOfDayData(
+                    "16h-18h",
+                    database.storesDao.getAttendanceForTimeOfDay(month, year, store.id, "16", "14")
+                )
+            )
+
+        }else{
+            timeOfDayData.add(
+                TimeOfDayData(
+                    "08-10h",
+                    database.storesDao.getAttendanceForTimeOfDayWithoutStore(month, year, "10", "08")
+                )
+            )
+            timeOfDayData.add(
+                TimeOfDayData(
+                    "10h-12h",
+                    database.storesDao.getAttendanceForTimeOfDayWithoutStore(month, year, "12", "10")
+                )
+            )
+            timeOfDayData.add(
+                TimeOfDayData(
+                    "12h-14h",
+                    database.storesDao.getAttendanceForTimeOfDayWithoutStore(month, year, "14", "12")
+                )
+            )
+            timeOfDayData.add(
+                TimeOfDayData(
+                    "14h-16h",
+                    database.storesDao.getAttendanceForTimeOfDayWithoutStore(month, year, "16", "14")
+                )
+            )
+        }
+        return timeOfDayData
     }
 
     private fun getEasterData(year: String): MutableList<AttendanceForStore> {

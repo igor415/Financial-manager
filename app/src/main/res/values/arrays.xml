@@ -2,7 +2,8 @@
 <resources>
     <string-array name="statisticsOptions">
         <item>Proizvod koji se najbolje prodaje po kvartalima godine</item>
-        <item>Prodavač koji je ostvario najveći postotak prodaje po kvartalima godine</item>
+        <!--item>Prodavač koji je ostvario najveći postotak prodaje po kvartalima godine</item-->
+        <item>Posjećenost prema razdoblju dana</item>
         <item>Grafički prikaz cjelokupne zarade po mjesecima</item>
         <item>Poslovnica koja je ostvarila rast ili pad prodaje u odnosu na prvi i drugi dio godine</item>
         <item>Top 3 tipova proizvoda koji su se najrjeđe prodavali</item>

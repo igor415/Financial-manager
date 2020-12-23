@@ -32,5 +32,6 @@ data class Bill(
     var employeeId: Int = 0,
     var storeId: Int = 0,
     var customerId: Int = 0,
-    var date: String? = null
+    var date: String? = null,
+    var time: String
 )

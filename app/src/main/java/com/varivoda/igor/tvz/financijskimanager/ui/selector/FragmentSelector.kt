@@ -81,6 +81,9 @@ class FragmentSelector() {
             "Top 4 najčešće posjećene trgovine tijekom izabranog razdoblja" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToRadarChartFragment())
             }
+            "Posjećenost prema razdoblju dana" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToTimeOfDayFragment())
+            }
         }
 
     }
