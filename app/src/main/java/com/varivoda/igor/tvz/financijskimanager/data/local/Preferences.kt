@@ -3,6 +3,14 @@ package com.varivoda.igor.tvz.financijskimanager.data.local
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.varivoda.igor.tvz.financijskimanager.util.Storable
+import java.lang.Exception
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
+
 
 class Preferences(appContext: Context) {
 
@@ -51,4 +59,30 @@ class Preferences(appContext: Context) {
 
     fun getUserToken(): String? = sharedPreferences.getString("user token",null)
 
+    fun saveStorableObject(storable: Storable){
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+        val jsonAdapter: JsonAdapter<Storable> = moshi.adapter(Storable::class.java)
+        val serialized = jsonAdapter.toJson(storable)
+        val editor = sharedPreferences.edit()
+        editor.putString("storable",serialized).apply()
+    }
+
+    fun getStorable(): Storable?{
+
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+        val jsonAdapter: JsonAdapter<Storable> = moshi.adapter(Storable::class.java)
+        val serialized = sharedPreferences.getString("storable", null)
+        if (serialized.isNullOrBlank()) {
+            return null
+        }
+        return try {
+            jsonAdapter.fromJson(serialized)
+        }catch (ex: Exception){
+            return null
+        }
+    }
 }

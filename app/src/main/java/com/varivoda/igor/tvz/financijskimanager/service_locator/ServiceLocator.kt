@@ -13,7 +13,10 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.repository.*
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseInventoryRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 import com.varivoda.igor.tvz.financijskimanager.monitoring.ConnectivityAgent
+import com.varivoda.igor.tvz.financijskimanager.util.getCharKey
 import kotlinx.coroutines.runBlocking
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 
 object ServiceLocator{
 
@@ -141,7 +144,9 @@ object ServiceLocator{
         return new
     }
 
-    private fun createDatabase(context: Context): AppDatabase {
+    fun createDatabase(context: Context, pass: String = "false"): AppDatabase {
+        val dbKey = getCharKey(pass.toCharArray(), context)
+        val supportFactory = SupportFactory(SQLiteDatabase.getBytes(dbKey))
         val new = Room.databaseBuilder(context.applicationContext,AppDatabase::class.java,"appDatabase.db")
             .addCallback(object: RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
@@ -315,6 +320,7 @@ object ServiceLocator{
                     db.execSQL("INSERT INTO InventoryItem VALUES(2,'Rijeka','2020-07-30',0,'Ivo Kustra')")
                 }
             })
+            .openHelperFactory(supportFactory)
             .fallbackToDestructiveMigration()
             .build()
         database = new

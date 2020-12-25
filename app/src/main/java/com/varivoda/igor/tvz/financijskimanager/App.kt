@@ -43,6 +43,10 @@ class App: Application(), LifecycleObserver{
     val inventoryRepository: BaseInventoryRepository
         get() = ServiceLocator.provideInventoryRepository(this)
 
+    fun setDatabase(password: String){
+        ServiceLocator.createDatabase(this,password)
+    }
+
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
