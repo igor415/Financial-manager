@@ -1,8 +1,10 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.login
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseLoginRepository
 import com.varivoda.igor.tvz.financijskimanager.util.NetworkResult
@@ -19,6 +21,7 @@ class LoginViewModel(preferences: Preferences,
     var currentPassword: String = preferences.getCachedPassword()
     var rememberMe: Boolean = preferences.getCachedRememberMeOption()
     var doAnimation = MutableLiveData<Boolean>()
+    var context: Context? = null
 
 
     fun evaluateCredentials(){
@@ -26,8 +29,15 @@ class LoginViewModel(preferences: Preferences,
         doAnimation.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             delay(1300)
-            //loginSuccess.postValue(loginRepository.login(currentUsername,currentPassword))
-            loginSuccess.postValue(NetworkResult.Success(true))
+            //val result = loginRepository.login(currentUsername,currentPassword)
+            //loginSuccess.postValue(result)
+            val result = NetworkResult.Success(true)
+            loginSuccess.postValue(result)
+            context?.let { context ->
+                if(result is NetworkResult.Success){
+                    (context as App).setDatabase(currentPassword)
+                }
+            }
         }
 
     }

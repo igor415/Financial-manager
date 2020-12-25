@@ -86,6 +86,9 @@ dependencies {
     //glide
     implementation "com.github.bumptech.glide:glide:4.3.1"
 
+    //db encryption
+    implementation "net.zetetic:android-database-sqlcipher:4.4.0"
+    implementation "androidx.sqlite:sqlite:2.1.0"
 
     //paging
     def paging_version = "3.0.0-alpha09"

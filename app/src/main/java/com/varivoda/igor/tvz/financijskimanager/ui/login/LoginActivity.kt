@@ -39,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
         observeLoginSuccess()
         preferences = Preferences(applicationContext)
         doAnimation()
+        loginViewModel.context = this.applicationContext
     }
 
     private fun doAnimation() {

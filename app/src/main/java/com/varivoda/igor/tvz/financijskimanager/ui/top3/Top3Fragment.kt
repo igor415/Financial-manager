@@ -133,4 +133,5 @@ class Top3Fragment : Fragment() {
         requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
     }
 
+
 }
