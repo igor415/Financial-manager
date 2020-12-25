@@ -31,6 +31,21 @@
 
     </LinearLayout>
 
+    <EditText
+        android:id="@+id/selectStore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearContainer"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:focusableInTouchMode="false"
+        android:gravity="center_vertical"
+        android:hint="@string/select_two_stores"
+        android:maxLines="1"
+        android:paddingEnd="30dp"
+        android:singleLine="true"
+        tools:ignore="RtlSymmetry" />
+
     <TextView
         android:id="@+id/xLabel"
         android:layout_width="match_parent"
@@ -38,7 +53,7 @@
         android:text="@string/months_x_label"
         android:gravity="center"
         android:layout_marginTop="8dp"
-        android:layout_below="@id/linearContainer"
+        android:layout_below="@id/selectStore"
         android:textColor="@android:color/darker_gray"
         android:textStyle="italic"
         android:textSize="17sp"/>

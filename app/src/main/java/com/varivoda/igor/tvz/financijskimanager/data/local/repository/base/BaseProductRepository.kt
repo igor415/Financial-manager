@@ -3,6 +3,7 @@ package com.varivoda.igor.tvz.financijskimanager.data.local.repository.base
 import androidx.lifecycle.LiveData
 import androidx.paging.PagingData
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.model.BarChartEntry
 import com.varivoda.igor.tvz.financijskimanager.model.CategoryDTO
 import com.varivoda.igor.tvz.financijskimanager.model.ProductQuarterDTO
@@ -22,6 +23,6 @@ interface BaseProductRepository {
     fun getEntries(dateSelected: String, firstProduct: Product): List<StatisticsEntry>?
     fun productSmallestShare(month: String, year: String): String?
     fun totalPerMonth(month: String?, year: String?): String?
-    fun getBarChartStatistics(year: String): List<BarChartEntry>?
+    fun getBarChartStatistics(year: String, currentStore: Pair<Store, Store>): Pair<List<BarChartEntry>, List<BarChartEntry>>?
     fun getTop3CategoriesAtLeastSold(month: String, year: String,storeId: Int): List<CategoryDTO>
 }

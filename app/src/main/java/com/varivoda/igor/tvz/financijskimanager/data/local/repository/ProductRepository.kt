@@ -6,6 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 import com.varivoda.igor.tvz.financijskimanager.model.BarChartEntry
 import com.varivoda.igor.tvz.financijskimanager.model.CategoryDTO
@@ -79,20 +80,62 @@ class ProductRepository(private val database: AppDatabase) :
         return database.productDao.totalPerMonth(month, year)
     }
 
-    override fun getBarChartStatistics(year: String): List<BarChartEntry>? {
+    override fun getBarChartStatistics(year: String, currentStore: Pair<Store, Store>): Pair<List<BarChartEntry>, List<BarChartEntry>>? {
 
-        val list = mutableListOf<BarChartEntry>()
-        for (i in 1 until 13){
-            val num = database.productDao.totalPerMonth(getMonthWithZero(i),year)
-            if(num != null){
-                list.add(BarChartEntry(getMonthWithZero(i),num))
-            }else{
-                list.add(BarChartEntry(getMonthWithZero(i),"0"))
+        val list1 = mutableListOf<BarChartEntry>()
+        val list2 = mutableListOf<BarChartEntry>()
+            var num = 0.0
+            for(i in 1 until 4){
+                num += database.productDao.totalPerMonthForBarChart(getMonthWithZero(i),year,currentStore.first.id) ?: 0.0
             }
+        list1.add(BarChartEntry("1",num))
 
+        num = 0.0
+        for(i in 4 until 7){
+            num += database.productDao.totalPerMonthForBarChart(getMonthWithZero(i),year,currentStore.first.id) ?: 0.0
         }
+        list1.add(BarChartEntry("2",num))
 
-        return list
+        num = 0.0
+        for(i in 7 until 10){
+            num += database.productDao.totalPerMonthForBarChart(getMonthWithZero(i),year,currentStore.first.id) ?: 0.0
+        }
+        list1.add(BarChartEntry("3",num))
+        num = 0.0
+        for(i in 10 until 13){
+            num += database.productDao.totalPerMonthForBarChart(getMonthWithZero(i),year,currentStore.first.id) ?: 0.0
+        }
+        list1.add(BarChartEntry("4",num))
+
+
+        var num1 = 0.0
+        for(i in 1 until 4){
+            num1 += database.productDao.totalPerMonthForBarChart(getMonthWithZero(i),year,currentStore.second.id) ?: 0.0
+        }
+        list2.add(BarChartEntry("1",num1))
+
+        num1 = 0.0
+        for(i in 4 until 7){
+            num1 += database.productDao.totalPerMonthForBarChart(getMonthWithZero(i),year,currentStore.second.id) ?: 0.0
+        }
+        list2.add(BarChartEntry("2",num1))
+
+        num1 = 0.0
+        for(i in 7 until 10){
+            num1 += database.productDao.totalPerMonthForBarChart(getMonthWithZero(i),year,currentStore.second.id) ?: 0.0
+        }
+        list2.add(BarChartEntry("3",num1))
+
+        num1 = 0.0
+        for(i in 10 until 13){
+            num1 += database.productDao.totalPerMonthForBarChart(getMonthWithZero(i),year,currentStore.second.id) ?: 0.0
+        }
+        list2.add(BarChartEntry("4",num1))
+
+
+
+
+        return Pair(list1, list2)
     }
 
     override fun getTop3CategoriesAtLeastSold(month: String, year: String,storeId: Int): List<CategoryDTO> {

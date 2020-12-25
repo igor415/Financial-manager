@@ -2,11 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="com.varivoda.igor.tvz.financijskimanager.ui.home.HomeViewModel" />
-    </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -49,7 +44,6 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/statistics"
                     style="@style/HomeCardView"
-                    android:onClick="@{() -> viewModel.onStatisticsClick()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
@@ -68,7 +62,6 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/insertInvoice"
                     style="@style/HomeCardView"
-                    android:onClick="@{() -> viewModel.onInvoiceClicked()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
@@ -86,7 +79,6 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/customers"
                     style="@style/HomeCardView"
-                    android:onClick="@{() -> viewModel.onCustomersClicked()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
@@ -104,7 +96,6 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/stores"
                     style="@style/HomeCardView"
-                    android:onClick="@{() -> viewModel.onStoresClicked()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
@@ -122,7 +113,6 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/products"
                     style="@style/HomeCardView"
-                    android:onClick="@{() -> viewModel.onProductsClicked()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
@@ -140,7 +130,6 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/employees"
                     style="@style/HomeCardView"
-                    android:onClick="@{() -> viewModel.onEmployeeClicked()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 

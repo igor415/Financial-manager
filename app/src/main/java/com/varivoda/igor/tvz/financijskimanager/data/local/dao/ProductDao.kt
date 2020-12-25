@@ -91,9 +91,17 @@ interface ProductDao {
         """SELECT SUM(pob.quantity*p.price) as total 
                 FROM Product p JOIN ProductsOnBill pob ON p.id = pob.productId 
                 JOIN Bill b ON b.id = pob.billId where strftime('%m',b.date) = :month 
-                and strftime('%Y',b.date) = :year """
+                and strftime('%Y',b.date) = :year"""
     )
     fun totalPerMonth(month: String?, year: String?): String?
+
+    @Query(
+        """SELECT SUM(pob.quantity*p.price) as total 
+                FROM Product p JOIN ProductsOnBill pob ON p.id = pob.productId 
+                JOIN Bill b ON b.id = pob.billId where strftime('%m',b.date) = :month 
+                and strftime('%Y',b.date) = :year and b.storeId = :id"""
+    )
+    fun totalPerMonthForBarChart(month: String?, year: String?, id: Int): Double?
 
     @Query(
         """SELECT SUM(pob.quantity*p.price) as total 

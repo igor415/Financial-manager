@@ -96,7 +96,7 @@ class RadarChartFragment : Fragment() {
         val periodArray = CustomPeriod.values().map { it.fullName }.toTypedArray()
         CustomPeriod.values().map { it.fullName }
             val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-            builder.setTitle(getString(R.string.select_store))
+            builder.setTitle(getString(R.string.select_discount_period))
             builder.setItems(periodArray
             ) { dialog, which ->
                 viewModel.enum.value = periodArray[which]

@@ -1,39 +1,25 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.home
 
-import android.annotation.SuppressLint
-import android.app.AlarmManager
+
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context.ALARM_SERVICE
-import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.*
-import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.varivoda.igor.tvz.financijskimanager.R
-import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.databinding.FragmentHomeBinding
-import com.varivoda.igor.tvz.financijskimanager.ui.maps.MapsActivity
 import com.varivoda.igor.tvz.financijskimanager.ui.menu.Menu
 import com.varivoda.igor.tvz.financijskimanager.util.*
-import com.varivoda.igor.tvz.financijskimanager.workmanager.BroadcastNotification
 import kotlinx.android.synthetic.main.fragment_home.*
-import timber.log.Timber
-import java.util.*
+
 
 
 class HomeFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
-    private lateinit var homeViewModelFactory: HomeViewModelFactory
     private lateinit var binding: FragmentHomeBinding
     private var currentViewClicked: View? = null
 
@@ -48,15 +34,17 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModelFactory = HomeViewModelFactory(findNavController())
-        homeViewModel = ViewModelProvider(requireActivity(),homeViewModelFactory).get(HomeViewModel::class.java)
-        binding.viewModel = homeViewModel
-        //(activity as HomeActivity).setActionBarText(getString(R.string.home_title))
         createChannel()
         listOf(statistics,customers,employees,insertInvoice,products,stores).forEach {
             registerForContextMenu(it)
         }
         //setTimerForDatabaseUpdate()
+        statistics.setOnClickListener { onStatisticsClick() }
+        customers.setOnClickListener { onCustomersClicked() }
+        employees.setOnClickListener { onEmployeeClicked() }
+        products.setOnClickListener { onProductsClicked() }
+        insertInvoice.setOnClickListener { onInvoiceClicked() }
+        stores.setOnClickListener { onStoresClicked() }
     }
 
 
@@ -101,6 +89,19 @@ class HomeFragment : Fragment() {
             notificationManager?.createNotificationChannel(notificationChannel)
         }
     }
+
+    fun onStatisticsClick() = findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(
+        Menu.STATISTICS.string))
+
+    fun onCustomersClicked() = findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(Menu.CUSTOMERS.string))
+
+    fun onEmployeeClicked() = findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(Menu.EMPLOYEES.string))
+
+    fun onInvoiceClicked() = findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(Menu.INSERT_BILL.string))
+
+    fun onProductsClicked() = findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(Menu.PRODUCTS.string))
+
+    fun onStoresClicked() = findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(Menu.STORES.string))
 
 
    /* private fun setTimerForDatabaseUpdate(){

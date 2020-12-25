@@ -55,7 +55,7 @@ class FragmentSelector() {
             "Proizvod koji ima najmanji udio u ukupnoj prodaji po mjesecu" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToBillFragment("Proizvod koji ima najmanji udio u ukupnoj prodaji po mjesecu"))
             }
-            "Grafički prikaz cjelokupne zarade po mjesecima" -> {
+            "Grafički prikaz cjelokupne zarade po kvartalima" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToBarChartFragment())
             }
             "Udio određene poslovnice u ukupnom godišnjem profitu" -> {

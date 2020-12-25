@@ -94,7 +94,7 @@
     <string name="product_smallest_share">Proizvod %1$s je doprinio ukupnoj prodaji sa %2$s%% unutar izabranog vremenskog razdoblja.</string>
     <string name="months_label">mjeseci</string>
     <string name="total_y_label">Total</string>
-    <string name="months_x_label">Months</string>
+    <string name="months_x_label">Quarters</string>
     <string name="stores_label">stores</string>
     <string name="other_stores_label">Other</string>
     <string name="pick_product">Pick product</string>
@@ -106,5 +106,6 @@
     <string name="category">Category</string>
     <string name="use_month_and_year_selection">Use month and year selection</string>
     <string name="select_discount_period">Select discount period</string>
+    <string name="select_two_stores">Select two stores</string>
 
 </resources>
