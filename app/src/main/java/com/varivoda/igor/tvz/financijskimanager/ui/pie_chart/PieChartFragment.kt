@@ -82,7 +82,6 @@ class PieChartFragment : Fragment() {
         dataSet.valueTextSize = 18f
         dataSet.valueTextColor = Color.WHITE
         val data = PieData(dataSet)
-
         pieChart.data = data
         pieChart.description.text = ""
         pieChart.animateY(1500)

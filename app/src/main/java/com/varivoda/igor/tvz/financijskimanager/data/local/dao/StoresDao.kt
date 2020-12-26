@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.model.AttendanceForStore
+import com.varivoda.igor.tvz.financijskimanager.model.ProductStockDTO
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -59,4 +60,7 @@ interface StoresDao {
 
     @Query("SELECT COUNT(*) FROM Bill")
     fun getBillCount(): Int
+
+    @Query("SELECT phoneNumber from Store where id = :id")
+    fun getNumberForStoreId(id: Int): String?
 }

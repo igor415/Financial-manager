@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
@@ -61,5 +63,15 @@ fun String.toSha2(): String {
     }
 
     return result.toString()
+}
+
+fun EditText.openKeyboard(context: Context?){
+    val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+}
+
+fun EditText.closeKeyboard(context: Context?){
+    val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(this.windowToken,0)
 }
 

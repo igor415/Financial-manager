@@ -4,10 +4,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Location
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseStoreRepository
-import com.varivoda.igor.tvz.financijskimanager.model.AttendanceForStore
-import com.varivoda.igor.tvz.financijskimanager.model.BarChartEntry
-import com.varivoda.igor.tvz.financijskimanager.model.PieChartEntry
-import com.varivoda.igor.tvz.financijskimanager.model.TimeOfDayData
+import com.varivoda.igor.tvz.financijskimanager.model.*
 import com.varivoda.igor.tvz.financijskimanager.util.CustomPeriod
 import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 import kotlinx.coroutines.flow.Flow
@@ -114,6 +111,18 @@ class StoreRepository (private val database: AppDatabase) :
             )
         }
         return timeOfDayData
+    }
+
+    override fun getAllProductsStockData(s: String): List<ProductStockDTO> {
+        return database.stockDao.getAllProductsStockData(s)
+    }
+
+    override fun getInfo(productId: Int): List<ProductStockDTO> {
+        return database.stockDao.getInfo(productId)
+    }
+
+    override fun getNumberForStoreId(id: Int): String? {
+        return database.storesDao.getNumberForStoreId(id)
     }
 
     private fun getEasterData(year: String): MutableList<AttendanceForStore> {

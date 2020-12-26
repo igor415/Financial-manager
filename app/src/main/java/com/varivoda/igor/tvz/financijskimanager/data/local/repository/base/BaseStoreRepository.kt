@@ -4,6 +4,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Location
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.model.AttendanceForStore
 import com.varivoda.igor.tvz.financijskimanager.model.PieChartEntry
+import com.varivoda.igor.tvz.financijskimanager.model.ProductStockDTO
 import com.varivoda.igor.tvz.financijskimanager.model.TimeOfDayData
 import com.varivoda.igor.tvz.financijskimanager.util.CustomPeriod
 import kotlinx.coroutines.flow.Flow
@@ -21,4 +22,7 @@ interface BaseStoreRepository {
     fun getAllLocations(): List<Location>
     fun getAttendanceForPeriod(enum: CustomPeriod, year: String): List<AttendanceForStore>
     fun getChartDataForTimeOfDay(month: String, year: String, store: Store): List<TimeOfDayData>
+    fun getAllProductsStockData(s: String): List<ProductStockDTO>
+    fun getInfo(productId: Int): List<ProductStockDTO>
+    fun getNumberForStoreId(id: Int): String?
 }

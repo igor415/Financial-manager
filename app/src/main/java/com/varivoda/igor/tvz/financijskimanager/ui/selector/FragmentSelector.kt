@@ -1,14 +1,12 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.selector
 
-import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
-import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.ui.maps.MapsActivity
 import com.varivoda.igor.tvz.financijskimanager.ui.menu.MenuListFragmentDirections
 
-class FragmentSelector() {
+class FragmentSelector {
 
     fun navigate(text: String,navController: NavController,activity: FragmentActivity?){
         when(text){
@@ -22,8 +20,9 @@ class FragmentSelector() {
             "Popis kupaca" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToFlowListFragment("Popis kupaca"))
             }
-            "Popis poslovnica" -> {
-                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToFlowListFragment("Popis poslovnica"))
+            "Stanje skladišta" -> {
+                //navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToFlowListFragment("Popis poslovnica"))
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToStockFragment())
             }
             "Lokacije poslovnica" -> {
                 activity?.startActivity(Intent(activity, MapsActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY))

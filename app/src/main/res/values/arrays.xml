@@ -29,7 +29,8 @@
         <item>Broj kupaca koji su posjetili poslovnicu tijekom mjeseca</item>
     </string-array>
     <string-array name="storesOptions">
-        <item>Popis poslovnica</item>
+        <!--item>Popis poslovnica</item-->
+        <item>Stanje skladišta</item>
         <!--item>Poslovnica koja je ostvarila najveći prihod po mjesecu</item-->
         <item>Inventura</item>
         <item>Udio određene poslovnice u ukupnom godišnjem profitu</item>

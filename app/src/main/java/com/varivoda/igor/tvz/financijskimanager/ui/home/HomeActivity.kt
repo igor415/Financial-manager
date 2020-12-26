@@ -33,6 +33,14 @@ class HomeActivity : AppCompatActivity() {
         supportActionBar?.title = text
     }
 
+    fun removeActionBar(){
+        supportActionBar?.hide()
+    }
+
+    fun showActionBar(){
+        supportActionBar?.show()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val menuInflater = menuInflater
         menuInflater.inflate(R.menu.main_menu, menu)

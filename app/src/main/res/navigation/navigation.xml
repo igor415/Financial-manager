@@ -131,6 +131,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_menuListFragment_to_stockFragment"
+            app:destination="@id/stockFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/listFragment"
@@ -254,4 +261,8 @@
         android:name="com.varivoda.igor.tvz.financijskimanager.ui.time_of_day.TimeOfDayFragment"
         android:label="fragment_time_of_day"
         tools:layout="@layout/fragment_time_of_day" />
+    <fragment
+        android:id="@+id/stockFragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.stock.StockFragment"
+        android:label="StockFragment" />
 </navigation>

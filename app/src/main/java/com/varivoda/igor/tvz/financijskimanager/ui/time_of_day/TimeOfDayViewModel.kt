@@ -38,7 +38,7 @@ class TimeOfDayViewModel (private val storeRepository: BaseStoreRepository) : Vi
     private fun getAllStores(){
         viewModelScope.launch(Dispatchers.IO) {
             val all = storeRepository.getAllStores().toMutableList()
-            all.add(0, Store(-1,"Sve poslovnice",null,1))
+            all.add(0, Store(-1,"Sve poslovnice",null,"",1))
             currentStore.postValue(all[0])
             allStores.postValue(all)
         }

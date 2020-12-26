@@ -21,5 +21,6 @@ data class Store (
     var id: Int = 0,
     var storeName: String? = null,
     var address: String? = null,
+    var phoneNumber: String,
     var locationId: Int = 0
 )
