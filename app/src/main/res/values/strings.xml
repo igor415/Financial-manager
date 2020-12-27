@@ -107,5 +107,6 @@
     <string name="use_month_and_year_selection">Use month and year selection</string>
     <string name="select_discount_period">Select discount period</string>
     <string name="select_two_stores">Select two stores</string>
+    <string name="ok">Ok</string>
 
 </resources>

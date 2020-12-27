@@ -34,7 +34,11 @@ class StockAdapter(private val showInfo: (ProductStockDTO) -> Unit, private val 
             productName.text = productStockDTO.productName
             quantity.text = productStockDTO.quantity.toString()
             if(!isPopupLayout) {
-                if(productStockDTO.quantity < 5){
+                if(productStockDTO.yellow){
+                    productName.setTextColor(Color.parseColor("#fdaa29"))
+                    quantity.setTextColor(Color.parseColor("#fdaa29"))
+                    info.setImageResource(R.drawable.ic_baseline_info_24_yellow)
+                }else if(productStockDTO.quantity < 5){
                     productName.setTextColor(Color.parseColor("#a83232"))
                     quantity.setTextColor(Color.parseColor("#a83232"))
                     info.setImageResource(R.drawable.ic_baseline_info_24_red)

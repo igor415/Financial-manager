@@ -24,4 +24,7 @@ interface BillDao {
 
     @Insert
     fun insertBill(bill: Bill)
+
+    @Query("SELECT SUM(pob.quantity) FROM Bill b join ProductsOnBill pob on b.id = pob.billId where pob.productId = :id and strftime('%m',b.date)=:month and strftime('%Y',b.date)=:year ")
+    fun getQuantityOfProduct(id: Int, month: String, year: String): Int
 }

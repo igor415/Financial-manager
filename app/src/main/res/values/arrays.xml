@@ -43,7 +43,7 @@
         <item>Top 10 najprodavanijih proizvoda</item>
         <item>Komparativna analiza</item>
         <item>Unesite sliku proizvoda</item>
-        <item>Proizvod koji ima najmanji udio u ukupnoj prodaji po mjesecu</item>
+        <!--item>Proizvod koji ima najmanji udio u ukupnoj prodaji po mjesecu</item-->
         <!--item>Županija u kojoj se određeni proizvod najbolje prodaje</item-->
     </string-array>
     <string-array name="employeesOptions">

@@ -85,7 +85,7 @@ fun toStorable(rawDbKey: ByteArray, userPasscode: CharArray): Storable {
 
 private fun generateSecretKey(passcode: CharArray, salt: ByteArray): SecretKey {
     // Initialize PBE with password
-    val factory: SecretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
+    val factory: SecretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1")
     val spec: KeySpec = PBEKeySpec(passcode, salt, 65536, 256)
     val tmp: SecretKey = factory.generateSecret(spec)
     return SecretKeySpec(tmp.encoded, "AES")

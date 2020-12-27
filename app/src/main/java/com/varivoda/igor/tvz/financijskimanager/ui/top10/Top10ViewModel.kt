@@ -1,10 +1,7 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.top10
 
-import android.content.Context
 import androidx.lifecycle.*
-import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
-import com.varivoda.igor.tvz.financijskimanager.data.local.repository.ProductRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 import com.varivoda.igor.tvz.financijskimanager.model.ProductDTO
 import com.varivoda.igor.tvz.financijskimanager.util.asDomainModel
@@ -12,8 +9,6 @@ import com.varivoda.igor.tvz.financijskimanager.util.getCurrentMonth
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentYear
 
 class Top10ViewModel(private val productRepository: BaseProductRepository) : ViewModel(){
-
-    //private val productRepository = ProductRepository(AppDatabase.getInstance(context))
 
     var monthAndYear = MutableLiveData<Pair<String,String>>()
     init {

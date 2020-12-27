@@ -7,5 +7,6 @@ data class ProductStockDTO(
     val productId: Int,
     val productName: String,
     val quantity: Int,
-    val idStore: Int
+    val idStore: Int,
+    var yellow: Boolean = false
 )

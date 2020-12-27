@@ -9,7 +9,7 @@
         android:id="@+id/productName"
         android:layout_width="0dp"
         android:layout_weight="4"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="10dp"
         android:gravity="center_vertical"
         android:layout_height="match_parent"
         tools:text="ovo je naziv"

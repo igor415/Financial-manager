@@ -114,7 +114,33 @@ class StoreRepository (private val database: AppDatabase) :
     }
 
     override fun getAllProductsStockData(s: String): List<ProductStockDTO> {
-        return database.stockDao.getAllProductsStockData(s)
+        val data = database.stockDao.getAllProductsStockData(s)
+        val cal = Calendar.getInstance().get(Calendar.YEAR)
+        val month = Calendar.getInstance().get(Calendar.MONTH)+1
+        data.forEach {
+            var num = 0
+            for( i in cal until cal+1){
+                num += database.billDao.getQuantityOfProduct(it.productId,"01",i.toString())
+                num += database.billDao.getQuantityOfProduct(it.productId,"02",i.toString())
+                num += database.billDao.getQuantityOfProduct(it.productId,"03",i.toString())
+                num += database.billDao.getQuantityOfProduct(it.productId,"04",i.toString())
+                num += database.billDao.getQuantityOfProduct(it.productId,"05",i.toString())
+                num += database.billDao.getQuantityOfProduct(it.productId,"06",i.toString())
+                num += database.billDao.getQuantityOfProduct(it.productId,"07",i.toString())
+                num += database.billDao.getQuantityOfProduct(it.productId,"08",i.toString())
+                num += database.billDao.getQuantityOfProduct(it.productId,"09",i.toString())
+                num += database.billDao.getQuantityOfProduct(it.productId,"10",i.toString())
+                num += database.billDao.getQuantityOfProduct(it.productId,"11",i.toString())
+                num += database.billDao.getQuantityOfProduct(it.productId,"12",i.toString())
+            }
+            println("debug full num is $num")
+            val avg = num/12
+            if(avg > it.quantity){
+                println("debug yellow it is ${it.productId}")
+                it.yellow = true
+            }
+        }
+        return data
     }
 
     override fun getInfo(productId: Int): List<ProductStockDTO> {

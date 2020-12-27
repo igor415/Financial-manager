@@ -54,7 +54,7 @@ class StockFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_stock, container, false)
         stockAdapter = StockAdapter(showInfo, false)
         view.product_recycler.adapter = stockAdapter
-        (activity as HomeActivity).removeActionBar()
+        //(activity as HomeActivity).removeActionBar()
         return view
     }
 
@@ -77,14 +77,14 @@ class StockFragment : Fragment() {
         currentProductName = item.productName
     }
 
-    override fun onPause() {
-        super.onPause()
-        (activity as HomeActivity).showActionBar()
-    }
-
     override fun onStart() {
         super.onStart()
         (activity as HomeActivity).removeActionBar()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        (activity as HomeActivity).showActionBar()
     }
 
     private fun searchFeature() {
@@ -128,6 +128,7 @@ class StockFragment : Fragment() {
         viewModel.allProducts.observe(viewLifecycleOwner, Observer {
             if (it == null) return@Observer
             stockAdapter.submitList(it)
+            println("debug data is $it")
             progress_bar.visibility = View.GONE
         })
     }
@@ -183,7 +184,7 @@ class StockFragment : Fragment() {
             ActivityCompat.requestPermissions(
                 requireActivity(),
                 arrayOf(Manifest.permission.CALL_PHONE),
-                REQUEST_LOCATION_PERMISSION
+                REQUEST_PHONE_PERMISSION
             )
         }else{
             phonePermission = true

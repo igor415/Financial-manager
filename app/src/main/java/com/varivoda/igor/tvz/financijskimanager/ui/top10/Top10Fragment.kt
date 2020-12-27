@@ -5,29 +5,22 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
-import com.varivoda.igor.tvz.financijskimanager.model.ProductDTO
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import com.varivoda.igor.tvz.financijskimanager.util.MonthYearDialog
 import com.varivoda.igor.tvz.financijskimanager.util.getMonthAndYearFormatted
 import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
-import kotlinx.android.synthetic.main.fragment_bill.*
-import kotlinx.android.synthetic.main.fragment_bill.view.*
+import kotlinx.android.synthetic.main.fragment_bill.timePeriod
 import kotlinx.android.synthetic.main.fragment_bill.view.changePeriod
 import kotlinx.android.synthetic.main.fragment_bill.view.timePeriod
 import kotlinx.android.synthetic.main.fragment_top10.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.fragment_top3.*
 import timber.log.Timber
 
 
 class Top10Fragment : Fragment() {
 
-    //private lateinit var top10ViewModel: Top10ViewModel
-    //private lateinit var top10ViewModelFactory: Top10ViewModelFactory
     private val top10ViewModel by viewModels<Top10ViewModel> {
         Top10ViewModelFactory((requireContext().applicationContext as App).productRepository)
     }
@@ -48,10 +41,12 @@ class Top10Fragment : Fragment() {
 
         view.timePeriod.text = getString(R.string.time_period, getMonthAndYearFormatted())
         view.changePeriod.setOnClickListener {
-            MonthYearDialog().getDialog(activity as HomeActivity,changeDate)
+            if(useMonthAndYearSwitch.isChecked) {
+                MonthYearDialog().getDialog(activity as HomeActivity, changeDate)
+            }else{
+                MonthYearDialog().getOnlyYearDialog(activity as HomeActivity, changeYear)
+            }
         }
-        //top10ViewModelFactory = Top10ViewModelFactory(requireContext())
-        //top10ViewModel = ViewModelProvider(requireActivity(),top10ViewModelFactory).get(Top10ViewModel::class.java)
         observeTopProducts()
         view.topRecyclerView.adapter = top10Adapter
         return view
@@ -61,9 +56,9 @@ class Top10Fragment : Fragment() {
     private fun observeTopProducts() {
         top10ViewModel.topProducts.observe(viewLifecycleOwner, Observer {
             if(it==null){
-                top10Adapter.submitList(listOf())
+                top10Adapter.setListValue(listOf())
             }else{
-                top10Adapter.submitList(it)
+                top10Adapter.setListValue(it)
             }
         })
     }
@@ -73,6 +68,12 @@ class Top10Fragment : Fragment() {
             month, year ->
         top10ViewModel.monthAndYear.value = Pair(getMonthWithZero(month),year.toString())
         timePeriod.text = getString(R.string.time_period, getMonthAndYearFormatted(month,year))
+    }
+
+    private val changeYear: (year: Int) -> Unit = {
+            year ->
+        top10ViewModel.monthAndYear.value = Pair("-1",year.toString())
+        timePeriod.text = getString(R.string.time_period, year.toString())
     }
 
 
