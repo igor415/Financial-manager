@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.ui.login.LoginActivity
@@ -89,6 +90,7 @@ class HomeActivity : AppCompatActivity() {
             setTitle(getString(R.string.log_out_message))
             setPositiveButton(getString(R.string.yes)
             ) { dialog, _ ->
+                (this@HomeActivity.applicationContext as App).clearDatabase()
                 returnToLogin()
                 dialog.dismiss()
             }
@@ -106,10 +108,10 @@ class HomeActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if(this::preferences.isInitialized){
-            val brightness: Float = preferences.getSeekBarValue()
+            /*val brightness: Float = preferences.getSeekBarValue()
             val lp = window.attributes
             lp.screenBrightness = brightness
-            window.attributes = lp
+            window.attributes = lp*/
         }
     }
 }

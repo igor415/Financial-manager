@@ -3,7 +3,9 @@ package com.varivoda.igor.tvz.financijskimanager.util
 import android.content.Context
 import android.os.Build
 import android.util.Base64
+import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
+import java.lang.Exception
 import java.security.AlgorithmParameters
 import java.security.SecureRandom
 import java.security.spec.KeySpec
@@ -98,7 +100,11 @@ fun getRawByteKey(passcode: CharArray, storable: Storable): ByteArray {
     val secret: SecretKey = generateSecretKey(passcode, salt)
     val cipher = Cipher.getInstance("AES/GCM/NoPadding")
     cipher.init(Cipher.DECRYPT_MODE, secret, IvParameterSpec(iv))
-    return cipher.doFinal(aesWrappedKey)
+    return try {
+        cipher.doFinal(aesWrappedKey)
+    }catch (ex: Exception){
+        return byteArrayOf()
+    }
 }
 
 fun getCharKey(passcode: CharArray, context: Context): CharArray {
@@ -106,6 +112,10 @@ fun getCharKey(passcode: CharArray, context: Context): CharArray {
         initKey(passcode, context)
     }
     return dbCharKey ?: error("Failed to decrypt database key")
+}
+
+fun clearDbCharKey(){
+    dbCharKey = null
 }
 
 private fun initKey(passcode: CharArray, context: Context) {

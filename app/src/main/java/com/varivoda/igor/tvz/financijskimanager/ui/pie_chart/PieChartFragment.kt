@@ -67,7 +67,7 @@ class PieChartFragment : Fragment() {
         val pieEntries = mutableListOf<PieEntry>()
         var smallestCounter: Float = 0.0f
         pieChartViewModel.pieChartStatistics.value?.forEach {
-            if(it.total!!.toFloat() < 8.0f){
+            if(it.total.toFloat() < 8.0f){
                 smallestCounter += it.total.toFloat()
             }else{
                 pieEntries.add(PieEntry(it.total.toFloat(),it.storeName))

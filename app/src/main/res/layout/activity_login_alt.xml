@@ -126,6 +126,62 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/orLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/credentialsLayout"
+            android:weightSum="6"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:background="@color/grey_color"
+                />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/or_resource"
+                android:textSize="16sp"
+                />
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="2dp"
+                android:background="@color/grey_color"
+                android:layout_gravity="center"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/fingerPrintText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:text="@string/place_your_finger_on_the_sensor_to_authenticate"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/orLayout"
+            app:layout_constraintBottom_toTopOf="@id/loginButton"
+            app:drawableStartCompat="@drawable/ic_baseline_fingerprint_24" />
+
+        <LinearLayout
             android:id="@+id/progressLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

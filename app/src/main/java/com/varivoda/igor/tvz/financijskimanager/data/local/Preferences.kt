@@ -3,13 +3,10 @@ package com.varivoda.igor.tvz.financijskimanager.data.local
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.google.gson.Gson
 import com.varivoda.igor.tvz.financijskimanager.util.Storable
 import java.lang.Exception
-import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
+import kotlin.random.Random
 
 
 class Preferences(appContext: Context) {
@@ -39,6 +36,8 @@ class Preferences(appContext: Context) {
 
     fun getVibrationsOption(): Boolean = appPreferences.getBoolean("vibrations key",true)
 
+    fun getFingerprintOption(): Boolean = appPreferences.getBoolean("fingerprint key",false)
+
     fun getNotificationsOption(): Boolean = appPreferences.getBoolean("notifications key",true)
 
     fun getToastMessageDesign(): String? = appPreferences.getString("toast key","default") ?: "default"
@@ -48,39 +47,36 @@ class Preferences(appContext: Context) {
         editor.putFloat("brightness key",float).apply()
     }
 
-    fun getSeekBarValue(): Float = sharedPreferences.getFloat("brightness key",0.5f)
+    //fun getSeekBarValue(): Float = sharedPreferences.getFloat("brightness key",0.5f)
 
     fun clear(value: String) = sharedPreferences.edit().remove(value).apply()
 
     fun insertUserToken(token: String) {
         val editor = sharedPreferences.edit()
-        editor.putString("user token",token).apply()
+        editor.putString("user token","Bearer $token").apply()
     }
 
     fun getUserToken(): String? = sharedPreferences.getString("user token",null)
 
+    fun getSerialNumber(): String = sharedPreferences.getString("serial",
+        "9172791880")!!
+
+
     fun saveStorableObject(storable: Storable){
-        val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-        val jsonAdapter: JsonAdapter<Storable> = moshi.adapter(Storable::class.java)
-        val serialized = jsonAdapter.toJson(storable)
+        val gson = Gson()
+        val serialized = gson.toJson(storable)
         val editor = sharedPreferences.edit()
         editor.putString("storable",serialized).apply()
     }
 
     fun getStorable(): Storable?{
-
-        val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-        val jsonAdapter: JsonAdapter<Storable> = moshi.adapter(Storable::class.java)
+        val gson = Gson()
         val serialized = sharedPreferences.getString("storable", null)
         if (serialized.isNullOrBlank()) {
             return null
         }
         return try {
-            jsonAdapter.fromJson(serialized)
+            gson.fromJson(serialized, Storable::class.java)
         }catch (ex: Exception){
             return null
         }

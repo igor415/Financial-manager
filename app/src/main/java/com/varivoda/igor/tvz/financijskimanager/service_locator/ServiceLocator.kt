@@ -7,14 +7,12 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
-import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Bill
-import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Customer
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.*
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseInventoryRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 import com.varivoda.igor.tvz.financijskimanager.monitoring.ConnectivityAgent
+import com.varivoda.igor.tvz.financijskimanager.util.clearDbCharKey
 import com.varivoda.igor.tvz.financijskimanager.util.getCharKey
-import kotlinx.coroutines.runBlocking
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
 
@@ -77,13 +75,13 @@ object ServiceLocator{
     }
 
     private fun createBillRepository(context: Context): BillRepository {
-        val new = BillRepository(database ?: createDatabase(context))
+        val new = BillRepository(database ?: createDatabase(context)!!)
         billRepository = new
         return new
     }
 
     fun provideInventoryRepository(context: Context): BaseInventoryRepository{
-        val new = InventoryRepository(database ?: createDatabase(context))
+        val new = InventoryRepository(database ?: createDatabase(context)!!)
         inventoryRepository = new
         return new
     }
@@ -121,32 +119,41 @@ object ServiceLocator{
     }
 
     private fun createCustomerRepository(context: Context): CustomerRepository {
-        val new = CustomerRepository(database ?: createDatabase(context))
+        val new = CustomerRepository(database ?: createDatabase(context)!!)
         customerRepository = new
         return new
     }
 
     private fun createEmployeeRepository(context: Context): EmployeeRepository {
-        val new = EmployeeRepository(database ?: createDatabase(context))
+        val new = EmployeeRepository(database ?: createDatabase(context)!!)
         employeeRepository = new
         return new
     }
 
     private fun createProductRepository(context: Context): ProductRepository {
-        val new = ProductRepository(database ?: createDatabase(context))
+        val new = ProductRepository(database ?: createDatabase(context)!!)
         productRepository = new
         return new
     }
 
     private fun createStoreRepository(context: Context): StoreRepository {
-        val new = StoreRepository(database ?: createDatabase(context))
+        val new = StoreRepository(database ?: createDatabase(context)!!)
         storeRepository = new
         return new
     }
 
-    fun createDatabase(context: Context, pass: String = "false"): AppDatabase {
-        val dbKey = getCharKey(pass.toCharArray(), context)
-        val supportFactory = SupportFactory(SQLiteDatabase.getBytes(dbKey))
+    fun clearDatabase(){
+        database = null
+        clearDbCharKey()
+    }
+
+    fun createDatabase(context: Context, pass: String = "false"): AppDatabase? {
+        /*val dbKey = getCharKey(pass.toCharArray(), context)
+        if(dbKey.isEmpty()){
+            clearDbCharKey()
+            return database
+        }
+        val supportFactory = SupportFactory(SQLiteDatabase.getBytes(dbKey))*/
         val new = Room.databaseBuilder(context.applicationContext,AppDatabase::class.java,"appDatabase.db")
             .addCallback(object: RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
@@ -445,7 +452,7 @@ object ServiceLocator{
                     db.execSQL("INSERT INTO StockData VALUES(120,6,20,7)")
                 }
             })
-            .openHelperFactory(supportFactory)
+            //.openHelperFactory(supportFactory)
             .fallbackToDestructiveMigration()
             .build()
         database = new
