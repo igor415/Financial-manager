@@ -34,7 +34,9 @@ class StoreRepository (private val database: AppDatabase) :
                 list.add(PieChartEntry(allStores[i].storeName!!,"0"))
             }
         }
-
+        list.forEach {
+            it.total = it.total?.replace(",",".")
+        }
         return list
     }
 
@@ -133,10 +135,8 @@ class StoreRepository (private val database: AppDatabase) :
                 num += database.billDao.getQuantityOfProduct(it.productId,"11",i.toString())
                 num += database.billDao.getQuantityOfProduct(it.productId,"12",i.toString())
             }
-            println("debug full num is $num")
             val avg = num/12
             if(avg > it.quantity){
-                println("debug yellow it is ${it.productId}")
                 it.yellow = true
             }
         }

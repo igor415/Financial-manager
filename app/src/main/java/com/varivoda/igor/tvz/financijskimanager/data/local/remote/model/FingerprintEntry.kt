@@ -1,7 +1,6 @@
 package com.varivoda.igor.tvz.financijskimanager.data.local.remote.model
 
-data class LoginEntry(
+data class FingerprintEntry(
     val username: String,
-    val password: String,
-    val fingerprint: String = ""
+    val fingerprint: String
 )

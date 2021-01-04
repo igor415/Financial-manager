@@ -108,5 +108,17 @@
     <string name="select_discount_period">Select discount period</string>
     <string name="select_two_stores">Select two stores</string>
     <string name="ok">Ok</string>
+    <string name="or_resource">OR</string>
+    <string name="place_your_finger_on_the_sensor_to_authenticate">Place your finger on the sensor to authenticate</string>
+
+    <!--speech feature-->
+    <string name="speech_prompt">Say something&#8230;</string>
+    <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
+    <string name="tap_on_mic">Tap on mic to speak</string>
+    <string name="product_not_available_resource">The product you are looking for is currently not available.</string>
+    <string name="google_search_alert_dialog_message">This App requires the Google Search App to work properly.</string>
+    <string name="download">Download</string>
+    <string name="cancel">Cancel</string>
+    <string name="database_decryption_error">Neuspješno dekriptiranje baze</string>
 
 </resources>

@@ -41,7 +41,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
         actionBar?.title = getString(R.string.stores_locations)
         val pref = Preferences(this)
-        setBrightness(pref.getSeekBarValue())
+        /*setBrightness(pref.getSeekBarValue())*/
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

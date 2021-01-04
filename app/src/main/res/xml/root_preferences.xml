@@ -29,8 +29,16 @@
         <SeekBarPreference
             app:allowDividerAbove="true"
             android:title="Change brightness"
+            app:isPreferenceVisible="false"
             android:defaultValue="50"
             android:key="brightness key"/>
+
+        <SwitchPreference
+            app:allowDividerAbove="true"
+            android:title="Use fingerprint authentication"
+            android:defaultValue="false"
+            app:isPreferenceVisible="false"
+            android:key="fingerprint key"/>
 
 
     </PreferenceCategory>

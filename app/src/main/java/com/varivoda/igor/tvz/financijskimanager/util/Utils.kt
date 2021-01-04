@@ -1,9 +1,11 @@
 package com.varivoda.igor.tvz.financijskimanager.util
 
 import android.content.Context
+import android.os.Build
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import java.util.*
+import kotlin.random.Random
 
 
 enum class CustomPeriod(val identifier: Int, val fullName: String){
@@ -75,4 +77,11 @@ fun getTodayDate(): String{
     val m = getMonthWithZero(monthValue)
     val d = getMonthWithZero(dayValue)
     return "$d.$m.$yearValue."
+}
+
+fun rawSerial(): String {
+    return (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        Random.nextLong().toString() + Random.nextLong().toString()
+    else
+        Build.SERIAL)
 }

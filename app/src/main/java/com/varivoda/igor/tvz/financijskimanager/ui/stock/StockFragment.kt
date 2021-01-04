@@ -1,11 +1,17 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.stock
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -22,7 +28,7 @@ import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.model.ProductStockDTO
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
-import com.varivoda.igor.tvz.financijskimanager.ui.maps.REQUEST_LOCATION_PERMISSION
+import com.varivoda.igor.tvz.financijskimanager.util.SpeechService
 import com.varivoda.igor.tvz.financijskimanager.util.closeKeyboard
 import com.varivoda.igor.tvz.financijskimanager.util.openKeyboard
 import com.varivoda.igor.tvz.financijskimanager.util.toast
@@ -35,6 +41,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
+
+const val REQ_CODE_SPEECH_INPUT = 33
 const val REQUEST_PHONE_PERMISSION = 11
 class StockFragment : Fragment() {
 
@@ -45,6 +53,7 @@ class StockFragment : Fragment() {
     private var infoDialog: AlertDialog? = null
     private var currentProductName: String? = null
     private var phonePermission = false
+    private var isShown = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,6 +72,50 @@ class StockFragment : Fragment() {
         observeStockData()
         searchFeature()
         observeInfoResult()
+        mSensorManager = requireActivity().getSystemService(Activity.SENSOR_SERVICE) as SensorManager
+        Objects.requireNonNull(mSensorManager).registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL)
+    }
+
+
+    fun getAllInfo(code: Int, data: Intent) {
+        if(code == REQ_CODE_SPEECH_INPUT) {
+            val result = data
+                .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            val listOfProducts = viewModel.allProducts.value ?: listOf()
+            outer_loop@ for (i in 0 until result?.size!!) {
+                val speechString = result[i]
+                if (listOfProducts.isNotEmpty()) {
+                    for (j in listOfProducts.indices) {
+                        val product = listOfProducts[j]
+                        if (speechString.toLowerCase(Locale.getDefault()) in product.productName.toLowerCase(
+                                Locale.getDefault()
+                            )
+                        ) {
+                            searchEditText.setText(speechString)
+                            break@outer_loop
+                        }
+                    }
+                }
+            }
+            if (searchEditText.text.isEmpty() && result.size > 0) searchEditText.setText(
+                result[0]
+            )
+            searchEditText.setSelection(searchEditText.text.length)
+        }
+    }
+
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        (activity as HomeActivity).removeActionBar()
+        if(requestCode == REQ_CODE_SPEECH_INPUT) {
+            searchEditText.setText("")
+            if (resultCode == Activity.RESULT_OK && null != data) {
+                getAllInfo(REQ_CODE_SPEECH_INPUT, data)
+            }
+        }
+        isShown = false
     }
 
     private fun observeInfoResult() {
@@ -80,11 +133,20 @@ class StockFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         (activity as HomeActivity).removeActionBar()
+        mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mSensorManager.unregisterListener(mSensorListener)
     }
 
     override fun onPause() {
         super.onPause()
-        (activity as HomeActivity).showActionBar()
+        if(!isShown){
+            (activity as HomeActivity).showActionBar()
+        }
+
     }
 
     private fun searchFeature() {
@@ -201,6 +263,38 @@ class StockFragment : Fragment() {
                 askForPermission()
             }
         }
+    }
+
+    var mAccelerometer = 10f
+    var mAccelerometerCurrent = SensorManager.GRAVITY_EARTH
+    var mAccelerometerLast = SensorManager.GRAVITY_EARTH
+    lateinit var mSensorManager: SensorManager
+
+    val mSensorListener: SensorEventListener = object : SensorEventListener {
+        override fun onSensorChanged(event: SensorEvent) {
+            val x = event.values[0]
+            val y = event.values[1]
+            val z = event.values[2]
+            mAccelerometerLast = mAccelerometerCurrent
+            mAccelerometerCurrent =
+                Math.sqrt((x * x + y * y + z * z).toDouble()).toFloat()
+            val delta: Float = mAccelerometerCurrent - mAccelerometerLast
+            mAccelerometer = mAccelerometer * 0.9f + delta
+            if (mAccelerometer > 11) {
+                if(!isShown){
+                    SpeechService.promptSpeechInput(
+                        REQ_CODE_SPEECH_INPUT,
+                        requireContext(),
+                        this@StockFragment
+                    )
+                    isShown = true
+                }
+
+            }
+        }
+
+        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+
     }
 
 }
