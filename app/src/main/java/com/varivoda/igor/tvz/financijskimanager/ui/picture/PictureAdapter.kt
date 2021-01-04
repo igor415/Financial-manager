@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.util.convertStringToBitmap
+import kotlinx.android.synthetic.main.picture_item.view.*
 
 class PictureAdapter : ListAdapter<Product,PictureAdapter.PictureViewHolder>(PictureDiffCallback()){
 
     private var listener: OnItemClickListener? = null
+    private var imageListener: OnImageClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PictureViewHolder {
         return PictureViewHolder.create(parent)
@@ -22,9 +24,14 @@ class PictureAdapter : ListAdapter<Product,PictureAdapter.PictureViewHolder>(Pic
 
     override fun onBindViewHolder(holder: PictureViewHolder, position: Int) {
         holder.bind(getItem(position))
-        holder.itemView.setOnClickListener {
+        holder.itemView.pictureTextView.setOnClickListener {
             if (position != RecyclerView.NO_POSITION) {
                 listener?.onClick(getItem(position))
+            }
+        }
+        holder.itemView.pictureImage.setOnClickListener {
+            if (position != RecyclerView.NO_POSITION) {
+                imageListener?.onImageClick(getItem(position))
             }
         }
     }
@@ -66,6 +73,14 @@ class PictureAdapter : ListAdapter<Product,PictureAdapter.PictureViewHolder>(Pic
 
     fun setOnItemClickListener(lis: OnItemClickListener) {
         listener = lis
+    }
+
+    interface OnImageClickListener {
+        fun onImageClick(product: Product)
+    }
+
+    fun setOnImageClickListener(lis: OnImageClickListener) {
+        imageListener = lis
     }
 
 }
