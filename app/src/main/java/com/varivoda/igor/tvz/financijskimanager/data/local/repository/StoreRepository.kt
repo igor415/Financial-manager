@@ -21,19 +21,33 @@ class StoreRepository (private val database: AppDatabase) :
         return database.storesDao.getAllStores()
     }
 
-    override fun storeTotalPerYear(year: String): List<PieChartEntry> {
+    override fun storeTotalPerYear(month: String, year: String): List<PieChartEntry> {
         val list = mutableListOf<PieChartEntry>()
         val allStores = database.storesDao.getAllStores()
-        val totalPerYear = database.productDao.totalPerYear(year)
-        for (i in allStores.indices){
-            val num = database.storesDao.storeTotalPerYear(year, allStores[i].id)
-            if(num != null && totalPerYear != null){
-                val percent = String.format(Locale.getDefault(), "%.2f", num.toFloat() / totalPerYear.toFloat() * 100)
-                list.add(PieChartEntry(allStores[i].storeName!!,percent))
-            }else{
-                list.add(PieChartEntry(allStores[i].storeName!!,"0"))
+        if(month == "-1"){
+            val totalPerYear = database.productDao.totalPerYear(year)
+            for (i in allStores.indices){
+                val num = database.storesDao.storeTotalPerYear(year, allStores[i].id)
+                if(num != null && totalPerYear != null){
+                    val percent = String.format(Locale.getDefault(), "%.2f", num.toFloat() / totalPerYear.toFloat() * 100)
+                    list.add(PieChartEntry(allStores[i].storeName!!,percent))
+                }else{
+                    list.add(PieChartEntry(allStores[i].storeName!!,"0"))
+                }
+            }
+        }else{
+            val total = database.productDao.totalPerYearAndMonth(month, year)
+            for (i in allStores.indices){
+                val num = database.storesDao.storeTotalPerMonthAndYear(month, year, allStores[i].id)
+                if(num != null && total != null){
+                    val percent = String.format(Locale.getDefault(), "%.2f", num.toFloat() / total.toFloat() * 100)
+                    list.add(PieChartEntry(allStores[i].storeName!!,percent))
+                }else{
+                    list.add(PieChartEntry(allStores[i].storeName!!,"0"))
+                }
             }
         }
+
         list.forEach {
             it.total = it.total?.replace(",",".")
         }

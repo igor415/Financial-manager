@@ -31,9 +31,9 @@ class LoginViewModel(preferences: Preferences,
             doAnimation.postValue(true)
             viewModelScope.launch(Dispatchers.IO) {
                 delay(1300)
-                val result = loginRepository.login(currentUsername,currentPassword)
+                //val result = loginRepository.login(currentUsername,currentPassword)
                 //loginSuccess.postValue(result)
-                //val result = NetworkResult.Success(true)
+                val result = NetworkResult.Success(true)
                 appContext?.let { context ->
                     if (result is NetworkResult.Success) {
                         if (currentPassword.isNotEmpty()) {

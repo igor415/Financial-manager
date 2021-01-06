@@ -40,8 +40,64 @@ class EmployeeRepository(private val appDatabase: AppDatabase) :
         appDatabase.employeeDao.insertEmployee(employee)
     }
 
-    override fun getHorizontalBarChartData(dateSelected: String): List<HorizontalBarChartEntry> {
-        val splitted = dateSelected.split(".")
+    override fun getHorizontalBarChartData(month: String, year: String, storeId: Int): List<HorizontalBarChartEntry> {
+        val allEmployees = appDatabase.employeeDao.getAll()
+        val list = mutableListOf<HorizontalBarChartEntry>()
+        if(storeId == -1){
+            if(month != "-1"){
+                allEmployees.forEach {
+                    val x = appDatabase.employeeDao.getEmployeeAvgKoefPerMonthAndYear(month, year, it.id)
+                    if(x != null){
+                        list.add(HorizontalBarChartEntry("  ${it.employeeName.first()}. ${it.employeeLastName}", x.toFloat()))
+                    }else{
+                        list.add(HorizontalBarChartEntry("  ${it.employeeName.first()}. ${it.employeeLastName}", 0f))
+                    }
+                }
+
+                list.sortBy { it.totalInvoice }
+                return list.reversed().take(3)
+            }else{
+                allEmployees.forEach {
+                    val x = appDatabase.employeeDao.getEmployeeAvgKoefPerYear(year, it.id)
+                    if(x != null){
+                        list.add(HorizontalBarChartEntry("  ${it.employeeName.first()}. ${it.employeeLastName}", x.toFloat()))
+                    }else{
+                        list.add(HorizontalBarChartEntry("  ${it.employeeName.first()}. ${it.employeeLastName}", 0f))
+                    }
+                }
+
+                list.sortBy { it.totalInvoice }
+                return list.reversed().take(3)
+            }
+        }else{
+            if(month != "-1"){
+                allEmployees.forEach {
+                    val x = appDatabase.employeeDao.getEmployeeAvgKoefPerMonthAndYearWithStore(month, year, it.id, storeId)
+                    if(x != null){
+                        list.add(HorizontalBarChartEntry("  ${it.employeeName.first()}. ${it.employeeLastName}", x.toFloat()))
+                    }else{
+                        list.add(HorizontalBarChartEntry("  ${it.employeeName.first()}. ${it.employeeLastName}", 0f))
+                    }
+                }
+
+                list.sortBy { it.totalInvoice }
+                return list.reversed().take(3)
+            }else{
+                allEmployees.forEach {
+                    val x = appDatabase.employeeDao.getEmployeeAvgKoefPerYearWithStore(year, it.id, storeId)
+                    if(x != null){
+                        list.add(HorizontalBarChartEntry("  ${it.employeeName.first()}. ${it.employeeLastName}", x.toFloat()))
+                    }else{
+                        list.add(HorizontalBarChartEntry("  ${it.employeeName.first()}. ${it.employeeLastName}", 0f))
+                    }
+                }
+
+                list.sortBy { it.totalInvoice }
+                return list.reversed().take(3)
+            }
+        }
+
+        /*val splitted = dateSelected.split(".")
         val allEmployees = appDatabase.employeeDao.getAll()
         val list = mutableListOf<HorizontalBarChartEntry>()
         allEmployees.forEach {
@@ -53,7 +109,7 @@ class EmployeeRepository(private val appDatabase: AppDatabase) :
             }
         }
         list.sortBy { it.totalInvoice }
-        return list
+        return list*/
     }
 
     override fun employeeMostProductSell(dateSelected: String, product: Product): String {

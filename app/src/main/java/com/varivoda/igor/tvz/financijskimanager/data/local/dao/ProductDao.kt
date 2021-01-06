@@ -119,4 +119,28 @@ interface ProductDao {
     )
     fun totalPerYear( year: String?): String?
 
+    @Query(
+        """SELECT SUM(pob.quantity*p.price) as total 
+                FROM Product p JOIN ProductsOnBill pob ON p.id = pob.productId 
+                JOIN Bill b ON b.id = pob.billId where 
+                 strftime('%Y',b.date) = :year and b.storeId = :id"""
+    )
+    fun totalPerYearWithStore( year: String?, id: Int): String?
+
+    @Query(
+        """SELECT SUM(pob.quantity*p.price) as total 
+                FROM Product p JOIN ProductsOnBill pob ON p.id = pob.productId 
+                JOIN Bill b ON b.id = pob.billId where 
+                 strftime('%Y',b.date) = :year and strftime('%m',b.date) = :month """
+    )
+    fun totalPerYearAndMonth(month: String, year: String?): String?
+
+    @Query(
+        """SELECT SUM(pob.quantity*p.price) as total 
+                FROM Product p JOIN ProductsOnBill pob ON p.id = pob.productId 
+                JOIN Bill b ON b.id = pob.billId where 
+                 strftime('%Y',b.date) = :year and strftime('%m',b.date) = :month and b.storeId = :id"""
+    )
+    fun totalPerYearAndMonthWithStore(month: String, year: String?, id: Int): String?
+
 }

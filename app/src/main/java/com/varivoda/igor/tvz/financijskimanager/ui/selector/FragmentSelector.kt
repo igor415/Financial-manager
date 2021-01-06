@@ -58,7 +58,7 @@ class FragmentSelector {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToBarChartFragment())
             }
             "Udio određene poslovnice u ukupnom godišnjem profitu" -> {
-                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToPieChartFragment())
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToPieChartFragment("Udio određene poslovnice u ukupnom godišnjem profitu"))
             }
             "Poslovnica koja najbolje prodaje određeni proizvod" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToDateAndProductFragment("Poslovnica koja najbolje prodaje određeni proizvod"))
@@ -75,13 +75,22 @@ class FragmentSelector {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToDateAndProductFragment("Zaposlenik koji je prodao najveću količinu nekog proizvoda po mjesecu"))
             }
             "Top 3 tipova proizvoda koji su se najrjeđe prodavali" ->
-                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToTop3Fragment())
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToTop3Fragment("Top 3 tipova proizvoda koji su se najrjeđe prodavali"))
 
             "Top 4 najčešće posjećene trgovine tijekom izabranog razdoblja" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToRadarChartFragment())
             }
             "Posjećenost prema razdoblju dana" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToTimeOfDayFragment())
+            }
+            "Top 3 zaposlenika sa najboljim koeficijentom količine na računu" ->
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToHorizontalBarChartFragment())
+
+            "Top 3 kupca koji su najviše kupovali određenu kategoriju" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToTop3Fragment("Top 3 kupca koji su najviše kupovali određenu kategoriju"))
+            }
+            "Grafički prikaz po načinima plaćanja" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToPieChartFragment("Grafički prikaz po načinima plaćanja"))
             }
         }
 

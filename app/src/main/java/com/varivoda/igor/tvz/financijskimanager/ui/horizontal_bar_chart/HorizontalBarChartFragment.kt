@@ -1,5 +1,6 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.horizontal_bar_chart
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
@@ -16,9 +17,8 @@ import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import com.varivoda.igor.tvz.financijskimanager.util.MonthYearDialog
-import com.varivoda.igor.tvz.financijskimanager.util.getCurrentYear
 import com.varivoda.igor.tvz.financijskimanager.util.getMonthAndYearFormatted
-import kotlinx.android.synthetic.main.fragment_bar_chart.*
+import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 import kotlinx.android.synthetic.main.fragment_horizontal_bar_chart.*
 import kotlinx.android.synthetic.main.fragment_horizontal_bar_chart.changePeriod
 import kotlinx.android.synthetic.main.fragment_horizontal_bar_chart.timePeriod
@@ -27,7 +27,8 @@ import kotlinx.android.synthetic.main.fragment_horizontal_bar_chart.timePeriod
 class HorizontalBarChartFragment : Fragment() {
 
     private val viewModel by viewModels<HorizontalBarChartViewModel> {
-        HorizontalBarChartViewModelFactory((requireContext().applicationContext as App).employeeRepository)
+        HorizontalBarChartViewModelFactory((requireContext().applicationContext as App).employeeRepository,
+            (requireContext().applicationContext as App).storeRepository)
     }
 
     override fun onCreateView(
@@ -40,13 +41,27 @@ class HorizontalBarChartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadChart()
+        //loadChart()
         (activity as HomeActivity).setActionBarText("Zaposlenici - statistika")
         timePeriod.text = getString(R.string.time_period, getMonthAndYearFormatted())
-        changePeriod.setOnClickListener {
-            MonthYearDialog().getDialog(activity as HomeActivity,changeDate)
-        }
         observeBarChartStatistics()
+
+        changePeriod.setOnClickListener {
+            if(useMonthAndYearSwitch.isChecked) {
+                MonthYearDialog().getDialog(activity as HomeActivity, changeDate)
+            }else{
+                MonthYearDialog().getOnlyYearDialog(activity as HomeActivity, changeYear)
+            }
+        }
+        selectStore.setOnClickListener { storeDialog() }
+        observeStoreSelected()
+    }
+
+    private fun observeStoreSelected() {
+        viewModel.currentStore.observe(viewLifecycleOwner, Observer {
+            if(it==null) return@Observer
+            selectStore.setText(it.storeName)
+        })
     }
 
     private fun observeBarChartStatistics() {
@@ -58,8 +73,31 @@ class HorizontalBarChartFragment : Fragment() {
 
     private val changeDate: (month: Int, year: Int) -> Unit = {
             month, year ->
-        viewModel.dateSelected.value = getMonthAndYearFormatted(month, year)
+        viewModel.monthAndYear.value = Pair(getMonthWithZero(month),year.toString())
         timePeriod.text = getString(R.string.time_period,getMonthAndYearFormatted(month, year))
+    }
+
+    private val changeYear: (year: Int) -> Unit = {
+            year ->
+        viewModel.monthAndYear.value = Pair("-1",year.toString())
+        timePeriod.text = getString(R.string.time_period,year.toString())
+    }
+
+    private var storeDialog: AlertDialog? = null
+    private fun storeDialog() {
+        viewModel.allStores.observe(viewLifecycleOwner, Observer {
+            if(it==null) return@Observer
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            builder.setTitle(getString(R.string.select_store))
+            builder.setItems(it.map { itt -> itt.storeName }.toTypedArray()
+            ) { dialog, which ->
+                viewModel.currentStore.value = it[which]
+                dialog?.dismiss() }
+            storeDialog?.cancel()
+            storeDialog = builder.create()
+            storeDialog?.show()
+        })
+
     }
 
     private fun loadChart() {
@@ -70,7 +108,7 @@ class HorizontalBarChartFragment : Fragment() {
             i += 1
         }
 
-        val barDataSet = BarDataSet(firstEntries,"Zarada(kn)")
+        val barDataSet = BarDataSet(firstEntries,"")
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS.toList())
         barDataSet.valueTextColor = Color.BLACK
         barDataSet.valueTextSize = 16f

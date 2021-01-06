@@ -120,5 +120,7 @@
     <string name="download">Download</string>
     <string name="cancel">Cancel</string>
     <string name="database_decryption_error">Neuspješno dekriptiranje baze</string>
+    <string name="full_name">Full name</string>
+    <string name="select_category">Select category</string>
 
 </resources>

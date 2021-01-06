@@ -17,7 +17,6 @@ import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import com.varivoda.igor.tvz.financijskimanager.util.MonthYearDialog
 import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
-import kotlinx.android.synthetic.main.fragment_horizontal_bar_chart.*
 import kotlinx.android.synthetic.main.fragment_time_of_day.*
 import kotlinx.android.synthetic.main.fragment_time_of_day.changePeriod
 import kotlinx.android.synthetic.main.fragment_time_of_day.timePeriod

@@ -3,12 +3,15 @@ package com.varivoda.igor.tvz.financijskimanager.ui.maps
 import android.Manifest
 import android.content.IntentSender
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import com.beust.klaxon.*
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -20,11 +23,16 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.ui.settings.SettingsActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 import timber.log.Timber
+import java.net.URL
 
 const val REQUEST_LOCATION_PERMISSION = 1
 const val REQUEST_TURN_DEVICE_LOCATION_ON = 2
@@ -157,8 +165,83 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 map.mapType = GoogleMap.MAP_TYPE_NORMAL
                 true
             }
+            R.id.showClosest -> {
+                buildPath()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+
+    private fun buildPath() {
+        val options = PolylineOptions()
+        options.color(Color.RED)
+        options.width(5f)
+        val url = getURL(LatLng(45.813019, 15.966568), LatLng(45.803019, 15.860000))
+        lifecycleScope.launch(Dispatchers.IO){
+            val result = URL(url).readText()
+            withContext(Dispatchers.Main){
+                val parser: Parser = Parser()
+                val stringBuilder: StringBuilder = StringBuilder(result)
+                val json: JsonObject = parser.parse(stringBuilder) as JsonObject
+                val routes = json.array<JsonObject>("routes")
+                val points = routes!!["legs"]["steps"][0] as JsonArray<JsonObject>
+                //val polypts = points.map { it.obj("polyline")?.string("points")!!  }
+                val polypts = points.flatMap { decodePoly(it.obj("polyline")?.string("points")!!)  }
+                options.add(LatLng(45.813019, 15.966568))
+
+                for (point in polypts) options.add(point)
+                options.add(LatLng(45.803019, 15.860000))
+                map.addPolyline(options)
+                //map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
+
+            }
+        }
+    }
+
+    private fun decodePoly(encoded: String): List<LatLng> {
+        val poly = ArrayList<LatLng>()
+        var index = 0
+        val len = encoded.length
+        var lat = 0
+        var lng = 0
+
+        while (index < len) {
+            var b: Int
+            var shift = 0
+            var result = 0
+            do {
+                b = encoded[index++].toInt() - 63
+                result = result or (b and 0x1f shl shift)
+                shift += 5
+            } while (b >= 0x20)
+            val dlat = if (result and 1 != 0) (result shr 1).inv() else result shr 1
+            lat += dlat
+
+            shift = 0
+            result = 0
+            do {
+                b = encoded[index++].toInt() - 63
+                result = result or (b and 0x1f shl shift)
+                shift += 5
+            } while (b >= 0x20)
+            val dlng = if (result and 1 != 0) (result shr 1).inv() else result shr 1
+            lng += dlng
+
+            val p = LatLng(lat.toDouble() / 1E5,
+                lng.toDouble() / 1E5)
+            poly.add(p)
+        }
+
+        return poly
+    }
+
+    private fun getURL(from : LatLng, to : LatLng) : String {
+        val origin = "origin=" + from.latitude + "," + from.longitude
+        val dest = "destination=" + to.latitude + "," + to.longitude
+        val sensor = "sensor=false"
+        val params = "$origin&$dest&$sensor"
+        return "https://maps.googleapis.com/maps/api/directions/json?$params"
+    }
 
     fun setBrightness(float: Float){
         val lp = window.attributes

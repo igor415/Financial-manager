@@ -5,6 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Category
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
@@ -166,6 +167,10 @@ class ProductRepository(private val database: AppDatabase) :
             categoriesDTO.add(CategoryDTO(it.id,it.name,count))
         }
         return categoriesDTO.sortedBy { it.count }.take(3)
+    }
+
+    override fun getCategories(): List<Category> {
+        return database.categoryDao.getAllCategories()
     }
 
 

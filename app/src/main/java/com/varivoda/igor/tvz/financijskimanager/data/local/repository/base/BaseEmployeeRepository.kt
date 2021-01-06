@@ -14,7 +14,7 @@ interface BaseEmployeeRepository {
     suspend fun getEmployeeTotalPerMonthAndYear(month: String, year: String): String?
     fun getEmployeeMostDaysIssuedInvoice(year: String): String?
     fun insertEmployee(employee: Employee)
-    fun getHorizontalBarChartData(dateSelected: String): List<HorizontalBarChartEntry>
+    fun getHorizontalBarChartData(month: String, year: String, storeId: Int): List<HorizontalBarChartEntry>
     fun employeeMostProductSell(
         dateSelected: String,
         product: Product

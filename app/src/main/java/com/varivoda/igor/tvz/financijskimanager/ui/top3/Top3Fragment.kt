@@ -12,9 +12,6 @@ import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import com.varivoda.igor.tvz.financijskimanager.util.*
-import kotlinx.android.synthetic.main.fragment_horizontal_bar_chart.*
-import kotlinx.android.synthetic.main.fragment_horizontal_bar_chart.changePeriod
-import kotlinx.android.synthetic.main.fragment_horizontal_bar_chart.timePeriod
 import kotlinx.android.synthetic.main.fragment_top3.*
 import kotlinx.android.synthetic.main.fragment_top3.view.*
 
@@ -23,10 +20,13 @@ class Top3Fragment : Fragment() {
 
     private val viewModel by viewModels<Top3ViewModel> {
         Top3ViewModelFactory((requireContext().applicationContext as App).productRepository,
-            (requireContext().applicationContext as App).storeRepository)
+            (requireContext().applicationContext as App).storeRepository,
+            (requireContext().applicationContext as App).customerRepository)
     }
     private val top3Adapter = Top3Adapter()
     private var storeDialog: AlertDialog? = null
+    private var categoryDialog: AlertDialog? = null
+    private var info: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +34,7 @@ class Top3Fragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_top3, container, false)
+        info = Top3FragmentArgs.fromBundle(requireArguments()).info
         view.recyclerViewTopThree.layoutManager = LinearLayoutManager(context)
         view.recyclerViewTopThree.adapter = top3Adapter
         return view
@@ -49,10 +50,30 @@ class Top3Fragment : Fragment() {
                 MonthYearDialog().getOnlyYearDialog(activity as HomeActivity, changeYear)
             }
         }
-        observeTop3Categories()
+        if(info == "Top 3 tipova proizvoda koji su se najrjeđe prodavali"){
+            observeTop3Categories()
+        }else{
+            observeTop3Customers()
+            useMonthAndYearSwitch.visibility = View.INVISIBLE
+            product.text = getString(R.string.full_name)
+            pickCategory.visibility = View.VISIBLE
+            observeCategoryChange()
+            pickCategory.setOnClickListener {
+                categoryDialog()
+            }
+
+        }
+
         pickStore.setOnClickListener { storeDialog() }
         observeStoreSelected()
         observeDateSelected()
+    }
+
+    private fun observeCategoryChange() {
+        viewModel.currentCategory.observe(viewLifecycleOwner, Observer {
+            if(it==null) return@Observer
+            pickCategory.setText(it.name)
+        })
     }
 
     private fun observeDateSelected() {
@@ -84,6 +105,14 @@ class Top3Fragment : Fragment() {
         })
     }
 
+    private fun observeTop3Customers(){
+        viewModel.top3Customers.observe(viewLifecycleOwner, Observer {
+            if(it==null) return@Observer
+            progressBar.visibility = View.GONE
+            top3Adapter.setListAndInvalidate(it)
+        })
+    }
+
     private val changeYear: (year: Int) -> Unit = {
             year ->
         viewModel.monthAndYear.value = Pair("-1",year.toString())
@@ -107,6 +136,22 @@ class Top3Fragment : Fragment() {
             storeDialog?.cancel()
             storeDialog = builder.create()
             storeDialog?.show()
+        })
+
+    }
+
+    private fun categoryDialog() {
+        viewModel.allCategories.observe(viewLifecycleOwner, Observer {
+            if(it==null) return@Observer
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            builder.setTitle(getString(R.string.select_category))
+            builder.setItems(it.map { itt -> itt.name }.toTypedArray()
+            ) { dialog, which ->
+                viewModel.currentCategory.value = it[which]
+                dialog?.dismiss() }
+            categoryDialog?.cancel()
+            categoryDialog = builder.create()
+            categoryDialog?.show()
         })
 
     }

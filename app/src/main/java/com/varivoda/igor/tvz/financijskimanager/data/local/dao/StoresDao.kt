@@ -31,6 +31,16 @@ interface StoresDao {
     fun storeTotalPerYear(year: String?, id: Int): String?
 
     @Query(
+        """
+                SELECT SUM(pob.quantity*p.price) as profit 
+                FROM Bill b JOIN ProductsOnBill pob ON b.id = pob.billId
+                JOIN product p ON p.id = pob.productId
+                WHERE strftime('%Y',b.date) = :year and strftime('%m',b.date) = :month 
+                and b.storeId = :id """
+    )
+    fun storeTotalPerMonthAndYear(month: String, year: String?, id: Int): String?
+
+    @Query(
         """select 'Poslovnica ' || x.storeName || ' je ostvarila profit od ' || x.profit || ' kn prodajom proizvoda' from 
                 (select s.storeName, SUM(pob.quantity*p.price) as profit 
                 from Bill b join Store s on b.storeId = s.id join ProductsOnBill 

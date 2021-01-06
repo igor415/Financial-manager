@@ -66,4 +66,20 @@ interface EmployeeDao {
         year: String,
         productId: Int
     ): EmployeeProductDTO?
+
+    @Query("""SELECT AVG(pob.quantity) FROM Bill b JOIN ProductsOnBill pob on b.id = pob.billId where strftime('%m',b.date)= :month 
+        and strftime('%Y',b.date) = :year and b.employeeId = :employeeId""")
+    fun getEmployeeAvgKoefPerMonthAndYear(month: String, year: String, employeeId: Int): String?
+
+    @Query("""SELECT AVG(pob.quantity) FROM Bill b JOIN ProductsOnBill pob on b.id = pob.billId where strftime('%m',b.date)= :month 
+        and strftime('%Y',b.date) = :year and b.employeeId = :employeeId and b.storeId = :id""")
+    fun getEmployeeAvgKoefPerMonthAndYearWithStore(month: String, year: String, employeeId: Int, id: Int): String?
+
+    @Query("""SELECT AVG(pob.quantity) FROM Bill b JOIN ProductsOnBill pob on b.id = pob.billId where 
+        strftime('%Y',b.date) = :year and b.employeeId = :employeeId""")
+    fun getEmployeeAvgKoefPerYear( year: String, employeeId: Int): String?
+
+    @Query("""SELECT AVG(pob.quantity) FROM Bill b JOIN ProductsOnBill pob on b.id = pob.billId where 
+        strftime('%Y',b.date) = :year and b.employeeId = :employeeId and b.storeId = :id""")
+    fun getEmployeeAvgKoefPerYearWithStore( year: String, employeeId: Int, id: Int): String?
 }

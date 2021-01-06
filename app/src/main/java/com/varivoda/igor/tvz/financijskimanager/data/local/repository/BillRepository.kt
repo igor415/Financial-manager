@@ -7,9 +7,11 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Bill
 import com.varivoda.igor.tvz.financijskimanager.model.BarChartEntry
 import com.varivoda.igor.tvz.financijskimanager.model.BillDTO
+import com.varivoda.igor.tvz.financijskimanager.model.PieChartEntry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
 
 class BillRepository(private val database: AppDatabase) {
 
@@ -29,6 +31,51 @@ class BillRepository(private val database: AppDatabase) {
                 println("debug: lista je ${database.billDao.get()}")
             }
 
+    }
+
+    fun getPaymentInfo(month: String, year: String, storeId: Int): List<PieChartEntry>{
+        val list = mutableListOf<PieChartEntry>()
+        val all = database.billDao.getAllPaymentMethods()
+        if(month == "-1"){
+            val totalValue = if(storeId == -1){
+                database.productDao.totalPerYear(year)
+            }else{
+                database.productDao.totalPerYearWithStore(year, storeId)
+            }
+            all.forEach {
+                val num = if(storeId == -1){
+                    database.billDao.getPaymentMethodTotalWithoutMonthWithoutStore(it.id, year)
+                }else{
+                    database.billDao.getPaymentMethodTotalWithoutMonth(it.id, year, storeId)
+                }
+                if(num != null && totalValue != null){
+                    val percent = String.format(Locale.getDefault(), "%.2f", num.toFloat() / totalValue.toFloat() * 100)
+                    list.add(PieChartEntry(it.name,percent))
+                }else{
+                    list.add(PieChartEntry(it.name,"0"))
+                }
+            }
+        }else{
+            val totalValue = if(storeId == -1){
+                database.productDao.totalPerYearAndMonth(month, year)
+            }else{
+                database.productDao.totalPerYearAndMonthWithStore(month, year, storeId)
+            }
+            all.forEach {
+                val num = if(storeId == -1){
+                    database.billDao.getPaymentMethodTotalWithoutStore(it.id, month, year)
+                }else{
+                    database.billDao.getPaymentMethodTotal(it.id, month, year, storeId)
+                }
+                if(num != null && totalValue != null){
+                    val percent = String.format(Locale.getDefault(), "%.2f", num.toFloat() / totalValue.toFloat() * 100)
+                    list.add(PieChartEntry(it.name,percent))
+                }else{
+                    list.add(PieChartEntry(it.name,"0"))
+                }
+            }
+        }
+        return list
     }
 
 

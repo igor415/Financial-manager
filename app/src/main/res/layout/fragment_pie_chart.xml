@@ -31,11 +31,35 @@
 
     </LinearLayout>
 
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/useMonthAndYearSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/use_month_and_year_selection"
+        android:layout_below="@id/linearContainer"
+        />
+
+    <EditText
+        android:id="@+id/pickStore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_below="@id/useMonthAndYearSwitch"
+        android:visibility="invisible"
+        android:focusableInTouchMode="false"
+        android:hint="@string/select_store" />
+
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pieChart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/linearContainer"
+        android:layout_below="@id/pickStore"
         android:layout_margin="5dp"/>
 
 </RelativeLayout>

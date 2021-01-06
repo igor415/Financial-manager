@@ -54,6 +54,18 @@
         android:layout_below="@id/pickStore"
         />
 
+    <EditText
+        android:id="@+id/pickCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_below="@id/pickStore"
+        android:visibility="gone"
+        android:focusableInTouchMode="false"
+        android:hint="@string/category" />
+
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"

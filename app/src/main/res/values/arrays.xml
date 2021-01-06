@@ -13,20 +13,23 @@
         <!--item>Prodavač koji je najviše dana u godini izdao račun</item-->
     </string-array>
     <string-array name="billsOptions">
-        <item>Unesi novi račun</item>
+        <!--item>Unesi novi račun</item>
         <item>Popis računa</item>
         <item>Račun sa najvećom svotom novca po mjesecu</item>
         <item>Broj izdanih računa po kvartalima</item>
         <item>Račun sa najviše stavki po godini</item>
-        <item>Zarada po prvom i drugom dijelu mjeseca u godini</item>
+        <item>Zarada po prvom i drugom dijelu mjeseca u godini</item-->
+        <item>Grafički prikaz po načinima plaćanja</item>
+        <item>Zaposlenik koji je izdao račun sa najvećim profitom</item>
     </string-array>
     <string-array name="customersOptions">
         <item>Popis kupaca</item>
-        <item>Kupac koji je potrošio najviše novaca u mjesecu</item>
-        <item>Kupac koji je kupovao najduži niz dana zaredom po mjesecu</item>
-        <item>Kupac koji je kupio najviše stavki u određenoj poslovnici</item>
-        <item>U kojoj poslovnici najčešće kupuje određeni kupac</item>
-        <item>Broj kupaca koji su posjetili poslovnicu tijekom mjeseca</item>
+        <item>Top 3 kupca koji su najviše kupovali određenu kategoriju</item>
+        <!--item>Kupac koji je potrošio najviše novaca u mjesecu</item-->
+        <!--item>Kupac koji je kupovao najduži niz dana zaredom po mjesecu</item-->
+        <!--item>Kupac koji je kupio najviše stavki u određenoj poslovnici</item-->
+        <!--item>U kojoj poslovnici najčešće kupuje određeni kupac</item>
+        <item>Broj kupaca koji su posjetili poslovnicu tijekom mjeseca</item-->
     </string-array>
     <string-array name="storesOptions">
         <!--item>Popis poslovnica</item-->
@@ -48,8 +51,9 @@
     </string-array>
     <string-array name="employeesOptions">
         <item>Popis zaposlenika</item>
-        <item>Zaposlenik koji je uprihodio najveću svotu novca po mjesecu</item>
-        <item>Grafički prikaz izdanih računa po zaposleniku</item>
+        <!--item>Zaposlenik koji je uprihodio najveću svotu novca po mjesecu</item-->
+        <item>Top 3 zaposlenika sa najboljim koeficijentom količine na računu</item>
+        <!--item>Grafički prikaz izdanih računa po zaposleniku</item-->
         <!--item>Zaposlenik koji je najveći broj dana zaredom izdao račun</item-->
         <!--item>Zaposlenici koji su ostvarili najveći prihod po mjesecu i županiji</item-->
         <item>Zaposlenik koji je prodao najveću količinu nekog proizvoda po mjesecu</item>
