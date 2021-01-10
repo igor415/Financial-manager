@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
-import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Bill
-import com.varivoda.igor.tvz.financijskimanager.model.BarChartEntry
 import com.varivoda.igor.tvz.financijskimanager.model.BillDTO
+import com.varivoda.igor.tvz.financijskimanager.model.EmployeeBestSale
 import com.varivoda.igor.tvz.financijskimanager.model.PieChartEntry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -78,5 +77,12 @@ class BillRepository(private val database: AppDatabase) {
         return list
     }
 
+    fun getEmployeeBestInvoiceSale(month: String, year: String, storeId: Int): EmployeeBestSale{
+        return if(storeId == -1){
+            database.billDao.getEmployeeWithBestSaleInvoiceWithoutStore(month, year)
+        }else{
+            database.billDao.getEmployeeWithBestSaleInvoice(month, year, storeId)
+        }
 
+    }
 }

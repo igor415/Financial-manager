@@ -14,7 +14,7 @@
     <string name="products_value">Products</string>
     <string name="stores_value">Stores</string>
     <string name="customers_value">Customers</string>
-    <string name="insert_bill_value">Insert bill</string>
+    <string name="insert_bill_value">Invoices</string>
     <string name="statistic_value">Statistic</string>
     <string name="navigation_problem">There is a problem with navigation</string>
     <string name="home_title">Home</string>
@@ -23,7 +23,7 @@
     <string name="statistics_title">Statistics</string>
     <string name="stores_title">Stores</string>
     <string name="employees_title">Employees</string>
-    <string name="insert_bill_title">Insert Bill</string>
+    <string name="insert_bill_title">Invoices</string>
     <string name="stores_locations">Lokacije poslovnica</string>
     <string name="no_internet">There is no internet connection</string>
     <string name="general_error">An error occurred. Please try again later.</string>
@@ -122,5 +122,9 @@
     <string name="database_decryption_error">Neuspješno dekriptiranje baze</string>
     <string name="full_name">Full name</string>
     <string name="select_category">Select category</string>
+    <string name="ra_un_br">Račun br.</string>
+    <string name="zaposlenik">Zaposlenik</string>
+    <string name="iznos">Iznos:</string>
+    <string name="na_in_pla_anja">Način plaćanja:</string>
 
 </resources>

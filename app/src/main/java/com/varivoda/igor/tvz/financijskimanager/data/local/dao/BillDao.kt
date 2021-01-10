@@ -7,6 +7,7 @@ import androidx.room.Query
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Bill
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.PaymentMethod
 import com.varivoda.igor.tvz.financijskimanager.model.BillDTO
+import com.varivoda.igor.tvz.financijskimanager.model.EmployeeBestSale
 
 @Dao
 interface BillDao {
@@ -51,4 +52,18 @@ interface BillDao {
          join Product p on p.id = pob.productId where b.paymentMethodId = :paymentMethodId 
         and strftime('%Y',b.date)=:year """)
     fun getPaymentMethodTotalWithoutMonthWithoutStore(paymentMethodId: Int, year: String): Double?
+
+    @Query("""SELECT b.id as invoiceId,e.id as employeeId,e.employeeName as name, e.employeeLastName as surname
+         , SUM(pob.quantity*p.price) as total, pm.name as paymentMethodName, b.date, b.time, s.storeName FROM Bill b join ProductsOnBill pob on b.id = pob.billId
+         join Product p on p.id = pob.productId join Employee e on e.id = b.employeeId join Store s on s.id = b.storeId
+    join PaymentMethod pm on pm.id = b.paymentMethodId where strftime('%m',b.date)=:month 
+                and strftime('%Y',b.date)=:year and b.storeId = :storeId group by b.id order by SUM(pob.quantity*p.price) desc limit 1""")
+    fun getEmployeeWithBestSaleInvoice(month: String, year: String, storeId: Int): EmployeeBestSale
+
+    @Query("""SELECT b.id as invoiceId,e.id as employeeId,e.employeeName as name, e.employeeLastName as surname
+         , SUM(pob.quantity*p.price) as total, pm.name as paymentMethodName, b.date, b.time, s.storeName FROM Bill b join ProductsOnBill pob on b.id = pob.billId
+         join Product p on p.id = pob.productId join Employee e on e.id = b.employeeId join Store s on s.id = b.storeId
+    join PaymentMethod pm on pm.id = b.paymentMethodId where strftime('%m',b.date)=:month 
+                and strftime('%Y',b.date)=:year group by b.id order by SUM(pob.quantity*p.price) desc limit 1""")
+    fun getEmployeeWithBestSaleInvoiceWithoutStore(month: String, year: String): EmployeeBestSale
 }

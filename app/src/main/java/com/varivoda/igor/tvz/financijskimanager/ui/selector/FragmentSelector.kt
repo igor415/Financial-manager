@@ -92,6 +92,9 @@ class FragmentSelector {
             "Grafički prikaz po načinima plaćanja" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToPieChartFragment("Grafički prikaz po načinima plaćanja"))
             }
+            "Zaposlenik koji je izdao račun sa najvećim profitom" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToBestInvoiceFragment())
+            }
         }
 
     }

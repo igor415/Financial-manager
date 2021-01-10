@@ -5,7 +5,7 @@
     <string name="products_value">Proizvodi</string>
     <string name="stores_value">Poslovnice</string>
     <string name="customers_value">Kupci</string>
-    <string name="insert_bill_value">Unesi račun</string>
+    <string name="insert_bill_value">Računi</string>
     <string name="statistic_value">Statistika</string>
     <string name="notification_title">Baza podataka je uspješno ažurirana.</string>
     <string name="title_activity_maps">Karta</string>
@@ -22,7 +22,7 @@
     <string name="statistics_title">Statistika</string>
     <string name="stores_title">Poslovnice</string>
     <string name="employees_title">Zaposlenici</string>
-    <string name="insert_bill_title">Unesi račun</string>
+    <string name="insert_bill_title">Računi</string>
     <string name="stores_locations">Store locations</string>
     <string name="no_internet">Nema internetske povezivosti</string>
     <string name="mail_title">Title</string>
