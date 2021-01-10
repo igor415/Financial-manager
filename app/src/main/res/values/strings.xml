@@ -126,5 +126,11 @@
     <string name="zaposlenik">Zaposlenik</string>
     <string name="iznos">Iznos:</string>
     <string name="na_in_pla_anja">Način plaćanja:</string>
+    <string name="no_data">No data</string>
+    <string name="scan_or_enter_invoice_number">Scan or enter invoice number</string>
+    <string name="enter_invoice_num">You need to enter invoice number</string>
+    <string name="returned_item_success">You successfully returned item</string>
+    <string name="problem_returning">There is a problem with returning, please try later</string>
+    <string name="seven_days_purchase">7 days have passed since the purchase</string>
 
 </resources>

@@ -1,15 +1,21 @@
 package com.varivoda.igor.tvz.financijskimanager.util
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Build
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
+import net.glxn.qrgen.android.QRCode
 import java.util.*
 import kotlin.random.Random
 
 
 enum class CustomPeriod(val identifier: Int, val fullName: String){
         CHRISTMAS(1,"Božićna rasprodaja"), EASTER(2,"Uskrsni popusti"), BLACK_FRIDAY(3, "Black friday"), SCHOOL_START(4,"Krenimo u školu")
+}
+
+fun getImageFromQrCode(string: String): Bitmap? {
+    return QRCode.from(string).withSize(360, 290).bitmap()
 }
 
 fun showSelectedToast(context: Context, text: String){

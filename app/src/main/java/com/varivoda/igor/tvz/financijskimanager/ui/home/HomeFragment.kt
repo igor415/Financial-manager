@@ -35,6 +35,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         createChannel()
+        (activity as HomeActivity).setActionBarText(getString(R.string.home_title))
         listOf(statistics,customers,employees,insertInvoice,products,stores).forEach {
             registerForContextMenu(it)
         }

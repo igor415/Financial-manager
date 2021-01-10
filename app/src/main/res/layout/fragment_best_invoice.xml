@@ -57,4 +57,15 @@
         android:layout_marginBottom="20dp"
         android:layout_below="@id/selectStore"/>
 
+    <TextView
+        android:id="@+id/noData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_data"
+        android:textColor="@color/colorAccent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="17sp"/>
+
 </RelativeLayout>

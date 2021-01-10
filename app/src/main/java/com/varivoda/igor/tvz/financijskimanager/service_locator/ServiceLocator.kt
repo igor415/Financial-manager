@@ -154,7 +154,7 @@ object ServiceLocator{
             return database
         }
         val supportFactory = SupportFactory(SQLiteDatabase.getBytes(dbKey))*/
-        val new = Room.databaseBuilder(context.applicationContext,AppDatabase::class.java,"appDatabase.db")
+        val new = Room.databaseBuilder(context.applicationContext,AppDatabase::class.java,"appDatabase1.db")
             .addCallback(object: RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)

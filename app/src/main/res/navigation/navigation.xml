@@ -145,6 +145,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_menuListFragment_to_returnProductFragment"
+            app:destination="@id/returnProductFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/listFragment"
@@ -286,4 +293,9 @@
         android:name="com.varivoda.igor.tvz.financijskimanager.ui.invoice.BestInvoiceFragment"
         android:label="fragment_best_invoice"
         tools:layout="@layout/fragment_best_invoice" />
+    <fragment
+        android:id="@+id/returnProductFragment"
+        android:name="com.varivoda.igor.tvz.financijskimanager.ui.return_product.ReturnProductFragment"
+        android:label="fragment_return_product"
+        tools:layout="@layout/fragment_return_product" />
 </navigation>

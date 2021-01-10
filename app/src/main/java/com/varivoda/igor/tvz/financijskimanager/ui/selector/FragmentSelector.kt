@@ -95,6 +95,9 @@ class FragmentSelector {
             "Zaposlenik koji je izdao račun sa najvećim profitom" -> {
                 navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToBestInvoiceFragment())
             }
+            "Povrat robe" -> {
+                navController.navigate(MenuListFragmentDirections.actionMenuListFragmentToReturnProductFragment())
+            }
         }
 
     }

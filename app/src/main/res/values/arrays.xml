@@ -21,6 +21,7 @@
         <item>Zarada po prvom i drugom dijelu mjeseca u godini</item-->
         <item>Grafički prikaz po načinima plaćanja</item>
         <item>Zaposlenik koji je izdao račun sa najvećim profitom</item>
+        <item>Povrat robe</item>
     </string-array>
     <string-array name="customersOptions">
         <item>Popis kupaca</item>

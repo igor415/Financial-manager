@@ -1,5 +1,6 @@
 package com.varivoda.igor.tvz.financijskimanager.ui.invoice
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -11,6 +12,7 @@ import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import com.varivoda.igor.tvz.financijskimanager.util.MonthYearDialog
+import com.varivoda.igor.tvz.financijskimanager.util.getImageFromQrCode
 import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 import kotlinx.android.synthetic.main.fragment_best_invoice.*
 import kotlinx.android.synthetic.main.invoice_template.*
@@ -44,9 +46,15 @@ class BestInvoiceFragment : Fragment() {
         observeResult()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun observeResult() {
         viewModel.result.observe(viewLifecycleOwner, Observer {
-            if(it==null) return@Observer
+            if(it==null){
+                invoice.visibility = View.INVISIBLE
+                noData.visibility = View.VISIBLE
+                return@Observer
+            }
+            noData.visibility = View.INVISIBLE
             invoice.visibility = View.VISIBLE
             storeInfo.text = it.storeName
             timeInfo.text = "${it.date} ${it.time}"
@@ -58,9 +66,7 @@ class BestInvoiceFragment : Fragment() {
         })
     }
 
-    private fun getImageFromQrCode(string: String): Bitmap? {
-        return QRCode.from(string).withSize(360, 290).bitmap()
-    }
+
 
     private fun observeMonthValue() {
         viewModel.monthAndYear.observe(viewLifecycleOwner, Observer {

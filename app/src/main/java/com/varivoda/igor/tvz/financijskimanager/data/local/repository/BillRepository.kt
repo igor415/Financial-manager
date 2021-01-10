@@ -85,4 +85,8 @@ class BillRepository(private val database: AppDatabase) {
         }
 
     }
+
+    fun getInvoiceInfo(id: Int): EmployeeBestSale?{
+        return database.billDao.getInvoiceInfo(id)
+    }
 }

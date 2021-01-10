@@ -203,6 +203,17 @@
         app:layout_constraintTop_toBottomOf="@id/thirdLine"
         tools:ignore="ContentDescription" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/confirmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_baseline_done_24"
+        android:layout_margin="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/qrImage"
+        tools:ignore="ContentDescription" />
+
 
 
 

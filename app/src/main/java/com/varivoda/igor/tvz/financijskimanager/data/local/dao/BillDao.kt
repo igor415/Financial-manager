@@ -66,4 +66,11 @@ interface BillDao {
     join PaymentMethod pm on pm.id = b.paymentMethodId where strftime('%m',b.date)=:month 
                 and strftime('%Y',b.date)=:year group by b.id order by SUM(pob.quantity*p.price) desc limit 1""")
     fun getEmployeeWithBestSaleInvoiceWithoutStore(month: String, year: String): EmployeeBestSale
+
+
+    @Query("""SELECT b.id as invoiceId,e.id as employeeId,e.employeeName as name, e.employeeLastName as surname
+         , SUM(pob.quantity*p.price) as total, pm.name as paymentMethodName, b.date, b.time, s.storeName FROM Bill b join ProductsOnBill pob on b.id = pob.billId
+         join Product p on p.id = pob.productId join Employee e on e.id = b.employeeId join Store s on s.id = b.storeId
+    join PaymentMethod pm on pm.id = b.paymentMethodId and b.id = :invoice""")
+    fun getInvoiceInfo(invoice: Int): EmployeeBestSale?
 }

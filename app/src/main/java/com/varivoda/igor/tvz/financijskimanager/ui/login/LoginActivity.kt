@@ -175,6 +175,7 @@ class LoginActivity : AppCompatActivity() {
                             preferences?.setCachedUsername(loginViewModel.currentUsername)
                             preferences?.setRememberMe(loginViewModel.rememberMe)
                         }
+
                         startActivity(
                             Intent(
                                 this,
