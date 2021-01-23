@@ -26,6 +26,7 @@ import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import com.varivoda.igor.tvz.financijskimanager.util.FingerprintHandler
 import com.varivoda.igor.tvz.financijskimanager.util.NetworkResult
 import com.varivoda.igor.tvz.financijskimanager.util.showSelectedToast
+import com.varivoda.igor.tvz.financijskimanager.util.toast
 import kotlinx.android.synthetic.main.activity_login.*
 import timber.log.Timber
 import java.security.KeyStore
@@ -183,7 +184,7 @@ class LoginActivity : AppCompatActivity() {
                             ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         )
                     }else{
-                        showSelectedToast(this, getString(R.string.database_decryption_error))
+                        showSelectedToast(this, getString(R.string.download_data_problem))
                         backToFirstLayout()
                     }
 

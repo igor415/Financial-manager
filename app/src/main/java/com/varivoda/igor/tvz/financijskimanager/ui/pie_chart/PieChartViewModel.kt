@@ -41,7 +41,11 @@ class PieChartViewModel(private val storeRepository: BaseStoreRepository, privat
     private fun getPaymentInfo(){
         viewModelScope.launch(Dispatchers.IO) {
             if(currentStore.value != null){
-                paymentInfo.postValue(billRepository.getPaymentInfo(monthAndYear.value!!.first, monthAndYear.value!!.second, currentStore.value!!.id))
+                val list = billRepository.getPaymentInfo(monthAndYear.value!!.first, monthAndYear.value!!.second, currentStore.value!!.id)
+                list.forEach {
+                    it.total = it.total.replace(",",".")
+                }
+                paymentInfo.postValue(list)
             }
 
         }

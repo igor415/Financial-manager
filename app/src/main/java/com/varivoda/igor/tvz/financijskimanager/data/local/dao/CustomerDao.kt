@@ -3,8 +3,10 @@ package com.varivoda.igor.tvz.financijskimanager.data.local.dao
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Customer
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.model.CategoryDTO
 import kotlinx.coroutines.flow.Flow
 
@@ -32,6 +34,9 @@ interface CustomerDao {
 
     @Insert
     fun insertCustomer(customer: Customer)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllCustomers(list: List<Customer>)
 
     @Query("SELECT * FROM Customer")
     fun getCustomersPaging(): PagingSource<Int,Customer>

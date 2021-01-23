@@ -38,10 +38,11 @@ class ReturnProductFragment : Fragment(), ZXingScannerView.ResultHandler {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpScanner()
+
         confirm.setOnClickListener {
             if(invoiceNumberEntry.text.isNotEmpty()){
                 invoiceNumberEntry.closeKeyboard(context)
-                stopScan()
+                //stopScan()
                 confirmDialog()
             }else{
                 context.toast(getString(R.string.enter_invoice_num))

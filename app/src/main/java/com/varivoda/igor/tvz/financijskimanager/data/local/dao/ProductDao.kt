@@ -6,7 +6,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.InventoryItem
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.model.ProductQuarterDTO
 import kotlinx.coroutines.flow.Flow
 
@@ -21,6 +23,12 @@ interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertProduct(product: Product)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllProducts(list: List<Product>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllInventories(list: List<InventoryItem>)
 
     @Query("DELETE FROM Product WHERE id = :id")
     fun deleteProduct(id: Int)

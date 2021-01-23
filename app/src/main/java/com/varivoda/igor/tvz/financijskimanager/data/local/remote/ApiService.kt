@@ -1,6 +1,7 @@
 package com.varivoda.igor.tvz.financijskimanager.data.local.remote
 
 import com.google.gson.GsonBuilder
+import com.varivoda.igor.tvz.financijskimanager.data.local.remote.model.AllData
 import com.varivoda.igor.tvz.financijskimanager.data.local.remote.model.FingerprintEntry
 import com.varivoda.igor.tvz.financijskimanager.data.local.remote.model.LoginEntry
 import com.varivoda.igor.tvz.financijskimanager.data.local.remote.model.LoginResponse
@@ -9,6 +10,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 
@@ -38,6 +40,9 @@ interface ApiService {
 
     @POST("login/fingerprintauthentication")
     fun loginByFingerprint(@Body fingerprintEntry: FingerprintEntry): Call<LoginResponse>
+
+    @GET("main")
+    fun getAllData(@Header("Authorization") token: String): Call<AllData>
 }
 
 object Api {

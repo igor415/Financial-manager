@@ -7,4 +7,5 @@ interface BaseLoginRepository {
     fun login(username: String, password: String): NetworkResult<Boolean>
     fun loginByFingerprint(username: String): NetworkResult<Boolean>
     fun addFingerprint(fingerprintEntry: FingerprintEntry): NetworkResult<Boolean>
+    fun getAllData(): NetworkResult<Boolean>
 }

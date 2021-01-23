@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Employee
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeDTO
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeProductDTO
 import kotlinx.coroutines.flow.Flow
@@ -26,6 +27,9 @@ interface EmployeeDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertEmployee(employee: Employee)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllEmployees(list: List<Employee>)
 
 
     @Query("""SELECT x.employeeName || ' ' || x.employeeLastName || ' je uprihodio/la ' || CAST(total as TEXT) FROM(SELECT e.id,e.employeeName,e.employeeLastName,SUM(pob.quantity*p.price) AS total 

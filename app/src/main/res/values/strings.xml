@@ -132,5 +132,7 @@
     <string name="returned_item_success">You successfully returned item</string>
     <string name="problem_returning">There is a problem with returning, please try later</string>
     <string name="seven_days_purchase">7 days have passed since the purchase</string>
+    <string name="error_pdf_create">Error with creating PDF inventory document.</string>
+    <string name="download_data_problem">There is problem with downloading data.</string>
 
 </resources>

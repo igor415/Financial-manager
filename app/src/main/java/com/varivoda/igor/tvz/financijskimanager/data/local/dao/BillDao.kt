@@ -3,9 +3,11 @@ package com.varivoda.igor.tvz.financijskimanager.data.local.dao
 import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Bill
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.PaymentMethod
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.model.BillDTO
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeBestSale
 
@@ -26,6 +28,12 @@ interface BillDao {
 
     @Insert
     fun insertBill(bill: Bill)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllBills(list: List<Bill>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllPaymentMethods(list: List<PaymentMethod>)
 
     @Query("SELECT SUM(pob.quantity) FROM Bill b join ProductsOnBill pob on b.id = pob.billId where pob.productId = :id and strftime('%m',b.date)=:month and strftime('%Y',b.date)=:year ")
     fun getQuantityOfProduct(id: Int, month: String, year: String): Int

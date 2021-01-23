@@ -1,7 +1,11 @@
 package com.varivoda.igor.tvz.financijskimanager.data.local.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.StockData
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.model.ProductStockDTO
 
 @Dao
@@ -12,4 +16,7 @@ interface StockDao {
 
     @Query("SELECT p.id, st.storeName as productName, s.quantity, s.idStore, 0 as yellow  FROM stockdata s JOIN Product p on s.productId = p.id join Store st on st.id = s.idStore where s.idStore != 1 and p.id = :id")
     fun getInfo(id: Int): List<ProductStockDTO>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllStocks(list: List<StockData>)
 }

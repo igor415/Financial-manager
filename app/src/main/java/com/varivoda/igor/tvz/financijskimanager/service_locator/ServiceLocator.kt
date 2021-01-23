@@ -87,7 +87,7 @@ object ServiceLocator{
     }
 
     fun provideLoginRepository(context: Context): LoginRepository{
-        val new = LoginRepository(providePreferences(context), ConnectivityAgent(context))
+        val new = LoginRepository(providePreferences(context), ConnectivityAgent(context),database ?: createDatabase(context)!!)
         loginRepository = new
         return new
     }
@@ -155,7 +155,7 @@ object ServiceLocator{
         }
         val supportFactory = SupportFactory(SQLiteDatabase.getBytes(dbKey))*/
         val new = Room.databaseBuilder(context.applicationContext,AppDatabase::class.java,"appDatabase1.db")
-            .addCallback(object: RoomDatabase.Callback() {
+           /* .addCallback(object: RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
                     db.execSQL("INSERT INTO County VALUES(10000,'Grad Zagreb')")
@@ -456,7 +456,7 @@ object ServiceLocator{
                     db.execSQL("INSERT INTO StockData VALUES(119,6,19,14)")
                     db.execSQL("INSERT INTO StockData VALUES(120,6,20,7)")
                 }
-            })
+            })*/
             //.openHelperFactory(supportFactory)
             .fallbackToDestructiveMigration()
             .build()

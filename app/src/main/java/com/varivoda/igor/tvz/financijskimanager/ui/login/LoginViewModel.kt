@@ -12,6 +12,7 @@ import com.varivoda.igor.tvz.financijskimanager.util.toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.lang.Exception
 
@@ -31,15 +32,21 @@ class LoginViewModel(preferences: Preferences,
             doAnimation.postValue(true)
             viewModelScope.launch(Dispatchers.IO) {
                 delay(1300)
-                //val result = loginRepository.login(currentUsername,currentPassword)
-                //loginSuccess.postValue(result)
-                val result = NetworkResult.Success(true)
+                val result = loginRepository.login(currentUsername,currentPassword)
+                //val result = NetworkResult.Success(true)
                 appContext?.let { context ->
                     if (result is NetworkResult.Success) {
                         if (currentPassword.isNotEmpty()) {
                             val bol = (context as App).setDatabase(currentPassword)
                             if (bol) {
-                                loginSuccess.postValue(result)
+                                val data = loginRepository.getAllData()
+                                if(data is NetworkResult.Success){
+                                    loginSuccess.postValue(result)
+                                }else{
+                                    loginSuccess.postValue(NetworkResult.Success(false))
+
+                                }
+
                             } else {
                                 loginSuccess.postValue(NetworkResult.Success(false))
                             }

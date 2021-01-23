@@ -2,7 +2,9 @@ package com.varivoda.igor.tvz.financijskimanager.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.County
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.model.AttendanceForStore
 import com.varivoda.igor.tvz.financijskimanager.model.ProductStockDTO
@@ -19,6 +21,9 @@ interface StoresDao {
 
     @Insert
     fun insertStore(store: Store)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllStores(list: List<Store>)
 
     @Query(
         """
