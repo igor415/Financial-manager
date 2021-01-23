@@ -20,7 +20,7 @@ interface BaseProductRepository {
     fun getMostItemsOnBill(year: String?): LiveData<String?>
     fun getProductStream(): Flow<PagingData<Product>>?
     fun getProducts(): List<Product>
-    fun updateProductImage(image: String, id: Int)
+    fun updateProductImage(image: String, id: Int): Boolean
     fun getEntries(dateSelected: String, firstProduct: Product): List<StatisticsEntry>?
     fun productSmallestShare(month: String, year: String): String?
     fun totalPerMonth(month: String?, year: String?): String?

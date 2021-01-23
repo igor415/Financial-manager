@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 class PictureViewModel(private val productRepository: BaseProductRepository) : ViewModel(){
 
     var products = MutableLiveData<List<Product>>()
+    var error = MutableLiveData<Boolean>()
 
     init {
         getAllProducts()
@@ -24,8 +25,13 @@ class PictureViewModel(private val productRepository: BaseProductRepository) : V
 
     fun updateProductImage(image: String, id: Int){
         viewModelScope.launch(Dispatchers.IO) {
-            productRepository.updateProductImage(image, id)
-            getAllProducts()
+            val bol = productRepository.updateProductImage(image, id)
+            if(bol){
+                getAllProducts()
+            }else{
+                error.postValue(true)
+            }
+
         }
     }
 }

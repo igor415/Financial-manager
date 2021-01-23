@@ -5,20 +5,26 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
+import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Category
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
+import com.varivoda.igor.tvz.financijskimanager.data.local.remote.Api
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 import com.varivoda.igor.tvz.financijskimanager.model.BarChartEntry
 import com.varivoda.igor.tvz.financijskimanager.model.CategoryDTO
 import com.varivoda.igor.tvz.financijskimanager.model.ProductQuarterDTO
 import com.varivoda.igor.tvz.financijskimanager.model.StatisticsEntry
+import com.varivoda.igor.tvz.financijskimanager.monitoring.ConnectivityAgent
 import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 import kotlinx.coroutines.flow.Flow
 import java.util.*
 
-class ProductRepository(private val database: AppDatabase) :
+class ProductRepository(private val database: AppDatabase,
+                        private val preferences: Preferences, private val connectivityAgent: ConnectivityAgent) :
     BaseProductRepository {
+
+    val api = Api.retrofitService
 
     override fun getAllProducts() : Flow<List<Product>>{
         return database.productDao.getAllProducts()
@@ -60,8 +66,26 @@ class ProductRepository(private val database: AppDatabase) :
         return database.productDao.getProducts()
     }
 
-    override fun updateProductImage(image: String, id: Int) {
-        database.productDao.updateProductImage(image, id)
+    override fun updateProductImage(image: String, id: Int): Boolean {
+        val product = database.productDao.getProductById(id)
+        if (product != null){
+            return if(connectivityAgent.isDeviceConnectedToInternet){
+                val response = api.sendImageString(preferences.getUserToken()!!, product).execute()
+                if(response.isSuccessful){
+                    database.productDao.updateProductImage(image, id)
+                    true
+                }else{
+                    false
+                }
+            }else{
+                false
+            }
+
+        }else{
+            return false
+        }
+
+
     }
 
     override fun getEntries(dateSelected: String, firstProduct: Product): List<StatisticsEntry>? {

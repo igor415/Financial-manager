@@ -20,6 +20,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
 import com.varivoda.igor.tvz.financijskimanager.util.bitmapToBase64
 import com.varivoda.igor.tvz.financijskimanager.util.convertStringToBitmap
+import com.varivoda.igor.tvz.financijskimanager.util.showSelectedToast
 import com.varivoda.igor.tvz.financijskimanager.util.toast
 import kotlinx.android.synthetic.main.fragment_picture.view.*
 import kotlinx.android.synthetic.main.full_image.view.*
@@ -53,6 +54,14 @@ class PictureFragment : Fragment(), PictureAdapter.OnItemClickListener, PictureA
         pictureViewModel.products.observe(viewLifecycleOwner, Observer {
             if(it==null) return@Observer
             pictureAdapter.submitList(it)
+        })
+        pictureViewModel.error.observe(viewLifecycleOwner, Observer {
+            if(it==null) return@Observer
+
+            if(it){
+                showSelectedToast(requireContext(), getString(R.string.error_send_image))
+            }
+            pictureViewModel.error.value = null
         })
     }
 

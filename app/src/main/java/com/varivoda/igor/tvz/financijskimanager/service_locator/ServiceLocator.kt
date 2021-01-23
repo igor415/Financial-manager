@@ -131,7 +131,7 @@ object ServiceLocator{
     }
 
     private fun createProductRepository(context: Context): ProductRepository {
-        val new = ProductRepository(database ?: createDatabase(context)!!)
+        val new = ProductRepository(database ?: createDatabase(context)!!, providePreferences(context),ConnectivityAgent(context))
         productRepository = new
         return new
     }

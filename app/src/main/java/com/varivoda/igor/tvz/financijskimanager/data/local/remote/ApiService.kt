@@ -1,6 +1,7 @@
 package com.varivoda.igor.tvz.financijskimanager.data.local.remote
 
 import com.google.gson.GsonBuilder
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.data.local.remote.model.AllData
 import com.varivoda.igor.tvz.financijskimanager.data.local.remote.model.FingerprintEntry
 import com.varivoda.igor.tvz.financijskimanager.data.local.remote.model.LoginEntry
@@ -9,10 +10,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 private const val BASE_URL = "http://192.168.0.169:8080"
 
@@ -43,6 +41,9 @@ interface ApiService {
 
     @GET("main")
     fun getAllData(@Header("Authorization") token: String): Call<AllData>
+
+    @PUT("main/image")
+    fun sendImageString(@Header("Authorization") token: String, @Body product: Product): Call<ResponseBody>
 }
 
 object Api {

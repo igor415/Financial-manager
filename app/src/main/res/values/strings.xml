@@ -134,5 +134,6 @@
     <string name="seven_days_purchase">7 days have passed since the purchase</string>
     <string name="error_pdf_create">Error with creating PDF inventory document.</string>
     <string name="download_data_problem">There is problem with downloading data.</string>
+    <string name="error_send_image">Error happened with sending image.</string>
 
 </resources>

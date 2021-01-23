@@ -36,6 +36,9 @@ interface ProductDao {
     @Query("SELECT COUNT(*) FROM Product")
     fun getProductCount(): Int
 
+    @Query("SELECT * FROM Product WHERE id = :id")
+    fun getProductById(id: Int): Product?
+
     @Query("SELECT * FROM product")
     fun getProducts(): List<Product>
 
