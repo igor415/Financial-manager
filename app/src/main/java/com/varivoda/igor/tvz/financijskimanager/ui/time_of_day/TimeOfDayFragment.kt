@@ -64,7 +64,7 @@ class TimeOfDayFragment : Fragment() {
             i += 1
         }
 
-        val barDataSet = BarDataSet(firstEntries.reversed(),"Attendance")
+        val barDataSet = BarDataSet(firstEntries.reversed(),getString(R.string.attendance))
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS.toList())
         barDataSet.valueTextColor = Color.BLACK
         barDataSet.valueTextSize = 0f

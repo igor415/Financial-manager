@@ -27,7 +27,7 @@
     <string name="stores_locations">Lokacije poslovnica</string>
     <string name="no_internet">There is no internet connection</string>
     <string name="general_error">An error occurred. Please try again later.</string>
-    <string name="mail_title">Naslov</string>
+    <string name="mail_title">Title</string>
     <string name="describe_problem">Molimo Vas opišite problem na koji ste naišli..</string>
     <string name="send_email">Pošalji e-mail</string>
     <string name="problem_with_email">Pojavio se problem sa otvaranjem e-maila</string>
@@ -36,18 +36,10 @@
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
     <!-- Messages Preferences -->
     <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="settings">Settings</string>
     <string name="more">more</string>
     <string name="share">Share</string>
@@ -63,9 +55,8 @@
     <string name="yes">Yes</string>
     <string name="no">Cancel</string>
     <string name="choose_month_year">Choose month and year </string>
-    <string name="no_data_for_month_and_year">Za odabrani mjesec i godinu nema podataka!</string>
-    <string name="no_data_for_month_and_year_for_product">Za odabrani mjesec i godinu nema podataka za navedeni proizvod!</string>
-    <string name="no_data_for_year">Za odabranu godinu nema podataka.</string>
+    <string name="no_data_for_month_and_year">There is no data for the selected year and month.</string>
+    <string name="no_data_for_year">There is no data for the selected year.</string>
 
     <!--quarter-->
     <string name="quarter_first" translatable="false">1/4</string>
@@ -75,7 +66,7 @@
     <string name="add">add</string>
     <string name="field_empty">This field can\'t be empty.</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="product_name">Product name</string>
     <string name="quantity">Quantity</string>
     <string name="top_products">Top 10 products</string>
@@ -91,8 +82,8 @@
     <string name="wrong_username_or_password">Wrong username or password!</string>
     <string name="quantity_x_label">quantity</string>
     <string name="day_of_the_month">Day of the month</string>
-    <string name="product_smallest_share">Proizvod %1$s je doprinio ukupnoj prodaji sa %2$s%% unutar izabranog vremenskog razdoblja.</string>
-    <string name="months_label">mjeseci</string>
+    <string name="product_smallest_share" translatable="false">Proizvod %1$s je doprinio ukupnoj prodaji sa %2$s%% unutar izabranog vremenskog razdoblja.</string>
+    <string name="months_label" translatable="false">mjeseci</string>
     <string name="total_y_label">Total</string>
     <string name="months_x_label">Quarters</string>
     <string name="stores_label">stores</string>
@@ -119,13 +110,11 @@
     <string name="google_search_alert_dialog_message">This App requires the Google Search App to work properly.</string>
     <string name="download">Download</string>
     <string name="cancel">Cancel</string>
-    <string name="database_decryption_error">Neuspješno dekriptiranje baze</string>
+    <string name="database_decryption_error" translatable="false">Neuspješno dekriptiranje baze</string>
     <string name="full_name">Full name</string>
     <string name="select_category">Select category</string>
-    <string name="ra_un_br">Račun br.</string>
-    <string name="zaposlenik">Zaposlenik</string>
-    <string name="iznos">Iznos:</string>
-    <string name="na_in_pla_anja">Način plaćanja:</string>
+    <string name="ra_un_br">Inovice nr.</string>
+    <string name="zaposlenik">Employee</string>
     <string name="no_data">No data</string>
     <string name="scan_or_enter_invoice_number">Scan or enter invoice number</string>
     <string name="enter_invoice_num">You need to enter invoice number</string>
@@ -135,5 +124,19 @@
     <string name="error_pdf_create">Error with creating PDF inventory document.</string>
     <string name="download_data_problem">There is problem with downloading data.</string>
     <string name="error_send_image">Error happened with sending image.</string>
+    <string name="na_in_pla_anja">Payment method:</string>
+    <string name="iznos">Total:</string>
+    <string name="no_data_for_month_and_year_for_product">There is no product data for the selected year and month.</string>
+    <string name="attendance">Attendance</string>
+    <string name="general_options">General options</string>
+    <string name="toast_msg_design">Choose toast message design</string>
+    <string name="vibrations">Vibrations</string>
+    <string name="notifications">Enable or disable notifications</string>
+    <string name="brightness">Change brightness</string>
+    <string name="fingerprint_authentication">Use fingerprint authentication</string>
+    <string name="problem_with_fingerprint">There is a problem with fingerprint.</string>
+    <string name="no_data_for_quarter">There is no data for this quarter</string>
+    <string name="quarter_product">Product %1$s is best seller for the selected quarter.</string>
+    <string name="toast_design">You successfully changed toast design.</string>
 
 </resources>

@@ -23,8 +23,8 @@ fun showSelectedToast(context: Context, text: String){
     val pref = Preferences(context)
     when(pref.getToastMessageDesign()){
         "default" -> context.toast(text)
-        "dark" -> context.styleableToast(text,R.style.darkToast)
-        "light" -> context.styleableToast(text,R.style.lightToast)
+        "tamno" -> context.styleableToast(text,R.style.darkToast)
+        "svijetlo" -> context.styleableToast(text,R.style.lightToast)
     }
 }
 

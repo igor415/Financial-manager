@@ -57,7 +57,7 @@ class App: Application(), LifecycleObserver{
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())
         }
-        setTimerForDatabaseUpdate()
+        //setTimerForDatabaseUpdate()
     }
     private fun setTimerForDatabaseUpdate(){
         val alarmFor: Calendar = Calendar.getInstance()

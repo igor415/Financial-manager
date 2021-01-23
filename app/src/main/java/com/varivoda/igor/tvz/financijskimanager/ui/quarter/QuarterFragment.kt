@@ -58,30 +58,33 @@ class QuarterFragment : Fragment() {
             "first" -> {
                 if(it.stream().anyMatch{ item -> item.quarter == "first"}){
                     isShown = true
-                    resultTextView.text = it.single { item -> item.quarter == "first" }.productName
+                    resultTextView.text = getStringResult(it.single { item -> item.quarter == "first" }.productName)
                 }
             }
             "second" -> {
                 if(it.stream().anyMatch{ item -> item.quarter == "second"}){
                     isShown = true
-                    resultTextView.text = it.single { item -> item.quarter == "second" }.productName
+                    resultTextView.text = getStringResult(it.single { item -> item.quarter == "second" }.productName)
                 }
             }
             "third" -> {
                 if(it.stream().anyMatch{ item -> item.quarter == "third"}){
                     isShown = true
-                    resultTextView.text = it.single { item -> item.quarter == "third" }.productName
+                    resultTextView.text = getStringResult(it.single { item -> item.quarter == "third" }.productName)
                 }
             }
             "fourth" -> {
                 if(it.stream().anyMatch{ item -> item.quarter == "fourth"}){
                     isShown = true
-                    resultTextView.text = it.single { item -> item.quarter == "fourth" }.productName
+                    resultTextView.text = getStringResult(it.single { item -> item.quarter == "fourth" }.productName)
                 }
             }
         }
-        if(!isShown) resultTextView.text = "Nema podataka za ovaj kvartal"
+        if(!isShown) resultTextView.text = getString(R.string.no_data_for_quarter)
     }
+
+    private fun getStringResult(string: String) = getString(R.string.quarter_product,string)
+
 
     private val changeDate: (year: Int) -> Unit = {
             year ->

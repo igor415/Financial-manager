@@ -10,10 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SeekBarPreference
-import androidx.preference.SwitchPreference
+import androidx.preference.*
 import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
@@ -66,7 +63,7 @@ class SettingsActivity : AppCompatActivity() {
 
                 }else{
                     fingerprint?.isChecked = false
-                    showSelectedToast(requireContext(), "There is a problem with fingerprint.")
+                    showSelectedToast(requireContext(), getString(R.string.problem_with_fingerprint))
                 }
             })
             return super.onCreateView(inflater, container, savedInstanceState)
@@ -79,6 +76,12 @@ class SettingsActivity : AppCompatActivity() {
                 val value = (newValue as Int) * 0.01
                 (activity as SettingsActivity).setBrightness(value.toFloat())
                 pref.setSeekBarValue(value.toFloat())
+                return@setOnPreferenceChangeListener true
+            }
+
+            findPreference<ListPreference>("toast key")?.setOnPreferenceChangeListener { _, value ->
+                Preferences(requireContext()).setToastDesign(value as String)
+                showSelectedToast(requireActivity(),getString(R.string.toast_design))
                 return@setOnPreferenceChangeListener true
             }
 

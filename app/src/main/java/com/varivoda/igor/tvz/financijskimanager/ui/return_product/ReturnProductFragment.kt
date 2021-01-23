@@ -120,7 +120,7 @@ class ReturnProductFragment : Fragment(), ZXingScannerView.ResultHandler {
     private fun startScan() {
         mScannerView?.setResultHandler(this)
         mScannerView?.startCamera()
-        mScannerView?.setAutoFocus(true)
+        //mScannerView?.setAutoFocus(true)
     }
 
     private fun setUpScanner() {

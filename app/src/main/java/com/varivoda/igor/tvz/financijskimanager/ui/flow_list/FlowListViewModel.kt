@@ -94,7 +94,14 @@ class FlowListViewModel(private val storeRepository: BaseStoreRepository,
                         return@insertSeparators ProductModel.SeparatorItem("Komponente")
                     }
                     if(before.category < after.category){
-                        ProductModel.SeparatorItem("Monitori")
+                        when(after.category){
+                            2 -> ProductModel.SeparatorItem("Periferija")
+                            3 -> ProductModel.SeparatorItem("Mobiteli")
+                            4 -> ProductModel.SeparatorItem("Software")
+                            5 -> ProductModel.SeparatorItem("Tableti")
+                            6 -> ProductModel.SeparatorItem("Kućni telefoni")
+                            else -> ProductModel.SeparatorItem("")
+                        }
                     }else{
                         null
                     }

@@ -62,8 +62,8 @@
 
     <string-array name="toast_designs">
         <item>default</item>
-        <item>dark</item>
-        <item>light</item>
+        <item>tamno</item>
+        <item>svijetlo</item>
     </string-array>
 
 </resources>

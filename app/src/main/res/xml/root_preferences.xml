@@ -1,10 +1,10 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="General options">
+    <PreferenceCategory android:title="@string/general_options">
         <ListPreference
             app:allowDividerAbove="true"
-            android:title="Choose toast message design"
+            android:title="@string/toast_msg_design"
             android:key="toast key"
             android:entries="@array/toast_designs"
             android:entryValues="@array/toast_designs"
@@ -14,13 +14,13 @@
 
         <SwitchPreference
             app:allowDividerAbove="true"
-            android:title="Vibrations"
+            android:title="@string/vibrations"
             android:defaultValue="true"
             android:key="vibrations key"/>
 
         <CheckBoxPreference
             app:allowDividerAbove="true"
-            android:title="Enable or disable notifications"
+            android:title="@string/notifications"
             android:key="notifications key"
             android:defaultValue="true"
             android:summaryOff="Disabled"
@@ -28,14 +28,14 @@
 
         <SeekBarPreference
             app:allowDividerAbove="true"
-            android:title="Change brightness"
+            android:title="@string/brightness"
             app:isPreferenceVisible="false"
             android:defaultValue="50"
             android:key="brightness key"/>
 
         <SwitchPreference
             app:allowDividerAbove="true"
-            android:title="Use fingerprint authentication"
+            android:title="@string/fingerprint_authentication"
             android:defaultValue="false"
             app:isPreferenceVisible="false"
             android:key="fingerprint key"/>

@@ -81,4 +81,8 @@ class Preferences(appContext: Context) {
             return null
         }
     }
+
+    fun setToastDesign(s: String) {
+        appPreferences.edit().putString("toast key",s).apply()
+    }
 }
