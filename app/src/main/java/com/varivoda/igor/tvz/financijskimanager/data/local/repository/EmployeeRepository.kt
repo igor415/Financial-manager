@@ -3,15 +3,24 @@ package com.varivoda.igor.tvz.financijskimanager.data.local.repository
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Employee
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
+import com.varivoda.igor.tvz.financijskimanager.data.local.remote.Api
+import com.varivoda.igor.tvz.financijskimanager.data.local.remote.ApiService
+import com.varivoda.igor.tvz.financijskimanager.data.local.remote.model.LoginEntry
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseEmployeeRepository
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeDTO
 import com.varivoda.igor.tvz.financijskimanager.model.HorizontalBarChartEntry
+import com.varivoda.igor.tvz.financijskimanager.monitoring.ConnectivityAgent
+import com.varivoda.igor.tvz.financijskimanager.util.NetworkResult
+import com.varivoda.igor.tvz.financijskimanager.util.toSha2
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
+import java.lang.Exception
 
-class EmployeeRepository(private val appDatabase: AppDatabase) :
+class EmployeeRepository(private val appDatabase: AppDatabase, private val connectivityAgent: ConnectivityAgent) :
     BaseEmployeeRepository {
+
+    val api = Api.retrofitService
 
     override fun getEmployees(): Flow<List<Employee>> {
         return appDatabase.employeeDao.getEmployees()
@@ -125,5 +134,24 @@ class EmployeeRepository(private val appDatabase: AppDatabase) :
             ""
         }
 
+    }
+
+    override fun changeEmployeeInfo(token: String, employee: Employee): NetworkResult<Boolean> {
+        if(connectivityAgent.isDeviceConnectedToInternet) {
+            return try {
+                val response = api.changeEmployeeInfo(token, employee).execute()
+                when(response.code()){
+                    200 -> {
+                        NetworkResult.Success(true)
+                    }
+                    else -> NetworkResult.Error(Exception(response.message()))
+                }
+            }catch (ex: Exception){
+                NetworkResult.Error(ex)
+            }
+
+        }else{
+            return NetworkResult.NoNetworkConnection("")
+        }
     }
 }

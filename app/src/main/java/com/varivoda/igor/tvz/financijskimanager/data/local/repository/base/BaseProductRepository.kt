@@ -3,12 +3,11 @@ package com.varivoda.igor.tvz.financijskimanager.data.local.repository.base
 import androidx.lifecycle.LiveData
 import androidx.paging.PagingData
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Category
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.InventoryItem
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
-import com.varivoda.igor.tvz.financijskimanager.model.BarChartEntry
-import com.varivoda.igor.tvz.financijskimanager.model.CategoryDTO
-import com.varivoda.igor.tvz.financijskimanager.model.ProductQuarterDTO
-import com.varivoda.igor.tvz.financijskimanager.model.StatisticsEntry
+import com.varivoda.igor.tvz.financijskimanager.model.*
+import com.varivoda.igor.tvz.financijskimanager.util.NetworkResult
 import kotlinx.coroutines.flow.Flow
 
 interface BaseProductRepository {
@@ -27,4 +26,8 @@ interface BaseProductRepository {
     fun getBarChartStatistics(year: String, currentStore: Pair<Store, Store>): Pair<List<BarChartEntry>, List<BarChartEntry>>?
     fun getTop3CategoriesAtLeastSold(month: String, year: String,storeId: Int): List<CategoryDTO>
     fun getCategories(): List<Category>
+    fun addEditProduct(token: String, product: Product): NetworkResult<Boolean>
+    fun returnItems(token: String, list: List<ReturnData>): NetworkResult<Boolean>
+    fun executeInventory(token: String, list: List<InventoryDTO>): NetworkResult<Boolean>
+    fun addInventoryItem(token: String, inventoryItem: InventoryItem): NetworkResult<Boolean>
 }

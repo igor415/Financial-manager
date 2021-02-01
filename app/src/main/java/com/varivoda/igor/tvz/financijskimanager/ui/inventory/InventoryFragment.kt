@@ -16,7 +16,10 @@ class InventoryFragment : Fragment() {
 
     private val inventoryAdapter = InventoryAdapter()
     private val inventoryViewModel by viewModels<InventoryViewModel> {
-        InventoryViewModelFactory((requireContext().applicationContext as App).inventoryRepository,(requireContext().applicationContext as App).storeRepository)
+        InventoryViewModelFactory((requireContext().applicationContext as App).inventoryRepository,
+            (requireContext().applicationContext as App).storeRepository,
+            (requireContext().applicationContext as App).productRepository,
+            (requireContext().applicationContext as App).preferences)
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +47,11 @@ class InventoryFragment : Fragment() {
             if(it==null) return@Observer
             inventoryAdapter.submitList(it)
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        inventoryViewModel.getInventoryItems()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

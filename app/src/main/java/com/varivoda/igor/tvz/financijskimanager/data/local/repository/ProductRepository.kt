@@ -7,17 +7,17 @@ import androidx.paging.PagingData
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Category
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.InventoryItem
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.data.local.remote.Api
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
-import com.varivoda.igor.tvz.financijskimanager.model.BarChartEntry
-import com.varivoda.igor.tvz.financijskimanager.model.CategoryDTO
-import com.varivoda.igor.tvz.financijskimanager.model.ProductQuarterDTO
-import com.varivoda.igor.tvz.financijskimanager.model.StatisticsEntry
+import com.varivoda.igor.tvz.financijskimanager.model.*
 import com.varivoda.igor.tvz.financijskimanager.monitoring.ConnectivityAgent
+import com.varivoda.igor.tvz.financijskimanager.util.NetworkResult
 import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 import kotlinx.coroutines.flow.Flow
+import java.lang.Exception
 import java.util.*
 
 class ProductRepository(private val database: AppDatabase,
@@ -195,6 +195,88 @@ class ProductRepository(private val database: AppDatabase,
 
     override fun getCategories(): List<Category> {
         return database.categoryDao.getAllCategories()
+    }
+
+    override fun addEditProduct(token: String, product: Product): NetworkResult<Boolean> {
+        if(connectivityAgent.isDeviceConnectedToInternet) {
+            return try {
+                val response = api.addOrEditProduct(token, product).execute()
+                when(response.code()){
+                    200 -> {
+                        NetworkResult.Success(true)
+                    }
+                    else -> NetworkResult.Error(Exception(response.message()))
+                }
+            }catch (ex: Exception){
+                NetworkResult.Error(ex)
+            }
+
+        }else{
+            return NetworkResult.NoNetworkConnection("")
+        }
+    }
+
+    override fun returnItems(token: String, list: List<ReturnData>): NetworkResult<Boolean> {
+        if(connectivityAgent.isDeviceConnectedToInternet) {
+            return try {
+                val response = api.returnItems(token, list).execute()
+                when(response.code()){
+                    200 -> {
+                        NetworkResult.Success(true)
+                    }
+                    else -> NetworkResult.Error(Exception(response.message()))
+                }
+            }catch (ex: Exception){
+                NetworkResult.Error(ex)
+            }
+
+        }else{
+            return NetworkResult.NoNetworkConnection("")
+        }
+    }
+
+    override fun executeInventory(token: String, list: List<InventoryDTO>): NetworkResult<Boolean> {
+        if(connectivityAgent.isDeviceConnectedToInternet) {
+            return try {
+                val response = api.executeInventory(token, list).execute()
+                when(response.code()){
+                    200 -> {
+                        NetworkResult.Success(true)
+                    }
+                    else -> NetworkResult.Error(Exception(response.message()))
+                }
+            }catch (ex: Exception){
+                NetworkResult.Error(ex)
+            }
+
+        }else{
+            return NetworkResult.NoNetworkConnection("")
+        }
+    }
+
+    override fun addInventoryItem(
+        token: String,
+        inventoryItem: InventoryItem
+    ): NetworkResult<Boolean> {
+        val item = InventoryItem(storeName = inventoryItem.storeName, successful = true, date = inventoryItem.date, fullName = inventoryItem.fullName)
+        database.inventoryDao.insertItem(item)
+
+        if(connectivityAgent.isDeviceConnectedToInternet) {
+            return try {
+                val response = api.addInventoryItem(token, inventoryItem).execute()
+                when(response.code()){
+                    200 -> {
+                        NetworkResult.Success(true)
+                    }
+                    else -> NetworkResult.Error(Exception(response.message()))
+                }
+            }catch (ex: Exception){
+                NetworkResult.Error(ex)
+            }
+
+        }else{
+            return NetworkResult.NoNetworkConnection("")
+        }
     }
 
 

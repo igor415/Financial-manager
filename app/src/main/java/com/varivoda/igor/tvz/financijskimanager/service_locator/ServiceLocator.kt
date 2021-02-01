@@ -125,7 +125,7 @@ object ServiceLocator{
     }
 
     private fun createEmployeeRepository(context: Context): EmployeeRepository {
-        val new = EmployeeRepository(database ?: createDatabase(context)!!)
+        val new = EmployeeRepository(database ?: createDatabase(context)!!,ConnectivityAgent(context))
         employeeRepository = new
         return new
     }

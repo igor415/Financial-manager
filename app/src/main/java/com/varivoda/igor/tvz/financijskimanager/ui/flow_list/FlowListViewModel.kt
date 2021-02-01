@@ -4,12 +4,14 @@ import android.app.AlertDialog
 import androidx.lifecycle.*
 import androidx.paging.*
 import com.varivoda.igor.tvz.financijskimanager.R
+import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.*
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseCustomerRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseEmployeeRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseProductRepository
 import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseStoreRepository
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeDTO
+import com.varivoda.igor.tvz.financijskimanager.util.NetworkResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -17,7 +19,8 @@ import kotlinx.coroutines.launch
 class FlowListViewModel(private val storeRepository: BaseStoreRepository,
                         private val productRepository: BaseProductRepository,
                         private val employeeRepository: BaseEmployeeRepository,
-                        private val customerRepository: BaseCustomerRepository
+                        private val customerRepository: BaseCustomerRepository,
+                        private val preferences: Preferences
 ) : ViewModel(){
 
     //private val productRepository = ProductRepository(AppDatabase.getInstance(context))
@@ -61,15 +64,31 @@ class FlowListViewModel(private val storeRepository: BaseStoreRepository,
 
     }
 
+    var errorMessage = MutableLiveData<String>()
     fun insertEmployee(employee: Employee){
         viewModelScope.launch(Dispatchers.IO) {
-            employeeRepository.insertEmployee(employee)
+            val response = employeeRepository.changeEmployeeInfo(preferences.getUserToken()!!
+                ,employee)
+            when(response){
+                is NetworkResult.Success -> employeeRepository.insertEmployee(employee)
+                is NetworkResult.NoNetworkConnection -> {errorMessage.postValue("Pojavio se problem. Molimo vas pokušajte kasnije.")}
+                is NetworkResult.Error -> errorMessage.postValue("Nema internetske povezivosti")
+                else -> {errorMessage.postValue("Pojavio se problem. Molimo vas pokušajte kasnije.")}
+            }
+
         }
     }
 
     fun insertProduct(product: Product){
         viewModelScope.launch(Dispatchers.IO) {
-            productRepository.insertProduct(product)
+            val response = productRepository.addEditProduct(preferences.getUserToken()!!, product)
+            when(response){
+                is NetworkResult.Success -> productRepository.insertProduct(product)
+                is NetworkResult.NoNetworkConnection -> {errorMessage.postValue("Pojavio se problem. Molimo vas pokušajte kasnije.")}
+                is NetworkResult.Error -> errorMessage.postValue("Nema internetske povezivosti")
+                else -> {errorMessage.postValue("Pojavio se problem. Molimo vas pokušajte kasnije.")}
+            }
+
         }
     }
 
@@ -148,7 +167,7 @@ class FlowListViewModel(private val storeRepository: BaseStoreRepository,
     fun onConfirmClicked(){
         if(priceInput.isNotEmpty() && nameInput.isNotEmpty()){
             if(edit){
-                insertProduct(Product(item?.id!!, nameInput, priceInput.toDouble(),1))
+                insertProduct(Product(item?.id!!, nameInput, priceInput.toDouble(),item?.categoryId!!))
             }else{
                 insertProduct(Product(productName = nameInput,price = priceInput.toDouble(),categoryId = 1))
             }
@@ -213,6 +232,7 @@ class FlowListViewModel(private val storeRepository: BaseStoreRepository,
             allStores.postValue(storeRepository.getAllStores())
         }
     }
+
 
 
 }

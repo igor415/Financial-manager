@@ -1,11 +1,15 @@
 package com.varivoda.igor.tvz.financijskimanager.data.local.remote
 
 import com.google.gson.GsonBuilder
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Employee
+import com.varivoda.igor.tvz.financijskimanager.data.local.entity.InventoryItem
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.data.local.remote.model.AllData
 import com.varivoda.igor.tvz.financijskimanager.data.local.remote.model.FingerprintEntry
 import com.varivoda.igor.tvz.financijskimanager.data.local.remote.model.LoginEntry
 import com.varivoda.igor.tvz.financijskimanager.data.local.remote.model.LoginResponse
+import com.varivoda.igor.tvz.financijskimanager.model.InventoryDTO
+import com.varivoda.igor.tvz.financijskimanager.model.ReturnData
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -44,6 +48,21 @@ interface ApiService {
 
     @PUT("main/image")
     fun sendImageString(@Header("Authorization") token: String, @Body product: Product): Call<ResponseBody>
+
+    @POST("main/employee")
+    fun changeEmployeeInfo(@Header("Authorization") token: String, @Body employee: Employee): Call<ResponseBody>
+
+    @POST("main/product")
+    fun addOrEditProduct(@Header("Authorization") token: String, @Body product: Product): Call<ResponseBody>
+
+    @POST("main/return")
+    fun returnItems(@Header("Authorization") token: String, @Body returnData: List<ReturnData>): Call<ResponseBody>
+
+    @POST("main/inventory")
+    fun executeInventory(@Header("Authorization") token: String, @Body list: List<InventoryDTO>): Call<ResponseBody>
+
+    @POST("main/add-inventory-item")
+    fun addInventoryItem(@Header("Authorization") token: String, @Body inventoryItem: InventoryItem): Call<ResponseBody>
 }
 
 object Api {

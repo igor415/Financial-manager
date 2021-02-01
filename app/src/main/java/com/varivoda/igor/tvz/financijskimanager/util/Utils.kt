@@ -85,6 +85,16 @@ fun getTodayDate(): String{
     return "$d.$m.$yearValue."
 }
 
+fun getInventoryDate(): String{
+    val cal = Calendar.getInstance()
+    val monthValue: Int = cal.get(Calendar.MONTH) + 1
+    val yearValue: Int = cal.get(Calendar.YEAR)
+    val dayValue: Int = cal.get(Calendar.DAY_OF_MONTH)
+    val m = getMonthWithZero(monthValue)
+    val d = getMonthWithZero(dayValue)
+    return "$yearValue-$m-$d"
+}
+
 fun rawSerial(): String {
     return (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         Random.nextLong().toString() + Random.nextLong().toString()

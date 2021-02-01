@@ -28,6 +28,7 @@ class FlowListAdapterEmployees(private val openPopup: (EmployeeDTO) -> Unit, pri
 
         override fun areContentsTheSame(oldItem: EmployeeDTO, newItem: EmployeeDTO): Boolean {
             return oldItem.id == newItem.id && oldItem.locationId == newItem.locationId && oldItem.storeId == newItem.storeId
+                    && oldItem.employeeName == newItem.employeeName && oldItem.employeeLastName == newItem.employeeLastName
         }
 
     }

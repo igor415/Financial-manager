@@ -5,6 +5,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeDTO
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeProductDTO
 import com.varivoda.igor.tvz.financijskimanager.model.HorizontalBarChartEntry
+import com.varivoda.igor.tvz.financijskimanager.util.NetworkResult
 import kotlinx.coroutines.flow.Flow
 
 interface BaseEmployeeRepository {
@@ -19,4 +20,5 @@ interface BaseEmployeeRepository {
         dateSelected: String,
         product: Product
     ): String
+    fun changeEmployeeInfo(token: String, employee: Employee): NetworkResult<Boolean>
 }

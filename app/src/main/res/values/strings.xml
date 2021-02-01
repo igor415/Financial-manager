@@ -138,5 +138,6 @@
     <string name="no_data_for_quarter">There is no data for this quarter</string>
     <string name="quarter_product">Product %1$s is best seller for the selected quarter.</string>
     <string name="toast_design">You successfully changed toast design.</string>
+    <string name="siganture">You need to sign yourself.</string>
 
 </resources>

@@ -5,19 +5,18 @@ import android.content.res.Resources
 import android.graphics.*
 import android.graphics.pdf.PdfDocument
 import android.os.Environment
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import com.varivoda.igor.tvz.financijskimanager.R
+import com.varivoda.igor.tvz.financijskimanager.model.ProductStockDTO
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.HashMap
 
 class PdfDocumentInventory {
 
-    fun createPdf(bm: Bitmap, resources: Resources, map: HashMap<String, Int>, fullName: String, context: Context){
+    fun createPdf(bm: Bitmap, resources: Resources, list: MutableList<ProductStockDTO>, fullName: String, context: Context){
         val document = PdfDocument()
         var pageInfo = PdfDocument.PageInfo.Builder(300, 500, 1).create()
         var page = document.startPage(pageInfo)
@@ -40,16 +39,16 @@ class PdfDocumentInventory {
         canvas.drawLine(0f,120f,300f,120f,paint)
 
         var start = 140f
-        map.forEach { (name, count) ->
+        list.forEach {
             if(start >= 460f){
-                canvas.drawText("$name: $count",10f,start,paint)
+                canvas.drawText("${it.productName}: ${it.quantity}",10f,start,paint)
                 document.finishPage(page)
                 pageInfo = PdfDocument.PageInfo.Builder(300, 500, 2).create()
                 page = document.startPage(pageInfo)
                 canvas = page.canvas
-                start = 10f
+                start = 20f
             }
-            canvas.drawText("$name: $count",10f,start,paint)
+            canvas.drawText("${it.productName}: ${it.quantity}",10f,start,paint)
             start += 20f
         }
 

@@ -6,7 +6,7 @@ data class ProductStockDTO(
     @ColumnInfo(name = "id")
     val productId: Int,
     val productName: String,
-    val quantity: Int,
+    var quantity: Int,
     val idStore: Int,
     var yellow: Boolean = false
 )

@@ -21,10 +21,12 @@ import com.varivoda.igor.tvz.financijskimanager.databinding.ProductPopupBinding
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeDTO
 import com.varivoda.igor.tvz.financijskimanager.ui.flow_list.loadstate.MyLoadStateAdapter
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
+import com.varivoda.igor.tvz.financijskimanager.util.showSelectedToast
 import kotlinx.android.synthetic.main.fragment_flow_list.view.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
 
 
 class FlowListFragment : Fragment() {
@@ -38,7 +40,8 @@ class FlowListFragment : Fragment() {
         FlowListViewModelFactory((requireContext().applicationContext as App).storeRepository,
             (requireContext().applicationContext as App).productRepository,
             (requireContext().applicationContext as App).employeeRepository,
-            (requireContext().applicationContext as App).customerRepository)
+            (requireContext().applicationContext as App).customerRepository,
+            (requireContext().applicationContext as App).preferences)
     }
 
     override fun onCreateView(
@@ -67,6 +70,15 @@ class FlowListFragment : Fragment() {
         }
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        flowListViewModel.errorMessage.observe(viewLifecycleOwner, Observer {
+            if(it==null) return@Observer
+            showSelectedToast(requireContext(),it)
+            flowListViewModel.errorMessage.value = null
+        })
     }
     private val changeProductInfo: (Product) -> Unit = {
             item ->
@@ -230,9 +242,9 @@ class FlowListFragment : Fragment() {
             "Popis proizvoda" ->{
                 inflater.inflate(R.menu.add_menu,menu)
             }
-            "Popis zaposlenika" -> {
+            /*"Popis zaposlenika" -> {
                 inflater.inflate(R.menu.add_menu,menu)
-            }
+            }*/
 
         }
     }
@@ -278,6 +290,7 @@ class FlowListFragment : Fragment() {
             flowListViewModel.priceInput = item.price.toString()
             flowListViewModel.item = item
         }else{
+            binding.categoryGroup.visibility = View.VISIBLE
             flowListViewModel.item = null
         }
         flowListViewModel.title = text
