@@ -112,7 +112,7 @@ class DateAndProductFragment : Fragment() {
             builder.setItems(it.map { itt -> itt.productName }.toTypedArray()
             ) { dialog, which ->
                 dateAndProductViewModel.insertProduct(it[which])
-                dialog?.dismiss() }
+                productDialog?.cancel() }
             productDialog?.cancel()
             productDialog = builder.create()
             productDialog?.show()

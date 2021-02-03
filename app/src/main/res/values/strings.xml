@@ -139,5 +139,6 @@
     <string name="quarter_product">Product %1$s is best seller for the selected quarter.</string>
     <string name="toast_design">You successfully changed toast design.</string>
     <string name="siganture">You need to sign yourself.</string>
+    <string name="select_return">Select items to return</string>
 
 </resources>

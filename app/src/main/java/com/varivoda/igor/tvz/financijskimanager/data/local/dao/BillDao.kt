@@ -9,6 +9,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Bill
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.PaymentMethod
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Store
 import com.varivoda.igor.tvz.financijskimanager.model.BillDTO
+import com.varivoda.igor.tvz.financijskimanager.model.DataOnBill
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeBestSale
 
 @Dao
@@ -81,4 +82,7 @@ interface BillDao {
          join Product p on p.id = pob.productId join Employee e on e.id = b.employeeId join Store s on s.id = b.storeId
     join PaymentMethod pm on pm.id = b.paymentMethodId and b.id = :invoice""")
     fun getInvoiceInfo(invoice: Int): EmployeeBestSale?
+
+    @Query("SELECT p.id, pb.quantity, p.productName, 0 as selected FROM ProductsOnBill pb JOIN Product p on pb.productId = p.id WHERE pb.billId = :id")
+    fun getDataOnBill(id: Int): List<DataOnBill>
 }

@@ -8,12 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
-import com.varivoda.igor.tvz.financijskimanager.util.closeKeyboard
-import com.varivoda.igor.tvz.financijskimanager.util.getImageFromQrCode
-import com.varivoda.igor.tvz.financijskimanager.util.showSelectedToast
-import com.varivoda.igor.tvz.financijskimanager.util.toast
+import com.varivoda.igor.tvz.financijskimanager.ui.check_inventory.CheckInventoryAdapter
+import com.varivoda.igor.tvz.financijskimanager.util.*
+import kotlinx.android.synthetic.main.fragment_check_inventory.view.*
 import kotlinx.android.synthetic.main.fragment_return_product.*
 import kotlinx.android.synthetic.main.invoice_template.view.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
@@ -24,8 +24,10 @@ import java.util.*
 class ReturnProductFragment : Fragment(), ZXingScannerView.ResultHandler {
 
     private val viewModel by viewModels<ReturnProductViewModel> {
-        ReturnProductViewModelFactory((requireContext().applicationContext as App).billRepository)
+        ReturnProductViewModelFactory((requireContext().applicationContext as App).billRepository,
+            (requireContext().applicationContext as App).productRepository, (requireContext().applicationContext as App).preferences)
     }
+    private var selectDialog: AlertDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,8 +69,10 @@ class ReturnProductFragment : Fragment(), ZXingScannerView.ResultHandler {
             dialogView.confirmButton.visibility = View.VISIBLE
             dialogView.confirmButton.setOnClickListener { view ->
                 if(checkDays(it.date)){
-                    viewModel.returnItem(invoiceNumberEntry.text.toString())
+                    //viewModel.returnItem(invoiceNumberEntry.text.toString())
                     confirmDialog?.cancel()
+                    createSelectDialog(invoiceNumberEntry.text.toString())
+
                 }else{
                     showSelectedToast(requireContext(), getString(R.string.seven_days_purchase))
                 }
@@ -79,6 +83,31 @@ class ReturnProductFragment : Fragment(), ZXingScannerView.ResultHandler {
             confirmDialog?.cancel()
             confirmDialog = builder.create()
             confirmDialog?.show()
+            viewModel.invoiceInfo.value = null
+        })
+    }
+
+    private val ad = CheckInventoryAdapter(true)
+    private fun createSelectDialog(invoiceId: String) {
+        viewModel.getInvoiceProductsAndQuantity(invoiceId)
+        viewModel.data.observe(viewLifecycleOwner, Observer { list ->
+            if(list==null) return@Observer
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            val dialogView = LayoutInflater.from(context).inflate(R.layout.fragment_check_inventory,null,false)
+            dialogView.time.text = getString(R.string.select_return)
+            dialogView.name.text = ""
+            dialogView.signature_pad.visibility = View.INVISIBLE
+            dialogView.recyclerView.adapter = ad
+            dialogView.confirm.setOnClickListener { view ->
+                viewModel.returnItem(ad.products.filter { it.selected }.toReturnDataList())
+                selectDialog?.cancel()
+            }
+            builder.setView(dialogView)
+            selectDialog?.cancel()
+            selectDialog = builder.create()
+            selectDialog?.show()
+            ad.setProductsValue(list)
+            ad.notifyDataSetChanged()
         })
     }
 
@@ -100,12 +129,15 @@ class ReturnProductFragment : Fragment(), ZXingScannerView.ResultHandler {
     private fun observeResult() {
         viewModel.returnResult.observe(viewLifecycleOwner, Observer {
             if(it==null) return@Observer
-            if(it){
-                showSelectedToast(requireContext(),getString(R.string.returned_item_success))
-                findNavController().popBackStack()
-            }else{
-                showSelectedToast(requireContext(),getString(R.string.problem_returning))
+            when(it){
+                is NetworkResult.Success -> {
+                    showSelectedToast(requireContext(),getString(R.string.returned_item_success))
+                    findNavController().popBackStack()
+                }
+                is NetworkResult.NoNetworkConnection -> showSelectedToast(requireContext(),getString(R.string.no_internet))
+                else -> showSelectedToast(requireContext(),getString(R.string.problem_returning))
             }
+            selectDialog?.cancel()
         })
     }
 

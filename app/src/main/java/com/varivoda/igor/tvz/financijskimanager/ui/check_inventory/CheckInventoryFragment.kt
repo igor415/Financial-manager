@@ -19,7 +19,7 @@ const val STORAGE_REQUEST_CODE = 12
 class CheckInventoryFragment : Fragment() {
 
     private var storeDialog: AlertDialog? = null
-    private var checkInventoryAdapter = CheckInventoryAdapter()
+    private var checkInventoryAdapter = CheckInventoryAdapter(false)
     private val inventoryViewModel by viewModels<InventoryViewModel> {
         InventoryViewModelFactory((requireContext().applicationContext as App).inventoryRepository,
             (requireContext().applicationContext as App).storeRepository,

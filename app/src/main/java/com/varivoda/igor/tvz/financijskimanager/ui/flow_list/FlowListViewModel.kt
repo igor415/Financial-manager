@@ -152,6 +152,7 @@ class FlowListViewModel(private val storeRepository: BaseStoreRepository,
     var title: String = ""
     var edit: Boolean = false
     var item: Product? = null
+    var selectedCategory: Int? = null
     var productPopup: AlertDialog? = null
     var errorFieldPrice: String? = null
     var errorFieldName: String? = null
@@ -169,7 +170,12 @@ class FlowListViewModel(private val storeRepository: BaseStoreRepository,
             if(edit){
                 insertProduct(Product(item?.id!!, nameInput, priceInput.toDouble(),item?.categoryId!!))
             }else{
-                insertProduct(Product(productName = nameInput,price = priceInput.toDouble(),categoryId = 1))
+                if(selectedCategory != null){
+                    insertProduct(Product(productName = nameInput,price = priceInput.toDouble(),categoryId = selectedCategory!!))
+                }else{
+
+                }
+
             }
             clearProductInfo()
         }else{

@@ -11,9 +11,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.varivoda.igor.tvz.financijskimanager.data.local.entity.Product
-import com.varivoda.igor.tvz.financijskimanager.model.InventoryDTO
-import com.varivoda.igor.tvz.financijskimanager.model.ProductDTO
-import com.varivoda.igor.tvz.financijskimanager.model.ProductStockDTO
+import com.varivoda.igor.tvz.financijskimanager.model.*
 import java.io.ByteArrayOutputStream
 import java.security.MessageDigest
 import kotlin.experimental.and
@@ -36,6 +34,12 @@ fun List<Product>.asDomainModel(): List<ProductDTO> {
         ProductDTO(
             productName = it.productName,
             quantity = it.price)
+    }
+}
+
+fun List<DataOnBill>.toReturnDataList(): List<ReturnData>{
+    return map{
+        ReturnData(it.id ?: 0, 1, it.quantity?: 0)
     }
 }
 

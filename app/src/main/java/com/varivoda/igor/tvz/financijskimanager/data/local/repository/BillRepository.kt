@@ -5,6 +5,7 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.varivoda.igor.tvz.financijskimanager.data.local.AppDatabase
 import com.varivoda.igor.tvz.financijskimanager.model.BillDTO
+import com.varivoda.igor.tvz.financijskimanager.model.DataOnBill
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeBestSale
 import com.varivoda.igor.tvz.financijskimanager.model.PieChartEntry
 import kotlinx.coroutines.Dispatchers
@@ -88,5 +89,9 @@ class BillRepository(private val database: AppDatabase) {
 
     fun getInvoiceInfo(id: Int): EmployeeBestSale?{
         return database.billDao.getInvoiceInfo(id)
+    }
+
+    fun getDataOnBill(invoiceId: String): List<DataOnBill> {
+        return database.billDao.getDataOnBill(invoiceId.toInt())
     }
 }

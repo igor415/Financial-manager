@@ -10,6 +10,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseS
 import com.varivoda.igor.tvz.financijskimanager.model.PieChartEntry
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentMonth
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentYear
+import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -28,7 +29,7 @@ class PieChartViewModel(private val storeRepository: BaseStoreRepository, privat
         paymentInfo.addSource(monthAndYear){ getPaymentInfo() }
         paymentInfo.addSource(currentStore){ getPaymentInfo() }
         getAllStores()
-        monthAndYear.value = Pair(getCurrentMonth(), getCurrentYear())
+        monthAndYear.value = Pair(getMonthWithZero(getCurrentMonth().toInt()), getCurrentYear())
     }
 
 

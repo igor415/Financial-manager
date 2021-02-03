@@ -12,6 +12,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseS
 import com.varivoda.igor.tvz.financijskimanager.model.CategoryDTO
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentMonth
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentYear
+import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -37,7 +38,7 @@ class Top3ViewModel(private val productRepository: BaseProductRepository,
 
         getAllStores()
         getAllCategories()
-        monthAndYear.value = Pair(getCurrentMonth(), getCurrentYear())
+        monthAndYear.value = Pair(getMonthWithZero(getCurrentMonth().toInt()), getCurrentYear())
     }
 
     fun getTop3Categories(){

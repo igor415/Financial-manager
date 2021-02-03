@@ -23,4 +23,8 @@ interface StockDao {
 
     @Query("UPDATE StockData set quantity = :quantity where productId = :productId and idStore = 1")
     fun changeStockValue(productId: Int, quantity: Int)
+
+    @Query("SELECT quantity FROM StockData where productId = :productId and idStore = 1")
+    fun getTotalQuantity(productId: Int): Int?
+
 }

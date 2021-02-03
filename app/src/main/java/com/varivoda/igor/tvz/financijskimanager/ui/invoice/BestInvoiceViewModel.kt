@@ -11,6 +11,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseS
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeBestSale
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentMonth
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentYear
+import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -29,7 +30,7 @@ class BestInvoiceViewModel(private val billRepository: BillRepository,
         result.addSource(monthAndYear) { getBestInvoiceEmployee() }
         result.addSource(currentStore) { getBestInvoiceEmployee() }
         getAllStores()
-        monthAndYear.value = Pair(getCurrentMonth(), getCurrentYear())
+        monthAndYear.value = Pair(getMonthWithZero(getCurrentMonth().toInt()), getCurrentYear())
     }
 
 

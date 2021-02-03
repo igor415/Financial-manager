@@ -21,8 +21,10 @@ import com.varivoda.igor.tvz.financijskimanager.databinding.ProductPopupBinding
 import com.varivoda.igor.tvz.financijskimanager.model.EmployeeDTO
 import com.varivoda.igor.tvz.financijskimanager.ui.flow_list.loadstate.MyLoadStateAdapter
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
+import com.varivoda.igor.tvz.financijskimanager.util.getIdForRadioButton
 import com.varivoda.igor.tvz.financijskimanager.util.showSelectedToast
 import kotlinx.android.synthetic.main.fragment_flow_list.view.*
+import kotlinx.android.synthetic.main.product_popup.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -158,10 +160,11 @@ class FlowListFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(view.flowListRecyclerView)
     }
 
+    private val employeeScope = CoroutineScope(Job() + Dispatchers.Main)
     private fun employeesFunction(view: View) {
 
         progressAndRetryInvisible(view)
-        CoroutineScope(Dispatchers.Main).launch{
+        employeeScope.launch{
             flowListViewModel.employees.collect{
                 flowListAdapterEmployees.submitList(it)
             }
@@ -172,6 +175,11 @@ class FlowListFragment : Fragment() {
         }
         val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(null,flowListAdapterEmployees,null,flowListViewModel))
         itemTouchHelper.attachToRecyclerView(view.flowListRecyclerView)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        employeeScope.cancel()
     }
 
     private fun productsFunction(view: View) {
@@ -203,6 +211,7 @@ class FlowListFragment : Fragment() {
             setHasFixedSize(true)
             adapter = flowListAdapter
         }
+
 
         val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(null,null,flowListAdapter,flowListViewModel))
         itemTouchHelper.attachToRecyclerView(view.flowListRecyclerView)
@@ -289,10 +298,15 @@ class FlowListFragment : Fragment() {
             flowListViewModel.nameInput = item.productName.split(":")[0]
             flowListViewModel.priceInput = item.price.toString()
             flowListViewModel.item = item
+            binding.categoryGroup.visibility = View.INVISIBLE
         }else{
             binding.categoryGroup.visibility = View.VISIBLE
             flowListViewModel.item = null
+            binding.categoryGroup.setOnCheckedChangeListener { group, checkedId ->
+                flowListViewModel.selectedCategory = getIdForRadioButton(checkedId)
+            }
         }
+
         flowListViewModel.title = text
 
         return builder.setView(binding.root).create()

@@ -10,10 +10,13 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.varivoda.igor.tvz.financijskimanager.R
+import com.varivoda.igor.tvz.financijskimanager.model.DataOnBill
 import com.varivoda.igor.tvz.financijskimanager.model.ProductStockDTO
 
-class CheckInventoryAdapter : RecyclerView.Adapter<CheckInventoryAdapter.ViewHolder>(){
+class CheckInventoryAdapter(private val dataOnBill: Boolean) : RecyclerView.Adapter<CheckInventoryAdapter.ViewHolder>(){
     var items = mutableListOf<ProductStockDTO>()
+
+    var products = mutableListOf<DataOnBill>()
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
@@ -23,6 +26,11 @@ class CheckInventoryAdapter : RecyclerView.Adapter<CheckInventoryAdapter.ViewHol
         fun bind(productStockDTO: ProductStockDTO){
             product.text = productStockDTO.productName
             quantity.setText(productStockDTO.quantity.toString())
+        }
+
+        fun bindDataOnBill(dataOnBill: DataOnBill){
+            product.text = dataOnBill.productName
+            quantity.setText(dataOnBill.quantity.toString())
         }
 
         companion object{
@@ -36,10 +44,30 @@ class CheckInventoryAdapter : RecyclerView.Adapter<CheckInventoryAdapter.ViewHol
         return ViewHolder.create(parent)
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int {
+        return if(dataOnBill){
+            products.size
+        }else{
+            items.size
+        }
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        if(dataOnBill){
+            holder.bindDataOnBill(products[position])
+            holder.itemView.setOnClickListener {
+                if(products[position].selected){
+                    holder.itemView.setBackgroundResource(R.drawable.white_background_wrapper)
+                    products[position].selected = false
+                }else{
+                    holder.itemView.setBackgroundResource(R.drawable.background_wrapper)
+                    products[position].selected = true
+                }
+            }
+        }else{
+            holder.bind(items[position])
+        }
+
         holder.quantity.addTextChangedListener(object: TextWatcher{
             override fun afterTextChanged(s: Editable?) {
 
@@ -49,7 +77,12 @@ class CheckInventoryAdapter : RecyclerView.Adapter<CheckInventoryAdapter.ViewHol
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                items[position].quantity = holder.quantity.text.toString().toIntOrNull() ?: 0
+                if(dataOnBill){
+                    products[position].quantity = holder.quantity.text.toString().toIntOrNull() ?: 0
+                }else{
+                    items[position].quantity = holder.quantity.text.toString().toIntOrNull() ?: 0
+                }
+
             }
         })
 
@@ -67,6 +100,11 @@ class CheckInventoryAdapter : RecyclerView.Adapter<CheckInventoryAdapter.ViewHol
 
     fun setItemsValue(list: List<ProductStockDTO>){
         items = list as MutableList<ProductStockDTO>
+        notifyDataSetChanged()
+    }
+
+    fun setProductsValue(list: List<DataOnBill>){
+        products = list as MutableList<DataOnBill>
         notifyDataSetChanged()
     }
 }

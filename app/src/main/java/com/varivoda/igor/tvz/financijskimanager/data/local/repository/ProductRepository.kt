@@ -222,6 +222,12 @@ class ProductRepository(private val database: AppDatabase,
                 val response = api.returnItems(token, list).execute()
                 when(response.code()){
                     200 -> {
+                        list.forEach {
+                            val i = database.stockDao.getTotalQuantity(it.productId)
+                            if(i != null){
+                                database.stockDao.changeStockValue(it.productId,  i - it.num)
+                            }
+                        }
                         NetworkResult.Success(true)
                     }
                     else -> NetworkResult.Error(Exception(response.message()))

@@ -73,7 +73,7 @@
             android:text="@={viewModel.priceInput}"
             android:inputType="numberDecimal"
             android:background="@drawable/edittext_background"
-            app:layout_constraintBottom_toTopOf="@+id/ok_button"
+            app:layout_constraintBottom_toTopOf="@+id/categoryGroup"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -85,44 +85,47 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp"
-            app:layout_constraintTop_toBottomOf="@id/price_input"
+            app:layout_constraintBottom_toTopOf="@+id/ok_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            >
+            app:layout_constraintTop_toBottomOf="@id/price_input">
 
             <RadioButton
                 android:id="@+id/first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Komponente"/>
+                android:text="Komponente" />
+
             <RadioButton
                 android:id="@+id/second"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Periferija"/>
+                android:text="Periferija" />
+
             <RadioButton
                 android:id="@+id/third"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mobiteli"/>
+                android:text="Mobiteli" />
+
             <RadioButton
                 android:id="@+id/fourth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Software"/>
+                android:text="Software" />
 
             <RadioButton
                 android:id="@+id/fifth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tableti"/>
+                android:text="Tableti" />
 
             <RadioButton
                 android:id="@+id/sixth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kućni telefoni"/>
+                android:text="Kućni telefoni" />
 
         </RadioGroup>
 

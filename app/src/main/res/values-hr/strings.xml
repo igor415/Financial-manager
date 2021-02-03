@@ -77,7 +77,7 @@
     <string name="speech_prompt">Govorite&#8230;</string>
     <string name="place_your_finger_on_the_sensor_to_authenticate">Dodirnite senzor kako si be autentificirali</string>
     <string name="or_resource">ILI</string>
-    <string name="ok">Da</string>
+    <string name="ok">Zatvori</string>
     <string name="select_two_stores">Izaberite dvije poslovnice</string>
     <string name="select_discount_period">Izaberite period popusta</string>
     <string name="use_month_and_year_selection">Koristi odabir mjeseca i godine</string>
@@ -120,6 +120,8 @@
     <string name="no_data_for_quarter">Nema podataka za ovaj kvartal</string>
     <string name="quarter_product">Proizvod %1$s se najbolje prodavao u izabranom kvartalu.</string>
     <string name="toast_design">Uspješno ste promijenili dizajn obavijesti.</string>
+    <string name="siganture">Morate se potpisati.</string>
+    <string name="select_return">Izaberite artikle za povrat</string>
 
 
 </resources>
