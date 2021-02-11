@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/time_period"
-            android:textSize="20sp"/>
+            android:textSize="19sp"/>
         <TextView
             android:id="@+id/changePeriod"
             android:layout_width="match_parent"
@@ -26,7 +26,7 @@
             android:textAllCaps="true"
             android:textStyle="bold"
             android:gravity="end"
-            android:textSize="20sp"
+            android:textSize="19sp"
             android:textColor="@color/colorAccent"/>
 
     </LinearLayout>

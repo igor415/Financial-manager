@@ -51,7 +51,7 @@
     <string name="number_label">Broj</string>
     <string name="date_label">Datum</string>
     <string name="total_label">Ukupno</string>
-    <string name="time_period">Vremenski period: %1$s</string>
+    <string name="time_period">Vremenski raspon: %1$s</string>
     <string name="enable_all_options">Omogući sve opcije</string>
     <string name="settings">Postavke</string>
     <string name="log_out_message">Jeste li sigurni da se želite odjaviti?</string>

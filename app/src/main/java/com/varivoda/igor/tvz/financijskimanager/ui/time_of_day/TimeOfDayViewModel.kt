@@ -9,6 +9,7 @@ import com.varivoda.igor.tvz.financijskimanager.data.local.repository.base.BaseS
 import com.varivoda.igor.tvz.financijskimanager.model.TimeOfDayData
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentMonth
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentYear
+import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -23,7 +24,7 @@ class TimeOfDayViewModel (private val storeRepository: BaseStoreRepository) : Vi
         timeOfDayData.addSource(currentStore){ getTimeOfDayData()}
         timeOfDayData.addSource(monthAndYear){ getTimeOfDayData()}
         getAllStores()
-        monthAndYear.value = Pair(getCurrentMonth(), getCurrentYear())
+        monthAndYear.value = Pair(getMonthWithZero(getCurrentMonth().toInt()), getCurrentYear())
     }
 
     fun getTimeOfDayData(){
