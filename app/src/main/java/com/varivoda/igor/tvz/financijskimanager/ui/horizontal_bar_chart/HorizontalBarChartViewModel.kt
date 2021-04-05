@@ -11,6 +11,7 @@ import com.varivoda.igor.tvz.financijskimanager.model.HorizontalBarChartEntry
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentMonth
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentYear
 import com.varivoda.igor.tvz.financijskimanager.util.getMonthAndYearFormatted
+import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -27,7 +28,7 @@ class HorizontalBarChartViewModel (private val employeeRepository: BaseEmployeeR
         barChartStatistics.addSource(monthAndYear) { getBarChartStatistics() }
         barChartStatistics.addSource(currentStore) { getBarChartStatistics() }
         getAllStores()
-        monthAndYear.value = Pair(getCurrentMonth(), getCurrentYear())
+        monthAndYear.value = Pair(getMonthWithZero(getCurrentMonth().toInt()), getCurrentYear())
     }
 
 

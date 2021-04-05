@@ -7,12 +7,13 @@ import com.varivoda.igor.tvz.financijskimanager.model.ProductDTO
 import com.varivoda.igor.tvz.financijskimanager.util.asDomainModel
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentMonth
 import com.varivoda.igor.tvz.financijskimanager.util.getCurrentYear
+import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
 
 class Top10ViewModel(private val productRepository: BaseProductRepository) : ViewModel(){
 
     var monthAndYear = MutableLiveData<Pair<String,String>>()
     init {
-        monthAndYear.value = Pair(getCurrentMonth(),getCurrentYear())
+        monthAndYear.value = Pair(getMonthWithZero(getCurrentMonth().toInt()),getCurrentYear())
     }
 
     var top10Products: LiveData<List<Product>> = Transformations.switchMap(monthAndYear){

@@ -8,9 +8,7 @@ import androidx.lifecycle.Observer
 import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.ui.home.HomeActivity
-import com.varivoda.igor.tvz.financijskimanager.util.MonthYearDialog
-import com.varivoda.igor.tvz.financijskimanager.util.getMonthAndYearFormatted
-import com.varivoda.igor.tvz.financijskimanager.util.getMonthWithZero
+import com.varivoda.igor.tvz.financijskimanager.util.*
 import kotlinx.android.synthetic.main.fragment_bill.timePeriod
 import kotlinx.android.synthetic.main.fragment_bill.view.changePeriod
 import kotlinx.android.synthetic.main.fragment_bill.view.timePeriod
