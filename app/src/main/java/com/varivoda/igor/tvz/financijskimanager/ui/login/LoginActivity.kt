@@ -2,9 +2,13 @@ package com.varivoda.igor.tvz.financijskimanager.ui.login
 
 import android.Manifest
 import android.app.KeyguardManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.hardware.fingerprint.FingerprintManager
+import android.os.Build
 import android.os.Bundle
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
@@ -65,6 +69,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         binding.viewModel = loginViewModel
+        createChannel("1",getString(R.string.notification_channel))
         constraintSetLoginProgress.clone(this, R.layout.activity_login_alt)
         constraintFirst.clone(this, R.layout.activity_login)
         observeLoginSuccess()
@@ -280,6 +285,30 @@ class LoginActivity : AppCompatActivity() {
         } catch (e: java.lang.Exception) {
             Timber.d(e)
             false
+        }
+    }
+
+    private fun createChannel(channelId: String, channelName: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            )
+                .apply {
+                    setShowBadge(false)
+                }
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = ""
+
+            val notificationManager = this.getSystemService(
+                NotificationManager::class.java
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
+
         }
     }
 }

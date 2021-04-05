@@ -91,7 +91,6 @@ class LoginRepository(private val preferences: Preferences,
         if(connectivityAgent.isDeviceConnectedToInternet){
             return try {
                 val response = api.getAllData(preferences.getUserToken()!!).execute()
-                println("debug response je ${response.code()}  ${response.message()}")
                 when(response.code()){
                     200 -> {
                         insertData(response.body()!!)

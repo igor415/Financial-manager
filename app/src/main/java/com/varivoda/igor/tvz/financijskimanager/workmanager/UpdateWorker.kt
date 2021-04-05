@@ -12,10 +12,10 @@ import com.varivoda.igor.tvz.financijskimanager.util.sendNotification
 class UpdateWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, params) {
 
     override fun doWork(): Result {
-        val notificationManager = ContextCompat.getSystemService(applicationContext,
+        /*val notificationManager = ContextCompat.getSystemService(applicationContext,
             NotificationManager::class.java) as NotificationManager
         notificationManager.cancelNotifications()
-        notificationManager.sendNotification(applicationContext.getString(R.string.notification_title),applicationContext)
+        notificationManager.sendNotification(applicationContext.getString(R.string.notification_title),applicationContext)*/
         return Result.success()
     }
 

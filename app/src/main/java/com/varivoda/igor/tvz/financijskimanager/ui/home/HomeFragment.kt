@@ -6,20 +6,27 @@ import android.app.NotificationManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
 import com.varivoda.igor.tvz.financijskimanager.databinding.FragmentHomeBinding
 import com.varivoda.igor.tvz.financijskimanager.ui.menu.Menu
 import com.varivoda.igor.tvz.financijskimanager.util.*
 import kotlinx.android.synthetic.main.fragment_home.*
-
+import timber.log.Timber
 
 
 class HomeFragment : Fragment() {
 
+    private val homeViewModel by viewModels<HomeViewModel> {
+        HomeViewModelFactory((requireContext().applicationContext as App).productRepository)
+    }
     private var _binding: FragmentHomeBinding? = null
     private var currentViewClicked: View? = null
     private val binding: FragmentHomeBinding
@@ -42,6 +49,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         createChannel()
+        observeStockNotification()
         (activity as HomeActivity).setActionBarText(getString(R.string.home_title))
         listOf(statistics,customers,employees,insertInvoice,products,stores).forEach {
             registerForContextMenu(it)
@@ -53,6 +61,27 @@ class HomeFragment : Fragment() {
         products.setOnClickListener { onProductsClicked() }
         insertInvoice.setOnClickListener { onInvoiceClicked() }
         stores.setOnClickListener { onStoresClicked() }
+    }
+
+    private fun observeStockNotification() {
+        homeViewModel.stockDataNotification.observe(viewLifecycleOwner, Observer {
+            if(it==null) return@Observer
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (it.data) {
+                        val manager =
+                            requireActivity().getSystemService(NotificationManager::class.java)
+                        manager.sendNotification(
+                            getString(R.string.warehouse_status), requireContext(), getString(
+                                R.string.notification_priority
+                            )
+                        )
+                    }
+                }
+                else -> Timber.d("warehouse status - ok")
+            }
+            homeViewModel.stockDataNotification.value = null
+        })
     }
 
 

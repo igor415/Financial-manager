@@ -285,5 +285,15 @@ class ProductRepository(private val database: AppDatabase,
         }
     }
 
+    override fun checkStockData(): NetworkResult<Boolean> {
+        val stockList = database.stockDao.getAll()
+        stockList.forEach {
+            if(it.quantity < 5){
+                return NetworkResult.Success(true)
+            }
+        }
+        return NetworkResult.Error(Exception(""))
+    }
+
 
 }

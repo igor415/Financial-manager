@@ -30,4 +30,5 @@ interface BaseProductRepository {
     fun returnItems(token: String, list: List<ReturnData>): NetworkResult<Boolean>
     fun executeInventory(token: String, list: List<InventoryDTO>): NetworkResult<Boolean>
     fun addInventoryItem(token: String, inventoryItem: InventoryItem): NetworkResult<Boolean>
+    fun checkStockData(): NetworkResult<Boolean>
 }

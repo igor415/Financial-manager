@@ -140,5 +140,8 @@
     <string name="toast_design">You successfully changed toast design.</string>
     <string name="siganture">You need to sign yourself.</string>
     <string name="select_return">Select items to return</string>
+    <string name="notification_channel">storage - notifications</string>
+    <string name="warehouse_status">Check warehouse status</string>
+    <string name="notification_priority">High priority</string>
 
 </resources>

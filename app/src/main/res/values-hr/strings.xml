@@ -122,6 +122,9 @@
     <string name="toast_design">Uspješno ste promijenili dizajn obavijesti.</string>
     <string name="siganture">Morate se potpisati.</string>
     <string name="select_return">Izaberite artikle za povrat</string>
+    <string name="notification_channel">skladište - obavijesti</string>
+    <string name="warehouse_status">Provjerite stanje skladišta!</string>
+    <string name="notification_priority">Visok prioritet</string>
 
 
 </resources>
