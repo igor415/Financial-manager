@@ -40,6 +40,8 @@ class Preferences(appContext: Context) {
 
     fun getNotificationsOption(): Boolean = appPreferences.getBoolean("notifications key",true)
 
+    fun setNotificationsOption(b: Boolean) = appPreferences.edit().putBoolean("notifications key",b).apply()
+
     fun getToastMessageDesign(): String? = appPreferences.getString("toast key","default") ?: "default"
 
     fun setSeekBarValue(float: Float){

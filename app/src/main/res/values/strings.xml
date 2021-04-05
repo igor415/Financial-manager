@@ -143,5 +143,7 @@
     <string name="notification_channel">storage - notifications</string>
     <string name="warehouse_status">Check warehouse status</string>
     <string name="notification_priority">High priority</string>
+    <string name="enabled">Enabled</string>
+    <string name="disabled">Disabled</string>
 
 </resources>

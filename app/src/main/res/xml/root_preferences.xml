@@ -23,8 +23,8 @@
             android:title="@string/notifications"
             android:key="notifications key"
             android:defaultValue="true"
-            android:summaryOff="Disabled"
-            android:summaryOn="Enabled"/>
+            android:summaryOff="@string/disabled"
+            android:summaryOn="@string/enabled"/>
 
         <SeekBarPreference
             app:allowDividerAbove="true"

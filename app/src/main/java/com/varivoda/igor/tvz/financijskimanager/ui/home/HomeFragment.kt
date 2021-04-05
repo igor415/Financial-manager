@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.varivoda.igor.tvz.financijskimanager.App
 import com.varivoda.igor.tvz.financijskimanager.R
+import com.varivoda.igor.tvz.financijskimanager.data.local.Preferences
 import com.varivoda.igor.tvz.financijskimanager.databinding.FragmentHomeBinding
 import com.varivoda.igor.tvz.financijskimanager.ui.menu.Menu
 import com.varivoda.igor.tvz.financijskimanager.util.*
@@ -69,13 +70,17 @@ class HomeFragment : Fragment() {
             when (it) {
                 is NetworkResult.Success -> {
                     if (it.data) {
-                        val manager =
-                            requireActivity().getSystemService(NotificationManager::class.java)
-                        manager.sendNotification(
-                            getString(R.string.warehouse_status), requireContext(), getString(
-                                R.string.notification_priority
+                        val pref = Preferences(requireContext())
+                        if(pref.getNotificationsOption()){
+                            val manager =
+                                requireActivity().getSystemService(NotificationManager::class.java)
+                            manager.sendNotification(
+                                getString(R.string.warehouse_status), requireContext(), getString(
+                                    R.string.notification_priority
+                                )
                             )
-                        )
+                        }
+
                     }
                 }
                 else -> Timber.d("warehouse status - ok")

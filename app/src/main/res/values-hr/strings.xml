@@ -125,6 +125,8 @@
     <string name="notification_channel">skladište - obavijesti</string>
     <string name="warehouse_status">Provjerite stanje skladišta!</string>
     <string name="notification_priority">Visok prioritet</string>
+    <string name="enabled">Omogućeno</string>
+    <string name="disabled">Onemogućeno</string>
 
 
 </resources>

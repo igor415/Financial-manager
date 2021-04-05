@@ -85,6 +85,11 @@ class SettingsActivity : AppCompatActivity() {
                 return@setOnPreferenceChangeListener true
             }
 
+            findPreference<CheckBoxPreference>("notifications key")?.setOnPreferenceChangeListener { _, value ->
+                Preferences(requireContext()).setNotificationsOption(value as Boolean)
+                return@setOnPreferenceChangeListener true
+            }
+
             keyguardManager =
                 requireActivity().getSystemService(KEYGUARD_SERVICE) as KeyguardManager
             try {
