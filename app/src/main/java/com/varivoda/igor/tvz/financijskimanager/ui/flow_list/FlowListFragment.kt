@@ -86,7 +86,7 @@ class FlowListFragment : Fragment() {
             item ->
         flowListViewModel.apply {
             productPopup?.cancel()
-            productPopup = addProductPopup("Change product info",item)
+            productPopup = addProductPopup(getString(R.string.change_product_info),item)
             productPopup?.setCancelable(false)
             productPopup?.setCanceledOnTouchOutside(false)
             productPopup?.show()
@@ -98,7 +98,7 @@ class FlowListFragment : Fragment() {
             item ->
         flowListViewModel.apply {
             employeePopup?.cancel()
-            employeePopup = addEmployeePopup("Change employee info",item)
+            employeePopup = addEmployeePopup(getString(R.string.change_employee_info),item)
             employeePopup?.setCancelable(false)
             employeePopup?.setCanceledOnTouchOutside(false)
             employeePopup?.show()
@@ -264,7 +264,7 @@ class FlowListFragment : Fragment() {
                 "Popis proizvoda" -> {
                     flowListViewModel.apply {
                         productPopup?.cancel()
-                        productPopup = addProductPopup("Insert product")
+                        productPopup = addProductPopup(getString(R.string.insert_product_info))
                         productPopup?.setCancelable(false)
                         productPopup?.setCanceledOnTouchOutside(false)
                         productPopup?.show()
@@ -274,7 +274,7 @@ class FlowListFragment : Fragment() {
                 "Popis zaposlenika" -> {
                     flowListViewModel.apply {
                         employeePopup?.cancel()
-                        employeePopup = addEmployeePopup("Insert employee")
+                        employeePopup = addEmployeePopup(getString(R.string.insert_employee_info))
                         employeePopup?.setCancelable(false)
                         employeePopup?.setCanceledOnTouchOutside(false)
                         employeePopup?.show()

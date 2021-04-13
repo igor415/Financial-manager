@@ -127,6 +127,19 @@
     <string name="notification_priority">Visok prioritet</string>
     <string name="enabled">Omogućeno</string>
     <string name="disabled">Onemogućeno</string>
+    <string name="first_name">Ime</string>
+    <string name="last_name">Prezime</string>
+    <string name="address">Adresa</string>
+    <string name="store">Poslovnica</string>
+    <string name="location">Lokacija</string>
+    <string name="confirm_button">Potvrdi</string>
+    <string name="cancel_button">Odustani</string>
+    <string name="name">Naziv</string>
+    <string name="price">Cijena</string>
+    <string name="change_product_info">Promijeni postavke proizvoda</string>
+    <string name="change_employee_info">Promijeni postavke zaposlenika</string>
+    <string name="insert_product_info">Unesite proizvod</string>
+    <string name="insert_employee_info">Unesite zaposlenika</string>
 
 
 </resources>

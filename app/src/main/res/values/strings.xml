@@ -145,5 +145,18 @@
     <string name="notification_priority">High priority</string>
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last name</string>
+    <string name="address">Address</string>
+    <string name="store">Store</string>
+    <string name="location">Location</string>
+    <string name="confirm_button">Confirm</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="name">Name</string>
+    <string name="price">Price</string>
+    <string name="change_product_info">Change product info</string>
+    <string name="change_employee_info">Change employee info</string>
+    <string name="insert_product_info">Insert product</string>
+    <string name="insert_employee_info">Insert employee</string>
 
 </resources>

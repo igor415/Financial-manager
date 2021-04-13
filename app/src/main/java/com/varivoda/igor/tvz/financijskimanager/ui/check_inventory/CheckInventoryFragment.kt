@@ -41,7 +41,7 @@ class CheckInventoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_REQUEST_CODE)
         time.text = getInventoryDate()
-        name.text = "test test"
+        name.text = "test"
         recyclerView.adapter = checkInventoryAdapter
         observeStockData()
         confirm.setOnClickListener {
@@ -50,7 +50,7 @@ class CheckInventoryFragment : Fragment() {
             }else{
                 val bm = signature_pad.signatureBitmap
                 inventoryViewModel.executeInventory(checkInventoryAdapter.items.toDomainModel())
-                PdfDocumentInventory().createPdf(bm,resources, checkInventoryAdapter.items,"test test", requireContext())
+                PdfDocumentInventory().createPdf(bm,resources, checkInventoryAdapter.items,"test", requireContext())
                 signature_pad.clear()
                 signature_pad.clearView()
             }

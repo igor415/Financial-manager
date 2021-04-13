@@ -48,7 +48,7 @@ class InventoryViewModel(private val inventoryRepository: BaseInventoryRepositor
             when(res){
                 is NetworkResult.Success -> {
                     productRepository.addInventoryItem(preferences.getUserToken()!!,
-                        InventoryItem(id = 100, fullName = "test test", storeName = "Zitnjak",successful = true, date = getInventoryDate()))
+                        InventoryItem(id = 100, fullName = "test", storeName = "Zitnjak",successful = true, date = getInventoryDate()))
                     inventoryRepository.changeStockData(list)
                     infoMessage.postValue("Inventura je izvršena.")
                 }
